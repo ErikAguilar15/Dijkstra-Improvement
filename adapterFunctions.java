@@ -61,3 +61,14 @@ private static Statement getStatement(Connection conn) {
 
 	return stmt;
 }
+
+private static void queryDB(Statement s, String sql) {
+	ResultSet rs = s.executeQuery(sql);
+	System.out.println("Query Results: ");
+        while (rs.next()) {
+            System.out.println("Value 1: " + rs.getString("val1"));
+            System.out.println("Value 2: " + rs.getString("val2"));
+            System.out.println("Value 3: " + rs.getString("val3"));
+            System.out.println("Value 4: " + rs.getString("val4"));
+        }
+}
