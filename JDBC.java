@@ -8,14 +8,14 @@ import java.sql.Statement;
 public class JDBC {
 	
 	//static String DBLocation = "jdbc:microsoft:sqlserver://HOST:1433;databaseName=MNFLD.dbo";
-	static String DBLocation = "jdbc:sqlserver://JUSTIN\\SQLEXPRESS:1433;databaseName=MNFLD;integratedSecurity=true;";
+	static String DBLocation = "jdbc:sqlserver://JUSTIN;databaseName=MNFLD;integratedSecurity=true";
 	static Connection connection = null;
 	
 	//Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
 	public static void SelectQuery() { //change name of func later, example one
 		try {	
 			
-		        connection = DriverManager.getConnection(DBLocation, "jgreen", "ejgallo");
+		        connection = DriverManager.getConnection(DBLocation);
 		        if (connection != null) {
 		        	System.out.println("Connected");
 		        }
@@ -28,18 +28,7 @@ public class JDBC {
 		            		+ ",[RESV_IN_USE_N]"
 		            		+ ",[CNCT_PT_TYP_SYS_I]"
 		            		+ "FROM [MNFLD].[dbo].[wmgma01_cnct_pt] ");
-		            /*ResultSet result = stat.executeQuery("select count(c_custkey) as cno "
-		                + "from customer ");
-		            if (result.next()) {
-		            int resultint = result.getInt("cno");
-		            custkey = resultint + 1;
-		            }
 		            
-		            result = stat.executeQuery("select c_custkey "
-		                + "from customer "
-		                + "where c_custkey = '" + custkey +"'");
-		            */    
-		            //check custkey doesn't exist yet
 		            if (result.next()) {
 		            	int resultInt = result.getInt("[SYS_I]");
 		            	System.out.println(resultInt);
@@ -59,7 +48,7 @@ public class JDBC {
 				System.err.println(e.getMessage());
 				}
 			
-			//SelectQuery();
+			SelectQuery();
 		}
 
 
