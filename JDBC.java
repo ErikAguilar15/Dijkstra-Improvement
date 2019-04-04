@@ -38,7 +38,20 @@ public class JDBC {
 		}
 		System.out.println("Disconnected");
 	}
-	
+	/*
+	private static Statement getStatement(Connection conn) {
+
+		Statement stat = null;
+		try {
+		// System.out.println("Connected");
+			stat = conn.createStatement();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return stat;
+	}*/
 	
 	public static void getOpenConnectionPorts() { //change name of func later, example one
 		try {	
