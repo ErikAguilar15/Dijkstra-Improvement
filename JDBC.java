@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class JDBC {
 	
 	//static String DBLocation = "jdbc:microsoft:sqlserver://HOST:1433;databaseName=MNFLD.dbo";
-	static String DBLocation = "jdbc:sqlserver://JUSTIN;databaseName=MNFLD;integratedSecurity=true";
+	static String DBLocation = "jdbc:sqlserver://JUSTIN:1433;databaseName=MNFLD;integratedSecurity=true";
 	static Connection connection = null;
 	
 	//Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
@@ -20,17 +20,17 @@ public class JDBC {
 		        	System.out.println("Connected");
 		        }
 		            Statement stat = connection.createStatement();
-		            ResultSet result = stat.executeQuery("SELECT TOP (10) [SYS_I] "
-		            		+ ",[SITE_SYS_I]"
-		            		+ ",[CNCT_I]"
-		            		+ ",[ALT_CNCT_I]"
-		            		+ ",[ACTV_X]"
-		            		+ ",[RESV_IN_USE_N]"
-		            		+ ",[CNCT_PT_TYP_SYS_I]"
-		            		+ "FROM [MNFLD].[dbo].[wmgma01_cnct_pt] ");
+		            ResultSet result = stat.executeQuery("SELECT TOP (10) SYS_I "
+		            		+ ",SITE_SYS_I"
+		            		+ ",CNCT_I"
+		            		+ ",ALT_CNCT_I"
+		            		+ ",ACTV_X"
+		            		+ ",RESV_IN_USE_N"
+		            		+ ",CNCT_PT_TYP_SYS_I"
+		            		+ "FROM wmgma01_cnct_pt ");
 		            
 		            if (result.next()) {
-		            	int resultInt = result.getInt("[SYS_I]");
+		            	int resultInt = result.getInt("SYS_I");
 		            	System.out.println(resultInt);
 		            }
 		        }
