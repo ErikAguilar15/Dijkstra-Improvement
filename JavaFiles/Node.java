@@ -22,7 +22,7 @@ public class Node {
 		srcPortID = "";
 		destPortID = "";
 		cost = Integer.MAX_VALUE;
-		visited = true;
+		visited = false;
 	}
 
 	// Constructor 
