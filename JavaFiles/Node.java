@@ -44,7 +44,7 @@ public class Node {
 	}
 
 	// Inserting to neighbors list
-	public int addNeighbor(Node n) {
+	public void addNeighbor(Node n) {
 		neighbors.add(n);
 	}
 	
