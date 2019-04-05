@@ -3,35 +3,35 @@ import java.util.*;
 public class Node {
 
 	// Values 
-	public int srcPortID;
-	public int destPortID;
+	private String srcPortID;
+	private String destPortID;
 	// a,b,c to be assigned,  b > c since we perfer more clips (makes Hoses of Higher cost)
 	// c(x) = PipeLen*a + Clips*b + Hoses*c
-	public int cost;
-	public boolean visited;
+	private int cost;
+	private boolean visited;
 	
 	// Post Computed for Printing
 	public int pannel; 
 	public int port;
 
 	// This is where we'll store open connections 
-	public List<Node> neighbors = new ArrayList<Node>(); 
+	private List<Node> neighbors = new ArrayList<>();
 
 	// Default Constructor --  Sets to MAX VALUE, FLAGS FOR UNSET
 	public Node(){
-		srcPortID = Integer.MAX_VALUE;
-		destPortID = Integer.MAX_VALUE;
+		srcPortID = "";
+		destPortID = "";
 		cost = Integer.MAX_VALUE;
 		visited = true;
 	}
 
 	// Constructor 
-	public Node(int src, int dest, int cst, boolean vis) {
+	public Node(String src, String dest, int cst, boolean vis) {
         	srcPortID = src;
         	destPortID = dest;
         	cost = cst;
 			visited = vis;
-    	}
+	}
 
 	// Update Node cost
     	public void updateCost(int c) {
