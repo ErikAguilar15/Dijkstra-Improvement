@@ -2,59 +2,59 @@ import java.util.*;
 
 public class Node {
 
-	// Values 
-	private String srcPortID;
-	private String destPortID;
-	// a,b,c to be assigned,  b > c since we perfer more clips (makes Hoses of Higher cost)
-	// c(x) = PipeLen*a + Clips*b + Hoses*c
-	private int cost;
-	private boolean visited;
-	
-	// Post Computed for Printing
-	public int pannel; 
-	public int port;
+    // Values
+    private String srcPortID;
+    private String destPortID;
+    // a,b,c to be assigned,  b > c since we perfer more clips (makes Hoses of Higher cost)
+    // c(x) = PipeLen*a + Clips*b + Hoses*c
+    private float cost;
+    private boolean visited;
 
-	// This is where we'll store open connections 
-	private List<Node> neighbors = new ArrayList<>();
+    // Post Computed for Printing
+    public int pannel;
+    public int port;
 
-	// Default Constructor --  Sets to MAX VALUE, FLAGS FOR UNSET
-	public Node(){
-		srcPortID = "";
-		destPortID = "";
-		cost = Integer.MAX_VALUE;
-		visited = true;
-	}
+    // This is where we'll store open connections
+    private List<Node> neighbors = new ArrayList<>();
 
-	// Constructor 
-	public Node(String src, String dest, int cst, boolean vis) {
-        	srcPortID = src;
-        	destPortID = dest;
-        	cost = cst;
-			visited = vis;
-	}
+    // Default Constructor --  Sets to MAX VALUE, FLAGS FOR UNSET
+    public Node(){
+        srcPortID = "";
+        destPortID = "";
+        cost = Integer.MAX_VALUE;
+        visited = false;
+    }
 
-	// Update Node cost
-    	public void updateCost(int c) {
-		cost = c;
-	}
+    // Constructor
+    public Node(String src, String dest, float cst, boolean vis) {
+        srcPortID = src;
+        destPortID = dest;
+        cost = cst;
+        visited = vis;
+    }
 
-	// Get cost of Node
-	public int getCost() {
-		return cost;
-	}
+    // Update Node cost
+    public void updateCost(float c) {
+        cost = c;
+    }
 
-	// Inserting to neighbors list
-	public void addNeighbor(Node n) {
-		neighbors.add(n);
-	}
-	
-	public int compare(Node n1, Node n2) {
+    // Get cost of Node
+    public float getCost() {
+        return cost;
+    }
 
-		if (n1.cost < n2.cost)
-			return -1;
-		if (n1.cost > n2.cost)
-			return 1;
-		return 0;
-	}
+    // Inserting to neighbors list
+    public void addNeighbor(Node n) {
+        neighbors.add(n);
+    }
+
+    public int compare(Node n1, Node n2) {
+
+        if (n1.cost < n2.cost)
+            return -1;
+        if (n1.cost > n2.cost)
+            return 1;
+        return 0;
+    }
 
 }
