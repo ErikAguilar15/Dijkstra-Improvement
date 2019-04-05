@@ -2,52 +2,59 @@ import java.util.*;
 
 public class Node {
 
-    public int panel;
-    public int port;
+	// Values 
+	public int srcPortID;
+	public int destPortID;
+	// a,b,c to be assigned,  b > c since we perfer more clips (makes Hoses of Higher cost)
+	// c(x) = PipeLen*a + Clips*b + Hoses*c
+	public int cost;
+	public boolean visited;
+	
+	// Post Computed for Printing
+	public int pannel; 
+	public int port;
 
-    public int srcPortID;
-    public int destPortID;
-    public int value;
+	// This is where we'll store open connections 
+	public List<Node> neighbors = new ArrayList<Node>(); 
 
-    public List<Node> neighbors = new ArrayList<Node>();
+	// Default Constructor --  Sets to MAX VALUE, FLAGS FOR UNSET
+	public Node(){
+		srcPortID = Integer.MAX_VALUE;
+		destPortID = Integer.MAX_VALUE;
+		cost = Integer.MAX_VALUE;
+		visited = true;
+	}
 
-    //These actually need to be priority queues rather than HashSets
-    Set<Node> visitedNodes = new HashSet<Node>();
-    Set<Node> unvisitedNodes = new HashSet<Node>();
+	// Constructor 
+	public Node(int src, int dest, int cst, boolean vis) {
+        	srcPortID = src;
+        	destPortID = dest;
+        	cost = cst;
+			visited = vis;
+    	}
 
-    // Constructor
-    public Node(int s, int d, int v) {
-        this.srcPortID = s;
-        this.destPortID = d;
-        this.value = v;
-    }
+	// Update Node cost
+    	public void updateCost(int c) {
+		cost = c;
+	}
 
-    //the actual shortest path from source to destination
-    private List<Node> shortestPath = new LinkedList<>();
+	// Get cost of Node
+	public int getCost() {
+		return cost;
+	}
 
-    // Update Node cost
-    public void updateCost(int v) {
-        this.value = v;
-    }
+	// Inserting to neighbors list
+	public int addNeighbor(Node n) {
+		neighbors.add(n);
+	}
+	
+	public int compare(Node n1, Node n2) {
 
-
-    // Get cost of Node
-    public int getCost() {
-        return value;
-    }
-
-    // Inserting to neighbors list
-    public void  addNeighbor(Node n) {
-        neighbors.add(n);
-    }
-
-    public int compare(Node node1, Node node2) {
-        if (node1.value < node2.value)
-            return -1;
-        if (node1.value > node2.value)
-            return 1;
-        return 0;
-    }
-
+		if (n1.cost < n2.cost)
+			return -1;
+		if (n1.cost > n2.cost)
+			return 1;
+		return 0;
+	}
 
 }

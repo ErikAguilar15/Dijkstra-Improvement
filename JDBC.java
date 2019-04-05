@@ -203,8 +203,7 @@ public class JDBC {
 													// example one
 		try {
 			Statement stat = connection.createStatement();
-			ResultSet result = stat.executeQuery("SELECT *" + "FROM MNFLD.dbo.wmgma01_cnct_pt AS cp "
-					+ "WHERE cp.ACTV_X =0 AND cp.RESV_IN_USE_N < 2" + "ORDER BY cp.RESV_IN_USE_N ASC, cp.CNCT_I");
+			ResultSet result = stat.executeQuery("SELECT *FROM MNFLD.dbo.wmgma01_cnct_pt AS cp WHERE cp.ACTV_X =0 AND cp.RESV_IN_USE_N < 2ORDER BY cp.RESV_IN_USE_N ASC, cp.CNCT_I");
 
 			while (result.next()) {
 				int i = 1;
@@ -283,9 +282,9 @@ public class JDBC {
 					+ "MNFLD.DBO.wmgma01_cnct_pt AS CP1, "
 					+ "MNFLD.DBO.wmgma01_cnct_pt AS CP2 "
 					+ "WHERE "
-					+ "CP1.SITE_SYS_I = 10 "
-					+ "AND CP2.SITE_SYS_I = 10 "
-					+ "AND PIPE.CNCT_PT_SIDE1_SYS_I = CP1.SYS_I "
+                    + "CP1.SITE_SYS_I = 10 "
+                    + "AND CP2.SITE_SYS_I = 10 "
+                    + "AND PIPE.CNCT_PT_SIDE1_SYS_I = CP1.SYS_I "
 					+ "AND PIPE.CNCT_PT_SIDE2_SYS_I = CP2.SYS_I "
 					+ "AND PIPE.LTH_N IS NOT NULL "
 					+ "ORDER BY PIPE.LTH_N, CP1.CNCT_I");
