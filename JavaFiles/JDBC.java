@@ -199,7 +199,7 @@ public class JDBC {
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT *" + "FROM MNFLD.dbo.wmgma01_cnct_pt AS cp "
-					+ "WHERE cp.ACTV_X =0 AND cp.RESV_IN_USE_N < 2" + "ORDER BY cp.RESV_IN_USE_N ASC, cp.CNCT_I");
+					+ "WHERE cp.ACTV_X =0 AND cp.RESV_IN_USE_N < 2 " + "ORDER BY cp.RESV_IN_USE_N ASC, cp.CNCT_I");
 
 			while (result.next()) {
 				int i = 1;
