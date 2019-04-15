@@ -18,16 +18,21 @@ public class Graph {
         this.nodes = nodes;
     }
 
-    public Node getNode(Node n) {
+    public Node getNode(String nodeName) {
 
         Iterator<Node> it = nodes.iterator();
         while (it.hasNext()) {
-            if (it.next().equals(n.getName())) {
-                return it.next();
+            Node current = it.next();
+            if (current.getName() == nodeName) {
+                return current;
             }
 
         }
         return null;
+    }
+
+    public void printPath(String n) {
+        getNode(n).printPath();
     }
 
 }

@@ -38,18 +38,8 @@ public class main {
         g.addNode(node6);
 
         g = Dijkstra.calcShortestPath(g, node1);
-        node5.printPath();
-//		for (Node n:
-//				g.getNodes()) {
-//			for (Node pN:
-//					n.getPath()) {
-//				pN.print();
-//			}
-//			System.out.print("\n");
-//		}
-
-//		node1.print();
-//		g.print();
+        g.printPath(node5.getName());
+//        node5.printPath();
 
 
         // Create graph from DB Node
