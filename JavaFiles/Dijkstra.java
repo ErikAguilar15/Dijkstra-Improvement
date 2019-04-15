@@ -1,18 +1,63 @@
-import java.util.*;
-import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeSet;
+
+public class Dijkstra {
+
+    // Finds shortest path from Node src on given Graph g
+    public static Graph calcShortestPath(Graph g, Node src) {
+
+        src.setCost(0);
+
+        TreeSet<Node> visitedNodes = new TreeSet<>();
+        TreeSet<Node> unVisitedNodes = new TreeSet<>();
+
+        visitedNodes.add(src);
+        unVisitedNodes.addAll(g.getNodes());
+
+        while (!unVisitedNodes.isEmpty()) {
+            Node openNode = unVisitedNodes.first();
+
+            unVisitedNodes.remove(openNode);
+
+            for (Map.Entry<Node, Integer> n :
+                    openNode.getNeighborsList().entrySet()) {
+                Node adjNode = n.getKey();
+                Integer edgeCost = n.getValue();
+
+                if (!visitedNodes.contains(adjNode)) {
+                    if (openNode.getCost() + edgeCost < adjNode.getCost()) {
+                        adjNode.setCost(openNode.getCost() + edgeCost);
+                        LinkedList<Node> shortestPath = new LinkedList<>(openNode.getPath());
+                        shortestPath.add(openNode);
+                        adjNode.setShortestPath(shortestPath);
+                    }
+                    unVisitedNodes.add(adjNode);
+                }
+            }
+            visitedNodes.add(openNode);
+        }
+        return g;
+    }
+
+
+}
+
+
+/*
 
 public class Dijkstra {
 
     private int dist[];
-    private Set<Integer> settled;
+    private Set<String> settled;
     private PriorityQueue<Node> pq;
     private int V; // Number of vertices
     List<List<Node> > adj;
 
-    public DPQ(int V){
+    public void Dijkstra(int V) {
         this.V = V;
         dist = new int[V];
-        settled = new HashSet<Integer>();
+        settled = new HashSet<String>();
         pq = new PriorityQueue<Node>(V, new Node());
     }
     // Funtion for Dijkstra's Algorithm
@@ -23,15 +68,15 @@ public class Dijkstra {
             dist[i] = Integer.MAX_VALUE;
 
         // Add source node to the priority queue
-        pq.add(new Node(source, 0));
+        pq.add(new Node(String.valueOf(source), 0));
 
         // Distance to the source is 0
-        dist = 0;
+        dist[0] = 0;
         while (settled.size() != V) {
 
             // remove the minimum distance node
             // from the priority queue
-            int u = pq.remove().node;
+            String u = pq.remove().getID();
 
             // adding the node whose distance is
             // finalized
@@ -43,7 +88,7 @@ public class Dijkstra {
 
     // Function to process all the neighbours
     // of the passed node
-    private void e_Neighbours(int u){
+    private void e_Neighbours(String u){
         int edgeDistance = -1;
         int newDistance = -1;
 
@@ -71,11 +116,10 @@ public class Dijkstra {
         int V = 5;
         int source = 0;
 
-        // Adjacency list representation of the
-        // connected edges
+        // List of Adjacent Edges
         List<List<Node> > adj = new ArrayList<List<Node> >();
 
-        // Initialize list for every node
+        // Inserting full list of nodes
         for (int i = 0; i < V; i++) {
             List<Node> item = new ArrayList<Node>();
             adj.add(item);
@@ -102,4 +146,4 @@ public class Dijkstra {
                     + dpq.dist[i]);
     }
 }
-
+*/
