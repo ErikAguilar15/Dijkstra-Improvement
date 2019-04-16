@@ -3,6 +3,8 @@ import java.util.*;
 public class Node implements Comparable {
 
     private String nodeID;
+    private String srcPortID;
+    private String dstPortID;
     private Integer cost = Integer.MAX_VALUE;
 
     private LinkedList<Node> shortestPath = new LinkedList<>();
@@ -17,6 +19,13 @@ public class Node implements Comparable {
     public Node(String n, Integer c) {
         this.nodeID = n;
         this.cost = c;
+    }
+
+    public Node(String src, String dst, Integer cost) {
+        this.nodeID = src + "->" + dst;
+        this.srcPortID = src;
+        this.dstPortID = dst;
+        this.cost = cost;
     }
 
     public String getName() {

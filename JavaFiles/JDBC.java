@@ -1,8 +1,10 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.sql.Statement;
+
+import java.sql.*;
 //import java.lang.Class;
 
 public class JDBC {
@@ -10,13 +12,19 @@ public class JDBC {
 	// DBLocation is local to my computer, theres a way to make remote
 	// accessible, ill do later
 	//static String DBLocation = "jdbc:sqlserver://JUSTIN\\SQLEXPRESS,1433:1433;integratedSecurity=true;";
-	static String DBLocation = "jdbc:sqlserver://192.168.99.1:1433;databaseName=MNFLD;";
+    //	static String DBLocation = "jdbc:sqlserver://192.168.99.1:1433;databaseName=MNFLD;";
+    static String DBLocation = "jdbc:sqlserver://172.17.0.2;databaseName=MNFLD;integratedSecurity=true;";
+//    static String DBLocation = "jdbc:sqlserver://localhost;databaseName=MNFLD;";
+
 
 	// static String DBLocation =
 	// "jdbc:sqlserver://JUSTIN:1433;databaseName=MNFLD;integratedSecurity=true"; local, working
 	static Connection connection = null;
-	
-	static String username = "jgreen";
+
+//    static String username = "jgreen";
+//    static String password = "ejgallo";
+
+    static String username = "sa";
 	static String password = "ejgallo";
 
 	// Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
@@ -24,13 +32,16 @@ public class JDBC {
 	// connects to SQL Server DB
 	public static void openSQLConnection() {
 		try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			connection = DriverManager.getConnection(DBLocation, username, password);
 
 			if (connection != null) {
-				System.out.println("Connected");
-			}
+                System.out.println("CONNECTION: SUCESS");
+            } else {
+                System.out.println("CONNECTION: FAILED");
+            }
 
-		} catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
 			System.err.println(e.getMessage());
 		}
 	}
@@ -305,7 +316,9 @@ public class JDBC {
 	
 
 	public static void main(String[] args) {
+        System.out.println("Opening SQL Connection to DB");
 		openSQLConnection();
+        System.out.println("After SQL Connection function is called");
 		//getOpenConnectionPorts();
 		//findExistingLineUp();
 		//findNearestPanel();
@@ -313,7 +326,7 @@ public class JDBC {
 		//getLineUpFrom_LineUpSYS_I();
 		//getOpenPossibleConnections();
 		//getPipes();
-		graphInformation();
+        if (connection != null) graphInformation();
 		closeSQLConnection();
 	}
 
