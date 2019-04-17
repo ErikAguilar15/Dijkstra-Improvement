@@ -7,7 +7,7 @@ public class Dijkstra {
     // Finds shortest path from Node src on given Graph g
     public static Graph calcShortestPath(Graph g, Node src) {
 
-        src.setCost(0);
+        src.setDistanceFromSrc(0);
 
         TreeSet<Node> visitedNodes = new TreeSet<>();
         TreeSet<Node> unVisitedNodes = new TreeSet<>();
@@ -26,8 +26,8 @@ public class Dijkstra {
                 Integer edgeCost = n.getValue();
 
                 if (!visitedNodes.contains(adjNode)) {
-                    if (openNode.getCost() + edgeCost < adjNode.getCost()) {
-                        adjNode.setCost(openNode.getCost() + edgeCost);
+                    if (openNode.getDistanceFromSrc() + edgeCost < adjNode.getDistanceFromSrc()) {
+                        adjNode.setDistanceFromSrc(openNode.getDistanceFromSrc() + edgeCost);
                         LinkedList<Node> shortestPath = new LinkedList<>(openNode.getPath());
                         shortestPath.add(openNode);
                         adjNode.setShortestPath(shortestPath);
@@ -42,7 +42,7 @@ public class Dijkstra {
 
     public static Graph calcCheapestWineLine(Graph g, Node src) {
 
-        src.setCost(0);
+        src.setDistanceFromSrc(0);
 
         TreeSet<Node> visitedNodes = new TreeSet<>();
         TreeSet<Node> unVisitedNodes = new TreeSet<>();
@@ -55,23 +55,28 @@ public class Dijkstra {
             Node openNode = unVisitedNodes.first();
             unVisitedNodes.remove(openNode);
 
-            for (Map.Entry<Node, Integer> n :
-                    openNode.getNeighborsList().entrySet()) {
-                Node adjNode = n.getKey();
-                Integer lineLength = n.getValue();
+            for (Edge e :
+                    g.getPossibleConnections(openNode.getName())) {
+                Node adjPipe;
+                if (e.dstNode != null)
+                    adjPipe = e.dstNode;
+                else
+                    adjPipe = e.srcNode;
 
-                if (!visitedNodes.contains(adjNode)) {
-                    if (openNode.getCost() + lineLength < adjNode.getCost()) {
-                        adjNode.setCost(openNode.getCost() + lineLength);
+                Integer lineLength = e.getLength();
+
+                if (!visitedNodes.contains(adjPipe)) {
+                    if (openNode.getDistanceFromSrc() + lineLength < adjPipe.getDistanceFromSrc()) {
+                        adjPipe.setDistanceFromSrc(openNode.getDistanceFromSrc() + lineLength);
                         LinkedList<Node> shortestPath = new LinkedList<>(openNode.getPath());
                         shortestPath.add(openNode);
-                        adjNode.setShortestPath(shortestPath);
+                        adjPipe.setShortestPath(shortestPath);
                     }
-                    unVisitedNodes.add(adjNode);
                 }
-            }
+                unVisitedNodes.add(adjPipe);
+                }
             visitedNodes.add(openNode);
-        }
+            }
         return g;
     }
 

@@ -45,4 +45,22 @@ public class Edge {
         return (srcNode == self) ? dstNode : srcNode;
     }
 
+    public String getSrcName() {
+        String name = this.srcNode.getName();
+        if (name != null) {
+            return name;
+        }
+        System.out.println("Tried to get source when it was null");
+        return null;
+    }
+
+    public String getDstName() {
+        return this.dstNode.getName();
+    }
+
+    @Override
+    public String toString() {
+        return ("(" + this.srcNode + "," + this.dstNode + ")->" + this.length);
+    }
+
 }

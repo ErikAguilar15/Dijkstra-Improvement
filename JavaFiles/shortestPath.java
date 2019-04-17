@@ -1,70 +1,58 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class shortestPath {
 
     public static void main(String[] args) {
 
         System.out.println("Creating Graph");
 
-        // Creating Tank Nodes
-        Node aTank = new Node("ATank");
-        Node bTank = new Node("BTank");
-
-
-        // Creating Pipe Nodes
-        Node pipeE = new Node("E567", "890", 10);
-        Node pipeC = new Node("C345", "678", 10);
-        Node pipeD = new Node("D456", "789", 10);
-        Node pipeF = new Node("F678", "901", 10);
-        Node pipeG = new Node("G345", "045", 10);
-
-        // Adding neighbors to Nodes
-        aTank.addAdjacentNode(pipeE, 10);
-        aTank.addAdjacentNode(pipeC, 15);
-
-        pipeC.addAdjacentNode(bTank, 100);
-
-        pipeE.addAdjacentNode(pipeD, 12);
-        pipeE.addAdjacentNode(pipeF, 15);
-
-        pipeD.addAdjacentNode(bTank, 2);
-        pipeD.addAdjacentNode(pipeF, 1);
-
-        pipeF.addAdjacentNode(pipeG, 1);
-
-        pipeG.addAdjacentNode(bTank, 1);
-
-//        bTank.addAdjacentNode(bTank, 5);
-
-
         Graph g = new Graph();
 
-        g.addNode(aTank);
-        g.addNode(pipeE);
-        g.addNode(pipeC);
-        g.addNode(pipeD);
-        g.addNode(pipeF);
-        g.addNode(pipeG);
-        g.addNode(bTank);
+        ArrayList<String> names = new ArrayList<>(
+                Arrays.asList(
+                        "ATank",     //0
+                        "B345->678", //1
+                        "C456->789", //2
+                        "D567->890", //3
+                        "ETank",     //4
+                        "F678->901", //5
+                        "G345->045"  //6
+                )
+        );
 
-        g = Dijkstra.calcCheapestWineLine(g, aTank);
-        g.printPath(bTank.getName());
-//        bTank.printPath();
-
-
-        // Create graph from DB Node
-        //  Find  all the Non-Active Ports and Sorts them by number of reservations
-		/*
-		 * String sql = "SELECT *
-				FROM MNFLD.dbo.wmgma01_cnct_pt AS cp
-				WHERE cp.ACTV_X =0 AND cp.RESV_IN_USE_N < 2
-				ORDER BY cp.RESV_IN_USE_N ASC, cp.CNCT_I
-	*/
-
-        // Set up Nodes and Edges
-        // 	-- [] Find Neighbors based from all Pannels
-        // 	-- Calculate size of clips possible
-        // 	-- Calculate angle theta of connection
+        int index = 0;
+        for (String name :
+                names) {
+            index = name.indexOf("->");
+            if (index > 0) {
+                String src = name.substring(0, index);
+                String dst = name.substring(index + 2, name.length());
+                g.addPipe(new Node(src, dst, 100));
+            } else {
+                g.addPipe(new Node(name));
+            }
 
 
+        }
+
+
+        g.addPossibleConnection(new Edge(g.getPipe(names.get(0)), g.getPipe(names.get(1)), 10)); // A-B
+        g.addPossibleConnection(new Edge(g.getPipe(names.get(0)), g.getPipe(names.get(2)), 15)); // A-C
+
+        g.addPossibleConnection(new Edge(g.getPipe(names.get(1)), g.getPipe(names.get(3)), 3)); // B-D
+        g.addPossibleConnection(new Edge(g.getPipe(names.get(1)), g.getPipe(names.get(5)), 5)); // B-F
+
+        g.addPossibleConnection(new Edge(g.getPipe(names.get(2)), g.getPipe(names.get(4)), 30)); // C-E
+
+        g.addPossibleConnection(new Edge(g.getPipe(names.get(3)), g.getPipe(names.get(4)), 20)); // D-E
+        g.addPossibleConnection(new Edge(g.getPipe(names.get(3)), g.getPipe(names.get(6)), 14)); // D-G
+
+        g.addPossibleConnection(new Edge(g.getPipe(names.get(6)), g.getPipe(names.get(4)), 3)); // G-E
+
+        g = Dijkstra.calcCheapestWineLine(g, g.getPipe(names.get(0)));
+
+        g.printPipeLine(names.get(4));
     }
 
 

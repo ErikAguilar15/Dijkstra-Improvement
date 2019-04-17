@@ -5,27 +5,30 @@ public class Node implements Comparable {
     private String nodeID;
     private String srcPortID;
     private String dstPortID;
-    private Integer cost = Integer.MAX_VALUE;
+    private Integer distanceFromSrc = Integer.MAX_VALUE;
+    private Integer length = Integer.MAX_VALUE;
 
     private LinkedList<Node> shortestPath = new LinkedList<>();
     private Map<Node, Integer> neighbors = new HashMap<>();
+
+    private ArrayList<Node> edges = new ArrayList<>();
 
     // Constructor with Max Value
     public Node(String n) {
         this.nodeID = n;
     }
 
-    // Constructor with given cost
+    // Constructor with given distanceFromSrc
     public Node(String n, Integer c) {
         this.nodeID = n;
-        this.cost = c;
+        this.distanceFromSrc = c;
     }
 
-    public Node(String src, String dst, Integer cost) {
+    public Node(String src, String dst, Integer length) {
         this.nodeID = src + "->" + dst;
         this.srcPortID = src;
         this.dstPortID = dst;
-        this.cost = cost;
+        this.length = length;
     }
 
     public String getName() {
@@ -36,12 +39,12 @@ public class Node implements Comparable {
         this.nodeID = s;
     }
 
-    public Integer getCost() {
-        return cost;
+    public Integer getDistanceFromSrc() {
+        return distanceFromSrc;
     }
 
-    public void setCost(Integer c) {
-        this.cost = c;
+    public void setDistanceFromSrc(Integer c) {
+        this.distanceFromSrc = c;
     }
 
     public Map<Node, Integer> getNeighbors() {
@@ -70,8 +73,15 @@ public class Node implements Comparable {
         neighbors.put(n, c);
     }
 
-    public void addPossibleConnection(Graph g, Node n, Integer c) {
-        neighbors.put(n, g.pipes.get(n.nodeID).length);
+    public void addPossibleConnection(Graph g, String graphNode, Integer c) {
+        Node n = g.getNode(graphNode);
+        if (n == null) {
+            System.out.println("Can't add possible connection, Node is null");
+        } else {
+            n.setDistanceFromSrc(c + n.getDistanceFromSrc());
+            edges.add(n);
+//            edges.add(n, g.pipes.get(n.nodeID).length);
+        }
 
     }
 
@@ -90,9 +100,9 @@ public class Node implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        if (this.cost.equals(((Node) o).cost)) {
+        if (this.distanceFromSrc.equals(((Node) o).distanceFromSrc)) {
             return 0;
-        } else if (this.cost > ((Node) o).cost) {
+        } else if (this.distanceFromSrc > ((Node) o).distanceFromSrc) {
             return 1;
         } else {
             return -1;
@@ -101,11 +111,11 @@ public class Node implements Comparable {
 
     @Override
     public String toString() {
-        return (this.nodeID + " " + this.cost);
+        return (this.nodeID + " " + this.distanceFromSrc);
     }
 
-    public void print() {
-        System.out.print(this.nodeID + " " + this.cost + ", ");
+    public void printLine() {
+        System.out.print("Shortest Path: " + shortestPath + "-> " + this + "\n");
     }
 
 }
