@@ -5,7 +5,7 @@
 To tackle our problem we will be using 3 Classes Graph, Edges, and Nodes.
 - Set up
     - Create a Graph
-        - This is where we will store all our nodes.
+        - This is were we will store all our nodes.
     - Create Nodes
         - These will be used to be inserted into the graph.
     - Create edges 
@@ -30,9 +30,7 @@ To tackle our problem we will be using 3 Classes Graph, Edges, and Nodes.
 
 
 ## TO DO:
-  - Import and save files from GitHub, Dropbox, Google Drive and One Drive
-  - Drag and drop markdown and HTML files into Dillinger
-  - Export documents as Markdown, HTML and PDF
+  - We need to be able to grab data from SQL and create an automation function that will input all Node (Pipe) Data and Edge (Clip and Hose) Data
 
 
 #### Pseudo Code
