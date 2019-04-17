@@ -21,10 +21,8 @@ To tackle our problem we will be using 3 Classes Graph, Edges, and Nodes.
 
 
 ## TO DO:
-  - Import and save files from GitHub, Dropbox, Google Drive and One Drive
-  - Drag and drop markdown and HTML files into Dillinger
-  - Export documents as Markdown, HTML and PDF
-
+	-
+	-
 
 #### Pseudo Code
 ```
