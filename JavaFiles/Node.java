@@ -57,12 +57,7 @@ public class Node implements Comparable {
                 new LinkedList<>(neighbors.entrySet());
 
         // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<Node, Integer>>() {
-            public int compare(Map.Entry<Node, Integer> o1,
-                               Map.Entry<Node, Integer> o2) {
-                return (o1.getValue()).compareTo(o2.getValue());
-            }
-        });
+        Collections.sort(list, Comparator.comparing(o -> (o.getValue())));
 
         HashMap<Node, Integer> temp = new LinkedHashMap<>();
         for (Map.Entry<Node, Integer> n : list) {
@@ -74,6 +69,12 @@ public class Node implements Comparable {
     public void addAdjacentNode(Node n, Integer c) {
         neighbors.put(n, c);
     }
+
+    public void addPossibleConnection(Graph g, Node n, Integer c) {
+        neighbors.put(n, g.pipes.get(n.nodeID).length);
+
+    }
+
 
     public List<Node> getPath() {
         return this.shortestPath;
