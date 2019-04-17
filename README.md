@@ -14,19 +14,30 @@ To tackle our problem we will be using 3 Classes Graph, Edges, and Nodes.
     - Set Source and Destination
     - Calculates shortest distance
     
-## New Updates!
+## Class definitions
+- Node our Pipe (2 cp)
+        - Integer distanceFromSrc = INF
+        - String IN_SYS_I
+        - String OUT_SYS_I
+        - Integer pipeLength
+- Edges our Connection (Clips or Hoses)
+        - Node Pipe_from
+        - Node Pipe_to
 
+## New Updates!
   - Created a running Dijkstra with generic Nodes
   - Need to work on implemeting our algorithm to regocognize the different type of edges in our system.
 
 
 ## TO DO:
-	-
-	-
+  - Import and save files from GitHub, Dropbox, Google Drive and One Drive
+  - Drag and drop markdown and HTML files into Dillinger
+  - Export documents as Markdown, HTML and PDF
+
 
 #### Pseudo Code
 ```
- 1  int[] Dijkstra(source)
+ 1  int[] Dijkstra(source) 
     {
  2     for each vertex v            	     // Initializations
        {
