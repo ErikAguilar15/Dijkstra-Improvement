@@ -6,8 +6,8 @@ public class Node implements Comparable {
     private String nodeID;
     private String srcPortID;
     private String dstPortID;
-    private Integer distanceFromSrc = Integer.MAX_VALUE;
-    private Integer pipeLength = Integer.MAX_VALUE;
+    private Float distanceFromSrc = Float.MAX_VALUE;
+    private Float pipeLength = Float.MAX_VALUE;
 
     private LinkedList<Node> shortestPath = new LinkedList<>();
 
@@ -17,19 +17,19 @@ public class Node implements Comparable {
     }
 
     // Constructor with given distanceFromSrc
-    public Node(String n, Integer c) {
+    public Node(String n, Float c) {
         this.nodeID = n;
         this.pipeLength = c;
     }
 
-    public Node(String src, String dst, Integer pipeLength) {
+    public Node(String src, String dst, Float pipeLength) {
         this.nodeID = src + "->" + dst;
         this.srcPortID = src;
         this.dstPortID = dst;
         this.pipeLength = pipeLength;
     }
 
-    public Node(String pipeID, String src, String dst, Integer pipeLength) {
+    public Node(String pipeID, String src, String dst, Float pipeLength) {
         this.nodeID = pipeID;
         this.srcPortID = src;
         this.dstPortID = dst;
@@ -44,15 +44,15 @@ public class Node implements Comparable {
         this.nodeID = s;
     }
 
-    public Integer getCost() {
+    Float getCost() {
         return distanceFromSrc;
     }
 
-    public void setCost(Integer c) {
+    void setCost(Float c) {
         this.distanceFromSrc = c;
     }
 
-    public Integer getPipeLength() {
+    Float getPipeLength() {
         return this.pipeLength;
     }
 
@@ -95,7 +95,7 @@ public class Node implements Comparable {
 //    }
 
 
-    public List<Node> getPath() {
+    List<Node> getPath() {
         return this.shortestPath;
     }
 
@@ -103,8 +103,20 @@ public class Node implements Comparable {
 //        System.out.print("Shortest Path: " + shortestPath + "-> " + this);
 //    }
 
-    public void setShortestPath(LinkedList<Node> l) {
+    void setShortestPath(LinkedList<Node> l) {
         this.shortestPath = l;
+    }
+
+    void clearRoute() {
+        this.shortestPath.clear();
+    }
+
+    int pipesInRoute() {
+        return shortestPath.size();
+    }
+
+    Node getRoute(Integer index) {
+        return shortestPath.get(index);
     }
 
     @Override
@@ -126,7 +138,7 @@ public class Node implements Comparable {
             return (this.nodeID + " " + this.distanceFromSrc);
     }
 
-    public void printLine() {
+    void printLine() {
         for (Node n : shortestPath) {
             System.out.print("(" + n + ") -> ");
         }

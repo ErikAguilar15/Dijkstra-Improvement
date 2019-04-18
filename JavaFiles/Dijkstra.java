@@ -39,9 +39,9 @@ public class Dijkstra {
 //        return g;
 //    }
 
-    public static void findMinPaths(Graph g, Node startPort) {
+    static void findMinPaths(Graph g, Node startPort) {
 
-        startPort.setCost(0);
+        startPort.setCost((float) 0.0);
 
         //TreeSet data structures for nodes we need to visit and add them once visited
         TreeSet<Node> expanded = new TreeSet<>();
@@ -62,7 +62,7 @@ public class Dijkstra {
 
                 //Calculate path costs based off line lengths
                 Node adjPipe = edge.getNeighbor(currentNode);
-                Integer lineLength = edge.getCost();
+                Float lineLength = edge.getCost();
 
                 if (!expanded.contains(adjPipe)) {
                     findShortcut(currentNode, adjPipe, lineLength);
@@ -74,7 +74,7 @@ public class Dijkstra {
 //        return g;
     }
 
-    private static void findShortcut(Node currentNode, Node adjPipe, Integer lineLength) {
+    private static void findShortcut(Node currentNode, Node adjPipe, Float lineLength) {
         if (currentNode.getCost() + lineLength < adjPipe.getCost()) {
             adjPipe.setCost(currentNode.getCost() + lineLength);
             LinkedList<Node> shortestPath = new LinkedList<>(currentNode.getPath());
@@ -83,5 +83,12 @@ public class Dijkstra {
         }
     }
 
+    static void resetCosts(Graph g) {
+        for (Node n :
+                g.getPipes()) {
+            n.setCost(Float.MAX_VALUE);
+            n.clearRoute();
+        }
+    }
 
 }

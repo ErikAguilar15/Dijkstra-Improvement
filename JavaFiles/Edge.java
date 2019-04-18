@@ -34,7 +34,7 @@ public class Edge {
     }
 
     // When considering using cost for edges we can sum the Node pipeLength
-    public Integer getCost() {
+    Float getCost() {
         return this.cost + this.dst.getPipeLength();
     }
 
@@ -42,11 +42,11 @@ public class Edge {
         this.cost = cost;
     }
 
-    public Node getNeighbor(Node self) {
+    Node getNeighbor(Node self) {
         return (src == self) ? dst : src;
     }
 
-    public String getSrcName() {
+    String getSrcName() {
         String name = this.src.getName();
         if (name != null) {
             return name;
@@ -55,7 +55,7 @@ public class Edge {
         return null;
     }
 
-    public String getDstName() {
+    String getDstName() {
         return this.dst.getName();
     }
 

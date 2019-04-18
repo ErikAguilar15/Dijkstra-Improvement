@@ -22,7 +22,8 @@ public class shortestPath {
                         "D567->890", //3
                         "ETank",     //4
                         "F678->901", //5
-                        "G345->045"  //6
+                        "G345->045", //6
+                        "HTank"      //7
                 )
         );
 
@@ -31,9 +32,9 @@ public class shortestPath {
             if (index > 0) {
                 String src = name.substring(0, index);
                 String dst = name.substring(index + 2);
-                mnfld.addPipe(new Node(src, dst, 100));
+                mnfld.addPipe(new Node(src, dst, (float) 0.0));
             } else {
-                mnfld.addPipe(new Node(name, 0));
+                mnfld.addPipe(new Node(name, (float) 0.0));
             }
         }
 
@@ -51,10 +52,29 @@ public class shortestPath {
 
         mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(6)), mnfld.getPipe(names.get(4)), 3)); // G-E
 
+        // -- Running Dijkstra & Finding shortest Paths -- //
+
+        int cons;
+        String destName = names.get(4);
+        Node p1;
+
         Dijkstra.findMinPaths(mnfld, mnfld.getPipe(names.get(0)));
-
         mnfld.printDistanceTree();
+        System.out.print("\nShortest Path: ");
+        mnfld.printPipeLine(names.get(4));
+        // TODO: Implement method to remove edge and calculate new shortest cost with out the edge, used to find new routes for the destination
 
+        cons = mnfld.getPipe(destName).pipesInRoute();
+        System.out.println(cons);
+
+        p1 = mnfld.getPipe(destName).getRoute(cons - 1);
+
+        mnfld.dropConnection(p1.getName(), destName);
+
+        Dijkstra.resetCosts(mnfld);
+
+        Dijkstra.findMinPaths(mnfld, mnfld.getPipe(names.get(0)));
+        mnfld.printDistanceTree();
         System.out.print("\n\nShortest Path: ");
         mnfld.printPipeLine(names.get(4));
     }

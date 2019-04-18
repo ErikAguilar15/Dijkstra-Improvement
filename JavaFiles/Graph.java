@@ -5,9 +5,10 @@ public class Graph {
     // Used in MNFLD case Dijkstra
     private ArrayList<Node> pipes = new ArrayList<>();
     private ArrayList<Edge> connections = new ArrayList<>();
+    private ArrayList<Edge> droppedConnection = new ArrayList<>();
 
     // MNFLD Dijkstra functions
-    public ArrayList<Node> getPipes() {
+    ArrayList<Node> getPipes() {
         return this.pipes;
     }
 
@@ -16,17 +17,17 @@ public class Graph {
     }
 
     // Adds a node
-    public void addPipe(Node pipe) {
+    void addPipe(Node pipe) {
         this.pipes.add(pipe);
     }
 
     // Adds an edge
-    public void insertConnection(Edge conn) {
+    void insertConnection(Edge conn) {
         this.connections.add(conn);
     }
 
     // Linear search for pipe
-    public Node getPipe(String pipeID) {
+    Node getPipe(String pipeID) {
 
         for (Node pipe : this.pipes) {
 
@@ -40,7 +41,7 @@ public class Graph {
     }
 
     // Returns results of a directed graph Port1->Port2
-    public ArrayList<Edge> findNeighbors(String inPort) {
+    ArrayList<Edge> findNeighbors(String inPort) {
 
         ArrayList<Edge> edgeList = new ArrayList<>();
 
@@ -53,18 +54,46 @@ public class Graph {
     }
 
     // Only print the path from the source to the destination
-    public void printPipeLine(String n) {
+    void printPipeLine(String n) {
         getPipe(n).printLine();
     }
 
     // Prints all the paths from Source(Tanks)
-    public void printDistanceTree() {
+    void printDistanceTree() {
         for (Node pipe : pipes) {
             pipe.printLine();
         }
     }
 
     // ----------------
+
+    boolean dropConnection(String eSrc, String eDst) {
+        boolean res = false;
+        for (Edge edge : findNeighbors(eSrc)) {
+            System.out.println(edge);
+            if (eDst.equals(edge.getDstName())) {
+                droppedConnection.add(edge);
+                connections.remove(edge);
+                res = true;
+                break;
+            }
+        }
+        return res;
+    }
+
+    boolean resetConnection(String eSrc, String eDst) {
+        boolean res = false;
+        for (Edge edge : droppedConnection) {
+//          System.out.println(edge);
+            if (eSrc.equals(edge.getSrcName()) || eDst.equals(edge.getDstName())) {
+                connections.add(edge);
+                res = true;
+                break;
+            }
+        }
+        return res;
+    }
+
 
 
     // Used in base case Dijkstra
@@ -93,10 +122,6 @@ public class Graph {
 //        }
 //        return null;
 //    }
-
-
-
-
 
 
 }
