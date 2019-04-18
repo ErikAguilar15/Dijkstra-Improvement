@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Node implements Comparable {
 
@@ -6,12 +7,11 @@ public class Node implements Comparable {
     private String srcPortID;
     private String dstPortID;
     private Integer distanceFromSrc = Integer.MAX_VALUE;
-    private Integer length = Integer.MAX_VALUE;
+    private Integer pipeLength = Integer.MAX_VALUE;
 
     private LinkedList<Node> shortestPath = new LinkedList<>();
-    private Map<Node, Integer> neighbors = new HashMap<>();
-
-    private ArrayList<Node> edges = new ArrayList<>();
+//    private Map<Node, Integer> neighbors = new HashMap<>();
+//    private ArrayList<Node> edges = new ArrayList<>();
 
     // Constructor with Max Value
     public Node(String n) {
@@ -24,11 +24,11 @@ public class Node implements Comparable {
         this.distanceFromSrc = c;
     }
 
-    public Node(String src, String dst, Integer length) {
+    public Node(String src, String dst, Integer pipeLength) {
         this.nodeID = src + "->" + dst;
         this.srcPortID = src;
         this.dstPortID = dst;
-        this.length = length;
+        this.pipeLength = pipeLength;
     }
 
     public String getName() {
@@ -39,60 +39,60 @@ public class Node implements Comparable {
         this.nodeID = s;
     }
 
-    public Integer getDistanceFromSrc() {
+    public Integer getCost() {
         return distanceFromSrc;
     }
 
-    public void setDistanceFromSrc(Integer c) {
+    public void setCost(Integer c) {
         this.distanceFromSrc = c;
     }
 
-    public Map<Node, Integer> getNeighbors() {
-        return neighbors;
-    }
+//    public Map<Node, Integer> getNeighbors() {
+//        return neighbors;
+//    }
+//
+//    public void setNeighbors(Map<Node, Integer> aN) {
+//        this.neighbors = aN;
+//    }
+//
+//    public Map<Node, Integer> getNeighborsList() {
+//        List<Map.Entry<Node, Integer>> list =
+//                new LinkedList<>(neighbors.entrySet());
+//
+//        // Sort the list
+//        Collections.sort(list, Comparator.comparing(o -> (o.getValue())));
+//
+//        HashMap<Node, Integer> temp = new LinkedHashMap<>();
+//        for (Map.Entry<Node, Integer> n : list) {
+//            temp.put(n.getKey(), n.getValue());
+//        }
+//        return temp;
+//    }
 
-    public void setNeighbors(Map<Node, Integer> aN) {
-        this.neighbors = aN;
-    }
+//    public void addAdjacentNode(Node n, Integer c) {
+//        neighbors.put(n, c);
+//    }
 
-    public Map<Node, Integer> getNeighborsList() {
-        List<Map.Entry<Node, Integer>> list =
-                new LinkedList<>(neighbors.entrySet());
-
-        // Sort the list
-        Collections.sort(list, Comparator.comparing(o -> (o.getValue())));
-
-        HashMap<Node, Integer> temp = new LinkedHashMap<>();
-        for (Map.Entry<Node, Integer> n : list) {
-            temp.put(n.getKey(), n.getValue());
-        }
-        return temp;
-    }
-
-    public void addAdjacentNode(Node n, Integer c) {
-        neighbors.put(n, c);
-    }
-
-    public void addPossibleConnection(Graph g, String graphNode, Integer c) {
-        Node n = g.getNode(graphNode);
-        if (n == null) {
-            System.out.println("Can't add possible connection, Node is null");
-        } else {
-            n.setDistanceFromSrc(c + n.getDistanceFromSrc());
-            edges.add(n);
-//            edges.add(n, g.pipes.get(n.nodeID).length);
-        }
-
-    }
+//    public void addPossibleConnection(Graph g, String graphNode, Integer c) {
+//        Node n = g.getNode(graphNode);
+//        if (n == null) {
+//            System.out.println("Can't add possible connection, Node is null");
+//        } else {
+//            n.setCost(c + n.getCost());
+//            edges.add(n);
+////            edges.add(n, g.pipes.get(n.nodeID).length);
+//        }
+//
+//    }
 
 
     public List<Node> getPath() {
         return this.shortestPath;
     }
 
-    public void printPath() {
-        System.out.print("Shortest Path: " + shortestPath + "-> " + this);
-    }
+//    public void printPath() {
+//        System.out.print("Shortest Path: " + shortestPath + "-> " + this);
+//    }
 
     public void setShortestPath(LinkedList<Node> l) {
         this.shortestPath = l;
@@ -115,7 +115,7 @@ public class Node implements Comparable {
     }
 
     public void printLine() {
-        System.out.print("Shortest Path: " + shortestPath + "-> " + this + "\n");
+        System.out.print(shortestPath + "-> " + this + "\n");
     }
 
 }

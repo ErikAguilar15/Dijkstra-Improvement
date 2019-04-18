@@ -1,52 +1,53 @@
 
 public class Edge {
 
-    Node srcNode;
-    Node dstNode;
-    Integer length = Integer.MAX_VALUE;
+    private Node src;
+    private Node dst;
+    private Integer cost = Integer.MAX_VALUE;
 
 
     public Edge() {
-        this.srcNode = null;
-        this.dstNode = null;
+        this.src = null;
+        this.dst = null;
     }
 
-    public Edge(Node src, Node dst, Integer len) {
-        this.srcNode = src;
-        this.dstNode = dst;
-        this.length = len;
+    public Edge(Node src, Node dst, Integer c) {
+        this.src = src;
+        this.dst = dst;
+        this.cost = c;
     }
 
-    public Node getSrcNode() {
-        return this.srcNode;
+    public Node getSrc() {
+        return this.src;
     }
 
-    public void setSrcNode(Node src) {
-        this.srcNode = src;
+    public void setSrc(Node src) {
+        this.src = src;
     }
 
-    public Node getDstNode() {
-        return this.dstNode;
+    public Node getDst() {
+        return this.dst;
     }
 
-    public void setDstNode(Node dst) {
-        this.dstNode = dst;
+    public void setDst(Node dst) {
+        this.dst = dst;
     }
 
-    public Integer getLength() {
-        return this.length;
+    // When considering using cost for edges we can sum the Node pipeLength
+    public Integer getCost() {
+        return this.cost;
     }
 
-    public void setLength(Integer len) {
-        this.length = len;
+    public void setCost(Integer len) {
+        this.cost = len;
     }
 
     public Node getNeighbor(Node self) {
-        return (srcNode == self) ? dstNode : srcNode;
+        return (src == self) ? dst : src;
     }
 
     public String getSrcName() {
-        String name = this.srcNode.getName();
+        String name = this.src.getName();
         if (name != null) {
             return name;
         }
@@ -55,12 +56,12 @@ public class Edge {
     }
 
     public String getDstName() {
-        return this.dstNode.getName();
+        return this.dst.getName();
     }
 
     @Override
     public String toString() {
-        return ("(" + this.srcNode + "," + this.dstNode + ")->" + this.length);
+        return ("(" + this.src + "," + this.dst + ")->" + this.cost);
     }
 
 }
