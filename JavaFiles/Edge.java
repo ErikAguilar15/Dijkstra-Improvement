@@ -5,16 +5,16 @@ public class Edge {
     private Node dst;
     private Integer cost = Integer.MAX_VALUE;
 
-
+    // Empty null pointer
     public Edge() {
         this.src = null;
         this.dst = null;
     }
 
-    public Edge(Node src, Node dst, Integer c) {
+    public Edge(Node src, Node dst, Integer cost) {
         this.src = src;
         this.dst = dst;
-        this.cost = c;
+        this.cost = cost;
     }
 
     public Node getSrc() {
@@ -35,11 +35,11 @@ public class Edge {
 
     // When considering using cost for edges we can sum the Node pipeLength
     public Integer getCost() {
-        return this.cost;
+        return this.cost + this.dst.getPipeLength();
     }
 
-    public void setCost(Integer len) {
-        this.cost = len;
+    public void setCost(Integer cost) {
+        this.cost = cost;
     }
 
     public Node getNeighbor(Node self) {

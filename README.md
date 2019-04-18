@@ -3,37 +3,43 @@
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)]()
 
 To tackle our problem we will be using 3 Classes Graph, Edges, and Nodes.
-- Set up
+## Set up
     - Create a Graph
         - This is were we will store all our nodes.
     - Create Nodes
         - These will be used to be inserted into the graph.
     - Create edges 
         - These will be created by passing src&dst nodes along with a length
-- Run Time
-    - Set Source and Destination
-    - Calculates shortest distance
-    
+        - In the case of the tank we can also just include a nodeID
+    - Run Time
+        - Set Source and Destination
+        - Calculates shortest distance
+
 ## Class definitions
 - Node our Pipe (2 cp)
-        - Integer distanceFromSrc = INF
-        - String IN_SYS_I
-        - String OUT_SYS_I
-        - Integer pipeLength
+    - Integer distanceFromSrc = INF
+    - String IN_SYS_I
+    - String OUT_SYS_I
+    - Integer pipeLength
 - Edges our Connection (Clips or Hoses)
-        - Node Pipe_from
-        - Node Pipe_to
+    - Node Pipe_from
+    - Node Pipe_to
 
 ## New Updates!
-  - Created a running Dijkstra with generic Nodes
-  - Need to work on implemeting our algorithm to regocognize the different type of edges in our system.
-
+  - Created a running Dijkstra with given tank name or src&dst ports
+  - Can print nodes and edges as if they were strings to facilitate inserting to database
+  - 
 
 ## TO DO:
+  - Need to connect to database to check with larger networks
+  - Create method to take in server input or implement a method of stress testing with larger node networks, 
+  - Need method to print alternate path to destination
+    - Do we need to remove paths and rerun dijjktra's algorithm or do we just look for paths based on what is already traversed 
+    - Possibly resetting last few iterations of Dijkstra's and reruning (adding nodes back to frontier and resetting their costs)   
   - We need to be able to grab data from SQL and create an automation function that will input all Node (Pipe) Data and Edge (Clip and Hose) Data
 
 
-#### Pseudo Code
+## Pseudo Code
 ```
  1  int[] Dijkstra(source) 
     {

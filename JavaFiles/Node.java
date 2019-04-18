@@ -10,8 +10,6 @@ public class Node implements Comparable {
     private Integer pipeLength = Integer.MAX_VALUE;
 
     private LinkedList<Node> shortestPath = new LinkedList<>();
-//    private Map<Node, Integer> neighbors = new HashMap<>();
-//    private ArrayList<Node> edges = new ArrayList<>();
 
     // Constructor with Max Value
     public Node(String n) {
@@ -21,7 +19,7 @@ public class Node implements Comparable {
     // Constructor with given distanceFromSrc
     public Node(String n, Integer c) {
         this.nodeID = n;
-        this.distanceFromSrc = c;
+        this.pipeLength = c;
     }
 
     public Node(String src, String dst, Integer pipeLength) {
@@ -45,6 +43,10 @@ public class Node implements Comparable {
 
     public void setCost(Integer c) {
         this.distanceFromSrc = c;
+    }
+
+    public Integer getPipeLength() {
+        return this.pipeLength;
     }
 
 //    public Map<Node, Integer> getNeighbors() {
@@ -111,11 +113,18 @@ public class Node implements Comparable {
 
     @Override
     public String toString() {
-        return (this.nodeID + " " + this.distanceFromSrc);
+        if (this.srcPortID != null && this.dstPortID != null)
+            return (this.srcPortID + "-" + this.dstPortID + " " + this.distanceFromSrc);
+        else
+            return (this.nodeID + " " + this.distanceFromSrc);
     }
 
     public void printLine() {
-        System.out.print(shortestPath + "-> " + this + "\n");
+        for (Node n : shortestPath) {
+            System.out.print("(" + n + ") -> ");
+        }
+        System.out.print("(" + this + ")\n");
+//        System.out.print(shortestPath + "-> " + this + "\n");
     }
 
 }

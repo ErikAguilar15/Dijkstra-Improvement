@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Graph {
 
     // Used in MNFLD case Dijkstra
-    ArrayList<Node> pipes = new ArrayList<>();
-    ArrayList<Edge> connections = new ArrayList<>();
+    private ArrayList<Node> pipes = new ArrayList<>();
+    private ArrayList<Edge> connections = new ArrayList<>();
 
     // MNFLD Dijkstra functions
     public ArrayList<Node> getPipes() {
@@ -15,17 +15,23 @@ public class Graph {
         this.pipes = pipes;
     }
 
+    // Adds a node
     public void addPipe(Node pipe) {
         this.pipes.add(pipe);
     }
 
-    public void insertEdge(Edge conn) {
+    // Adds an edge
+    public void insertConnection(Edge conn) {
         this.connections.add(conn);
     }
 
+    // Linear search for pipe
     public Node getPipe(String pipeID) {
+
         for (Node pipe : this.pipes) {
+
             String pipeName = pipe.getName();
+
             if (pipeName.equals(pipeID)) {
                 return pipe;
             }
@@ -50,10 +56,12 @@ public class Graph {
         return edgeList;
     }
 
+    // Only print the path from the source to the destination
     public void printPipeLine(String n) {
         getPipe(n).printLine();
     }
 
+    // Prints all the paths from Source(Tanks)
     public void printDistanceTree() {
         for (Node pipe : pipes) {
             pipe.printLine();

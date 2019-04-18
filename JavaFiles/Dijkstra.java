@@ -39,7 +39,7 @@ public class Dijkstra {
 //        return g;
 //    }
 
-    public static Graph findMinPaths(Graph g, Node startPort) {
+    public static void findMinPaths(Graph g, Node startPort) {
 
         startPort.setCost(0);
 
@@ -71,7 +71,7 @@ public class Dijkstra {
                 }
             expanded.add(currentNode);
             }
-        return g;
+//        return g;
     }
 
     private static void findShortcut(Node currentNode, Node adjPipe, Integer lineLength) {

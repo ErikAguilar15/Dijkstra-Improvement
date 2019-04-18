@@ -6,8 +6,8 @@ public class shortestPath {
     public static void main(String[] args) {
 
         System.out.println("Creating Graph");
-        Graph g = new Graph();
-        int index = 0;
+        Graph mnfld = new Graph();
+        int index;
 
         ArrayList<String> names = new ArrayList<>(
                 Arrays.asList(
@@ -26,32 +26,32 @@ public class shortestPath {
             if (index > 0) {
                 String src = name.substring(0, index);
                 String dst = name.substring(index + 2);
-                g.addPipe(new Node(src, dst, 100));
+                mnfld.addPipe(new Node(src, dst, 0));
             } else {
-                g.addPipe(new Node(name));
+                mnfld.addPipe(new Node(name, 0));
             }
         }
 
         // Inserting Edges to the graph
-        g.insertEdge(new Edge(g.getPipe(names.get(0)), g.getPipe(names.get(1)), 10)); // A-B
-        g.insertEdge(new Edge(g.getPipe(names.get(0)), g.getPipe(names.get(2)), 15)); // A-C
+        mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(0)), mnfld.getPipe(names.get(1)), 10)); // A-B
+        mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(0)), mnfld.getPipe(names.get(2)), 15)); // A-C
 
-        g.insertEdge(new Edge(g.getPipe(names.get(1)), g.getPipe(names.get(3)), 3)); // B-D
-        g.insertEdge(new Edge(g.getPipe(names.get(1)), g.getPipe(names.get(5)), 5)); // B-F
+        mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(1)), mnfld.getPipe(names.get(3)), 3)); // B-D
+        mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(1)), mnfld.getPipe(names.get(5)), 5)); // B-F
 
-        g.insertEdge(new Edge(g.getPipe(names.get(2)), g.getPipe(names.get(4)), 30)); // C-E
+        mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(2)), mnfld.getPipe(names.get(4)), 30)); // C-E
 
-        g.insertEdge(new Edge(g.getPipe(names.get(3)), g.getPipe(names.get(4)), 20)); // D-E
-        g.insertEdge(new Edge(g.getPipe(names.get(3)), g.getPipe(names.get(6)), 14)); // D-G
+        mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(3)), mnfld.getPipe(names.get(4)), 20)); // D-E
+        mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(3)), mnfld.getPipe(names.get(6)), 14)); // D-G
 
-        g.insertEdge(new Edge(g.getPipe(names.get(6)), g.getPipe(names.get(4)), 3)); // G-E
+        mnfld.insertConnection(new Edge(mnfld.getPipe(names.get(6)), mnfld.getPipe(names.get(4)), 3)); // G-E
 
-        g = Dijkstra.findMinPaths(g, g.getPipe(names.get(0)));
+        Dijkstra.findMinPaths(mnfld, mnfld.getPipe(names.get(0)));
 
-        g.printDistanceTree();
+        mnfld.printDistanceTree();
 
         System.out.print("\n\nShortest Path: ");
-        g.printPipeLine(names.get(4));
+        mnfld.printPipeLine(names.get(4));
     }
 
 
