@@ -72,6 +72,14 @@ Graph(V, E)
  19     }
  20   }
 
+ 21 findShortcut(cv, av, cost) {
+ 
+ 22 if cn.cost + cost < av.cost 
+ 23     av.cost = cn.cost + cost 
+ 24     shortestPath = cv.shortestPath()
+ 24     shortestPath.add(cv)
+ 25 }
+
 ```
 
 License

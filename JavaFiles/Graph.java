@@ -46,12 +46,8 @@ public class Graph {
 
         for (Edge edge : connections) {
 //          System.out.println(edge);
-            String portName = edge.getSrcName();
-            if (portName != null) {
-                if (portName.equals(inPort)) {
-                    edgeList.add(edge);
-                }
-            }
+            if (inPort.equals(edge.getSrcName()) /*|| inPort.equals(edge.getDstName())*/)
+                edgeList.add(edge);
         }
         return edgeList;
     }
