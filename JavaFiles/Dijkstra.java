@@ -48,7 +48,7 @@ public class Dijkstra {
         TreeSet<Node> frontier = new TreeSet<>();
 
         // Path Start nodes
-        expanded.add(startPort);
+//        expanded.add(startPort);
         frontier.add(startPort);
 
         //While we still have unvisited nodes

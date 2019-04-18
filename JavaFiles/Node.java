@@ -29,6 +29,13 @@ public class Node implements Comparable {
         this.pipeLength = pipeLength;
     }
 
+    public Node(String pipeID, String src, String dst, Integer pipeLength) {
+        this.nodeID = pipeID;
+        this.srcPortID = src;
+        this.dstPortID = dst;
+        this.pipeLength = pipeLength;
+    }
+
     public String getName() {
         return nodeID;
     }

@@ -10,6 +10,11 @@ public class shortestPath {
         int index;
 
         ArrayList<String> names = new ArrayList<>(
+
+
+                /// pipe_ID portIN _.portOut
+
+
                 Arrays.asList(
                         "ATank",     //0
                         "B345->678", //1
@@ -26,7 +31,7 @@ public class shortestPath {
             if (index > 0) {
                 String src = name.substring(0, index);
                 String dst = name.substring(index + 2);
-                mnfld.addPipe(new Node(src, dst, 0));
+                mnfld.addPipe(new Node(src, dst, 100));
             } else {
                 mnfld.addPipe(new Node(name, 0));
             }

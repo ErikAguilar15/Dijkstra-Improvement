@@ -41,35 +41,36 @@ To tackle our problem we will be using 3 Classes Graph, Edges, and Nodes.
 
 ## Pseudo Code
 ```
- 1  int[] Dijkstra(source) 
-    {
- 2     for each vertex v            	     // Initializations
-       {
- 3         dist[v] := infinity               // Unknown distance function from s to v
- 4         previous[v] := -1		     // the array previous stores parent info.
- 5         Q.insert(v)			     // Insert all vertices into the priority queue Q
-                                             // The dist-values are used as priorities
-       }
+V := Vertices
+E := Edges
 
- 6     dist[source] := 0                     // Distance from source to source is set to 0
- 7     Q.change(source, 0)                   // and this is updated in the priority queue as well
+Graph(V, E)
 
- 8     while Q is not empty:                 // The main loop
-       {
- 9         u := Q.delete()                   // Remove best vertex from priority queue; returns source on first iteration
-10         for each neighbor v of u:         // where v has not yet been considered
-           {
-11             alt = dist[u] + weight(u, v)
-12             if alt < dist[v]              // Relax (u,v)
-               {
-13                 dist[v] := alt
-14                 previous[v] := u
-15	           Q.change(v, dist[v]) 
-	       }
-	   } // end of for-each-neighbor
-       } // end of while-Q-is-not-empty
-16     return previous[]
-    } // end of function
+ 1    void  Dijkstra(Graph, Source) {
+ 
+ 2      Source.setCost(0)
+ 3      E := Expanded
+ 4      F := Fronteir
+ 
+ 5      E {}
+ 6      F { Source }
+ 
+ 7      while F Not Empty {
+ 8          cv := Current Vertex 
+ 9          cv =  min(Edges)
+ 
+ 10         F.remove(cv)
+ 
+ 11         for each n in cv.Neighbors {
+ 12             n := neighbor adjacent vertex
+ 13             cost := edge.cost
+ 14             if av not in V
+ 15                 find findShortcut(cv, av, cost);
+ 16             F.add(av)
+ 17         }
+ 18     E.add
+ 19     }
+ 20   }
 
 ```
 
