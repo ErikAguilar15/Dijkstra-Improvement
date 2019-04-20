@@ -4,46 +4,6 @@ public class main {
 
         System.out.println("Creating Graph");
 
-//        // Creating Nodes to be inserted
-//        Node node1 = new Node("A123-475");
-//        Node node2 = new Node("B234-567");
-//        Node node3 = new Node("C345-678");
-//        Node node4 = new Node("D456-789");
-//        Node node5 = new Node("E567-890");
-//        Node node6 = new Node("F678-901");
-//
-//        // Adding neighbors to Nodes
-//        node1.addAdjacentNode(node2, 10);
-//        node1.addAdjacentNode(node3, 15);
-//
-//        node2.addAdjacentNode(node4, 12);
-//        node2.addAdjacentNode(node6, 15);
-//
-//        node3.addAdjacentNode(node5, 10);
-//
-//
-//        node4.addAdjacentNode(node5, 2);
-//        node4.addAdjacentNode(node6, 1);
-//
-//        node5.addAdjacentNode(node5, 5);
-//
-//
-//        Graph g = new Graph();
-//
-//        g.addNode(node1);
-//        g.addNode(node2);
-//        g.addNode(node3);
-//        g.addNode(node4);
-//        g.addNode(node5);
-//        g.addNode(node6);
-//
-//        g = Dijkstra.runBasicDijkstra(g, node1);
-//        g.printPath(node5.getName());
-
-
-        //        node5.printPath();
-
-
         // Create graph from DB Node
         //  Find  all the Non-Active Ports and Sorts them by number of reservations
 		/*
@@ -57,8 +17,6 @@ public class main {
         // 	-- [] Find Neighbors based from all Pannels
         // 	-- Calculate size of clips possible
         // 	-- Calculate angle theta of connection
-
-
     }
 }
 //}

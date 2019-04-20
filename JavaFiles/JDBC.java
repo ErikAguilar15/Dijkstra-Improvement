@@ -313,12 +313,58 @@ public class JDBC {
 			System.err.println(e.getMessage());
 		}
 	}
+
+
+	public static void insertPipes(Graph g) {
+		try {
+			openSQLConnection();
+			Statement stat = connection.createStatement();
+			ResultSet result = stat.executeQuery("SELECT CP1.SYS_I AS CP1_ID, "
+					+ "CP1.CNCT_I AS CP1_CN, "
+					+ "CP2.SYS_I AS CP2_ID, "
+					+ "CP2.CNCT_I AS CP2_CN, "
+					+ "PIPE.LTH_N AS PipeLength, "
+					+ "* "
+					+ "FROM "
+					+ "MNFLD.DBO.WMGMA08_PIPE AS PIPE, "
+					+ "MNFLD.DBO.wmgma01_cnct_pt AS CP1, "
+					+ "MNFLD.DBO.wmgma01_cnct_pt AS CP2 "
+					+ "WHERE "
+					+ "CP1.SITE_SYS_I = 10 "
+					+ "AND CP2.SITE_SYS_I = 10 "
+					+ "AND PIPE.CNCT_PT_SIDE1_SYS_I = CP1.SYS_I "
+					+ "AND PIPE.CNCT_PT_SIDE2_SYS_I = CP2.SYS_I "
+					+ "AND PIPE.LTH_N IS NOT NULL "
+					+ "ORDER BY PIPE.LTH_N, CP1.CNCT_I");
+
+			System.out.println("CP1_ID\tCP1_CN\tCP2_ID\tCP2_CN\tpipelength");
+			float cp1_id, cp2_id, pipelength;
+			String cp1_cn, cp2_cn;
+			while (result.next()) {
+				cp1_id = result.getFloat("CP1_ID");
+				cp1_cn = result.getString("CP1_CN");
+
+				cp2_id = result.getFloat("CP2_ID");
+				cp2_cn = result.getString("CP2_CN");
+
+				pipelength = result.getFloat("PipeLength");
+				g.addPipe(new Node(cp1_cn, cp2_cn, pipelength));
+
+
+				System.out.println(cp1_id + "\t" + cp1_cn + "\t" + cp2_id + "\t" + cp2_cn + "\t" + pipelength);
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
 	
 
 	public static void main(String[] args) {
-        System.out.println("Opening SQL Connection to DB");
-		openSQLConnection();
-        System.out.println("After SQL Connection function is called");
+		Graph mnfld = new Graph();
+		System.out.println("Opening SQL Connection to DB");
+		insertPipes(mnfld);
+		System.out.println("After SQL Connection function is called");
+//		openSQLConnection();
 		//getOpenConnectionPorts();
 		//findExistingLineUp();
 		//findNearestPanel();

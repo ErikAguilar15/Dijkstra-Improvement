@@ -74,6 +74,7 @@ Graph(V, E)
 
  21 findShortcut(cv, av, cost) {
  
+ 
  22 if cn.cost + cost < av.cost 
  23     av.cost = cn.cost + cost 
  24     shortestPath = cv.shortestPath()
