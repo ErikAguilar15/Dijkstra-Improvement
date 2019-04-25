@@ -317,7 +317,7 @@ public class JDBC {
 				pipelength = result.getFloat("PipeLength");
 				boolean vis = false;
 				//Node ports = new Node(cp1_cn, cp2_cn, pipelength, vis);
-				Node ports = new Node(cp1, cp1_cn, cp2_cn, (int) pipelength);
+				Node ports = new Node(cp1, cp1_cn, cp2_cn, pipelength);
 				//info.add(i, new Node(src, dest, cst, vis));
 				newnode.add(i, ports);
 				

@@ -3,9 +3,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class shortestPath {
-
-    public static void createShortestPath(List<Node> newnodes) {
-
+	/*
+	 * NEED TO IMPLEMENT WITH INPUT nodes
+	 */
+    public static void createShortestPath(List<Node> nodes) {
+    	
     	System.out.println("Creating Graph");
         Graph mnfld = new Graph();
         int index;
