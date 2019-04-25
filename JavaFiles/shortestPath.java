@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class shortestPath {
 
-    public static void main(String[] args) {
+    public static void createShortestPath(List<Node> newnodes) {
 
-        System.out.println("Creating Graph");
+    	System.out.println("Creating Graph");
         Graph mnfld = new Graph();
         int index;
 
