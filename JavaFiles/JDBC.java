@@ -339,7 +339,7 @@ public class JDBC {
 //				cp2_cn = result.getString("CP2_CN");
 
 				pipelength = result.getFloat ( "PipeLength" );
-				g.addPipe ( new Node ( String.valueOf ( cp1_id ), String.valueOf ( cp2_id ), pipelength ) );
+//				g.addPipe ( new Node ( String.valueOf ( cp1_id ), String.valueOf ( cp2_id ), pipelength ) );
 
 
 				System.out.println ( cp1_id + "\t" + cp1_id + "\t" + cp2_id + "\t" + pipelength );
@@ -349,7 +349,6 @@ public class JDBC {
 		}
 	}
 
-
 	public static void insertPipes_w_Names(Graph g) {
 		try {
 			openSQLConnection ();
@@ -358,7 +357,7 @@ public class JDBC {
 					"SELECT\t\n" +
 							"\t\tCP1.CNCT_I AS CP1_CN,\n" +
 							"\t\tCP2.CNCT_I AS CP2_CN,\n" +
-							"\t\tPIPE.LTH_N AS 'Pipe Length'--,*\n" +
+							"\t\tPIPE.LTH_N AS 'PipeLength'\n" +
 							"FROM \n" +
 							"\tMNFLD.DBO.WMGMA08_PIPE AS PIPE,\n" +
 							"\tMNFLD.DBO.wmgma01_cnct_pt AS CP1,\n" +
@@ -373,13 +372,13 @@ public class JDBC {
 			);
 
 			System.out.println ( "CP1_CN\tCP2_CN\tpipelength" );
-			float cp1_id, cp2_id, pipelength;
+			float pipelength;
 			String cp1_cn, cp2_cn;
 			while (result.next ()) {
 				cp1_cn = result.getString ( "CP1_CN" );
 				cp2_cn = result.getString ( "CP2_CN" );
 				pipelength = result.getFloat ( "PipeLength" );
-				g.addPipe ( new Node ( cp1_cn, cp2_cn, pipelength ) );
+//				g.addPipe ( new Node ( cp1_cn, cp2_cn, pipelength ) );
 
 				System.out.println ( cp1_cn + "\t" + cp2_cn + "\t" + pipelength );
 			}
@@ -388,6 +387,33 @@ public class JDBC {
 		}
 	}
 
+	private static void insertEdges_w_Names(Graph g) {
+
+		try {
+			openSQLConnection();
+			Statement stat = connection.createStatement();
+			ResultSet result = stat.executeQuery(
+					"SELECT PC.CNCT_PT_SIDE1_SYS_I AS CPS1, \n" +
+							"        PC.CNCT_PT_SIDE2_SYS_I AS CPS2\n" +
+							"FROM MNFLD.dbo.wmgma02_posbl_cnct AS PC"
+			);
+
+			System.out.println( "CP1_CN\tCP2_CN\tpipelength" );
+			float pipelength;
+			Float cps1, cps2;
+			while (result.next()) {
+				cps1 = result.getFloat( "CPS1" );
+				cps2 = result.getFloat( "CPS1" );
+				pipelength = result.getFloat( "PipeLength" );
+//				g.insertConnection ( cps1,cps2, pipelength );
+
+//				System.out.println ( cp1_cn + "\t" + cp2_cn + "\t" + pipelength );
+			}
+		} catch (SQLException e) {
+			System.err.println( e.getMessage() );
+		}
+
+	}
 
 	public static void insertConnections(Graph g) {
 		try {
@@ -407,7 +433,8 @@ public class JDBC {
 				cp1_id = result.getFloat ( "CP1_ID" );
 				cp2_id = result.getFloat ( "CP2_ID" );
 				pipelength = result.getFloat ( "PipeLength" );
-				g.insertConnection ( new Edge ( String.valueOf ( cp1_id ), String.valueOf ( cp2_id ), pipelength );)
+				//TODO: Implement a way to insert edges based off ID in order to implement, inside graph we can create a custom find node function to retrieve the pipe
+//				g.insertConnection ( new Edge ( String.valueOf ( cp1_id ), String.valueOf ( cp2_id ), pipelength ));
 
 				System.out.println ( cp1_id + "\t" + cp2_id + "\t" + pipelength );
 			}
@@ -418,12 +445,11 @@ public class JDBC {
 
 	}
 
-
-
 	public static void main(String[] args) {
 		Graph mnfld = new Graph();
 		System.out.println("Opening SQL Connection to DB");
 		insertPipes_w_Names ( mnfld );
+		insertEdges_w_Names( mnfld );
 		System.out.println("After SQL Connection function is called");
 
 

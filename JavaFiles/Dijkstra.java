@@ -6,7 +6,7 @@ public class Dijkstra {
     // Finds shortest path from Node src on given Graph g
 //    public static Graph runBasicDijkstra(Graph g, Node src) {
 //
-//        src.setCost(0);
+//        src.setDistCost(0);
 //
 //        //TreeSet data structures for nodes we need to visit and add them once visited
 //        TreeSet<Node> visitedNodes = new TreeSet<>();
@@ -41,7 +41,7 @@ public class Dijkstra {
 
     static void findMinPaths(Graph g, Node startPort) {
 
-        startPort.setCost((float) 0.0);
+        startPort.setDistCost( (float) 0.0 );
 
         //TreeSet data structures for nodes we need to visit and add them once visited
         TreeSet<Node> expanded = new TreeSet<>();
@@ -58,7 +58,7 @@ public class Dijkstra {
             frontier.remove(currentNode);
 
             //Get node keys and lengths of wine lines
-            for (Edge edge : g.findNeighbors(currentNode.getName())) {
+            for (Edge edge : g.findNeighbors( currentNode.getID() )) {
 
                 //Calculate path costs based off line lengths
                 Node adjPipe = edge.getNeighbor(currentNode);
@@ -66,8 +66,9 @@ public class Dijkstra {
 
                 if (!expanded.contains(adjPipe)) {
                     findShortcut(currentNode, adjPipe, lineLength);
+                    frontier.add( adjPipe );
                 }
-                frontier.add(adjPipe);
+
                 }
             expanded.add(currentNode);
             }
@@ -75,8 +76,8 @@ public class Dijkstra {
     }
 
     private static void findShortcut(Node currentNode, Node adjPipe, Float lineLength) {
-        if (currentNode.getCost() + lineLength < adjPipe.getCost()) {
-            adjPipe.setCost(currentNode.getCost() + lineLength);
+        if (currentNode.getDistCost() + lineLength < adjPipe.getDistCost()) {
+            adjPipe.setDistCost( currentNode.getDistCost() + lineLength );
             LinkedList<Node> shortestPath = new LinkedList<>(currentNode.getPath());
             shortestPath.add(currentNode);
             adjPipe.setShortestPath(shortestPath);
@@ -86,8 +87,25 @@ public class Dijkstra {
     static void resetCosts(Graph g) {
         for (Node n :
                 g.getPipes()) {
-            n.setCost(Float.MAX_VALUE);
+            n.setDistCost( Float.MAX_VALUE );
             n.clearRoute();
+        }
+    }
+
+    static void findPaths(Graph g, int n, String srcTank, String destTank) {
+        int cons;
+        Node p1;
+        while (n > 0) {
+            findMinPaths( g, g.getPipe( srcTank ) );
+//            g.printDistanceTree();
+            System.out.print( "\nShortest Path: " );
+            g.printPipeLine( destTank );
+
+            cons = g.getPipe( destTank ).pipesInRoute();
+            p1 = g.getPipe( destTank ).getRoute( cons - 1 );
+            g.dropConnection( p1.getID(), destTank );
+            resetCosts( g );
+            n--;
         }
     }
 

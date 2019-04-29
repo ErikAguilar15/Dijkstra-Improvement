@@ -82,7 +82,7 @@
 //						+ columnMasterKeyName
 //						+ " WITH ( "
 //						+ " KEY_STORE_PROVIDER_NAME = '"
-//						+ storeProvider.getName()
+//						+ storeProvider.getID()
 //						+ "' , KEY_PATH =  '"
 //						+ keyAlias
 //						+ "' ) ";

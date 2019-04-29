@@ -28,15 +28,14 @@ To tackle our problem we will be using 3 Classes Graph, Edges, and Nodes.
 ## New Updates!
   - Created a running Dijkstra with given tank name or src&dst ports
   - Can print nodes and edges as if they were strings to facilitate inserting to database
-  - 
+  - We can create different paths by removing edges from our graph and putting them in the dropped connection list
 
 ## TO DO:
   - Need to connect to database to check with larger networks
   - Create method to take in server input or implement a method of stress testing with larger node networks, 
-  - Need method to print alternate path to destination
-    - Do we need to remove paths and rerun dijjktra's algorithm or do we just look for paths based on what is already traversed 
-    - Possibly resetting last few iterations of Dijkstra's and reruning (adding nodes back to frontier and resetting their costs)   
+  - Need method to print alternate path to destination with out having to add nodes back to frontier and resetting their costs (Can be done later)
   - We need to be able to grab data from SQL and create an automation function that will input all Node (Pipe) Data and Edge (Clip and Hose) Data
+  - Give edges ID's as they are added into the system
 
 
 ## Pseudo Code
@@ -88,4 +87,4 @@ License
 
 MIT
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+[//]: #(These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)

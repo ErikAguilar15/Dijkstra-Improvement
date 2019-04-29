@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Graph {
 
-    // Used in MNFLD case Dijkstra
+    // Stores list of Nodes and Edges
     private ArrayList<Node> pipes = new ArrayList<>();
     private ArrayList<Edge> connections = new ArrayList<>();
     private ArrayList<Edge> droppedConnection = new ArrayList<>();
@@ -18,24 +18,35 @@ public class Graph {
 
     // Adds a node
     void addPipe(Node pipe) {
-        this.pipes.add(pipe);
+//        System.out.println( pipe );
+        this.pipes.add( pipe );
     }
 
     // Adds an edge
     void insertConnection(Edge conn) {
-        this.connections.add(conn);
+//        System.out.println( conn );
+        this.connections.add( conn );
+    }
+
+
+    //TODO: Create method to fetch 2 pipes and insert the resulting edge from those two pipes
+    void insertConnection(String pipeNameIN, String pipeNameOUT) {
+
+//        this.connections.add(new Edge ( getPipe ( pipeNameIN ).ge ));
     }
 
     // Linear search for pipe
-    Node getPipe(String pipeID) {
+    Node getPipe(String portID) {
 
         for (Node pipe : this.pipes) {
 
-            String pipeName = pipe.getName();
-
-            if (pipeName.equals(pipeID)) {
+            if (pipe.getPortOut() != null && pipe.getPortOut() != null) {
+                if (pipe.getPortIn() == Float.parseFloat( portID ) || pipe.getPortOut() == Float.parseFloat( portID ))
+                    return pipe;
+            } else if (pipe.getID().equals( portID )) {
                 return pipe;
             }
+
         }
         return null;
     }
@@ -47,15 +58,15 @@ public class Graph {
 
         for (Edge edge : connections) {
 //          System.out.println(edge);
-            if (inPort.equals(edge.getSrcName()) /*|| inPort.equals(edge.getDstName())*/)
-                edgeList.add(edge);
+            if (inPort.equals( edge.getSrcName() ) /*|| inPort.equals(edge.getDstName())*/)
+                edgeList.add( edge );
         }
         return edgeList;
     }
 
     // Only print the path from the source to the destination
     void printPipeLine(String n) {
-        getPipe(n).printLine();
+        getPipe( n ).printLine();
     }
 
     // Prints all the paths from Source(Tanks)
@@ -69,11 +80,11 @@ public class Graph {
 
     boolean dropConnection(String eSrc, String eDst) {
         boolean res = false;
-        for (Edge edge : findNeighbors(eSrc)) {
-            System.out.println(edge);
-            if (eDst.equals(edge.getDstName())) {
-                droppedConnection.add(edge);
-                connections.remove(edge);
+        for (Edge edge : findNeighbors( eSrc )) {
+//            System.out.println( edge );
+            if (eDst.equals( edge.getDstName() )) {
+                droppedConnection.add( edge );
+                connections.remove( edge );
                 res = true;
                 break;
             }
@@ -85,15 +96,14 @@ public class Graph {
         boolean res = false;
         for (Edge edge : droppedConnection) {
 //          System.out.println(edge);
-            if (eSrc.equals(edge.getSrcName()) || eDst.equals(edge.getDstName())) {
-                connections.add(edge);
+            if (eSrc.equals( edge.getSrcName() ) || eDst.equals( edge.getDstName() )) {
+                connections.add( edge );
                 res = true;
                 break;
             }
         }
         return res;
     }
-
 
 
     // Used in base case Dijkstra
@@ -115,7 +125,7 @@ public class Graph {
 //        Iterator<Node> it = nodes.iterator();
 //        while (it.hasNext()) {
 //            Node current = it.next();
-//            if (current.getName() == nodeName) {
+//            if (current.getID() == nodeName) {
 //                return current;
 //            }
 //
