@@ -1,8 +1,14 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class shortestPath {
+	/*
+	 * NEED TO IMPLEMENT WITH INPUT nodes
+	 */
+    public static void createShortestPath(List<Node> nodes) {
 
-    public static void main(String[] args) {
-
-        System.out.println( "Creating Graph" );
+    	System.out.println( "Creating Graph" );
         Graph mnfld = new Graph();
         int index;
 

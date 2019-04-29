@@ -5,6 +5,7 @@
 //import java.sql.Statement;
 
 import java.sql.*;
+import java.util.*;
 //import java.lang.Class;
 
 public class JDBC {
@@ -32,7 +33,6 @@ public class JDBC {
 	// connects to SQL Server DB
 	public static void openSQLConnection() {
 		try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			connection = DriverManager.getConnection(DBLocation, username, password);
 
 			if (connection != null) {
@@ -61,6 +61,7 @@ public class JDBC {
 	}
 	
 	public static void findExistingLineUp() {
+		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT lu.SYS_I AS LineUP_SYS_ID, "
@@ -96,9 +97,11 @@ public class JDBC {
 		catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		closeSQLConnection();
 	}
 
 	public static void findNearestPanel() {
+		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT "
@@ -128,9 +131,11 @@ public class JDBC {
 		catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		closeSQLConnection();
 	}
-	
+
 	public static void findNearestPort() {
+		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT "
@@ -162,9 +167,11 @@ public class JDBC {
 		catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		closeSQLConnection();
 	}
 
 	public static void getLineUpFrom_LineUpSYS_I() {
+		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT C.LN_UP_SYS_I AS LINE_UP_ID, "
@@ -199,9 +206,11 @@ public class JDBC {
 		catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		closeSQLConnection();
 	}
 
 	public static void getOpenConnectionPorts() {
+		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT *" + "FROM MNFLD.dbo.wmgma01_cnct_pt AS cp "
@@ -217,9 +226,11 @@ public class JDBC {
 		catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		closeSQLConnection();
 	}
 	
 	public static void getOpenPossibleConnections() {
+		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT *"
@@ -237,9 +248,11 @@ public class JDBC {
 		catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		closeSQLConnection();
 	}
 
 	public static void getPipes() {
+		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT SYS_I, "
@@ -262,9 +275,13 @@ public class JDBC {
 		catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		closeSQLConnection();
 	}
 
-	public static void graphInformation() {
+
+	public static List<Node> graphInformation() {
+		List<Node> newnode = new ArrayList<Node>();
+		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
 			ResultSet result = stat.executeQuery("SELECT CP1.SYS_I AS CP1_ID, "
@@ -288,22 +305,37 @@ public class JDBC {
 			System.out.println("CP1_ID\tCP1_CN\tCP2_ID\tCP2_CN\tpipelength");
 			float cp1_id, cp2_id, pipelength;
 			String cp1_cn, cp2_cn;
+
+
 			while (result.next()) {
+				int i = 0;
 				cp1_id = result.getFloat("CP1_ID");
+				String cp1 = String.valueOf(cp1_id); //temporary
 				cp1_cn = result.getString("CP1_CN");
 				
 				cp2_id = result.getFloat("CP2_ID");
 				cp2_cn = result.getString("CP2_CN");
 				
 				pipelength = result.getFloat("PipeLength");
-				
+				boolean vis = false;
+				//Node ports = new Node(cp1_cn, cp2_cn, pipelength, vis);
+//				Node ports = new Node(cp1, cp1_cn, cp2_cn, pipelength);
+				//info.add(i, new Node(src, dest, cst, vis));
+//				newnode.add(i, ports);
+
+				i++;
+
 				System.out.println(cp1_id + "\t" + cp1_cn + "\t" + cp2_id + "\t" + cp2_cn + "\t" + pipelength);
 			}
+
+
 		}
 
 		catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		closeSQLConnection();
+		return newnode;
 	}
 
 	public static void insertPipes(Graph g) {
@@ -328,28 +360,29 @@ public class JDBC {
 							+ "ORDER BY" +
 							" PIPE.LTH_N, CP1.CNCT_I" );
 
-			System.out.println ( "CP1_ID\tCP2_ID\tpipelength" );
+ 			System.out.println ( "CP1_ID\tCP2_ID\tpipelength" );
 			float cp1_id, cp2_id, pipelength;
 			String cp1_cn, cp2_cn;
 			while (result.next()) {
 				cp1_id = result.getFloat("CP1_ID");
 //				cp1_cn = result.getString("CP1_CN");
 
-				cp2_id = result.getFloat ( "CP2_ID" );
+ 				cp2_id = result.getFloat ( "CP2_ID" );
 //				cp2_cn = result.getString("CP2_CN");
 
-				pipelength = result.getFloat ( "PipeLength" );
-//				g.addPipe ( new Node ( String.valueOf ( cp1_id ), String.valueOf ( cp2_id ), pipelength ) );
+ 				pipelength = result.getFloat ( "PipeLength" );
+				//g.addPipe ( new Node ( String.valueOf ( cp1_id ), String.valueOf ( cp2_id ), pipelength ) );
 
 
-				System.out.println ( cp1_id + "\t" + cp1_id + "\t" + cp2_id + "\t" + pipelength );
+ 				System.out.println ( cp1_id + "\t" + cp1_id + "\t" + cp2_id + "\t" + pipelength );
 			}
 		} catch (SQLException e) {
 			System.err.println ( e.getMessage () );
 		}
 	}
 
-	public static void insertPipes_w_Names(Graph g) {
+
+ 	public static void insertPipes_w_Names(Graph g) {
 		try {
 			openSQLConnection ();
 			Statement stat = connection.createStatement ();
@@ -357,7 +390,7 @@ public class JDBC {
 					"SELECT\t\n" +
 							"\t\tCP1.CNCT_I AS CP1_CN,\n" +
 							"\t\tCP2.CNCT_I AS CP2_CN,\n" +
-							"\t\tPIPE.LTH_N AS 'PipeLength'\n" +
+							"\t\tPIPE.LTH_N AS 'Pipe Length'--,*\n" +
 							"FROM \n" +
 							"\tMNFLD.DBO.WMGMA08_PIPE AS PIPE,\n" +
 							"\tMNFLD.DBO.wmgma01_cnct_pt AS CP1,\n" +
@@ -371,51 +404,26 @@ public class JDBC {
 							"\tORDER BY PIPE.LTH_N, CP1.CNCT_I"
 			);
 
-			System.out.println ( "CP1_CN\tCP2_CN\tpipelength" );
-			float pipelength;
+ 			System.out.println ( "CP1_CN\tCP2_CN\tpipelength" );
+			float cp1_id, cp2_id, pipelength;
 			String cp1_cn, cp2_cn;
 			while (result.next ()) {
 				cp1_cn = result.getString ( "CP1_CN" );
 				cp2_cn = result.getString ( "CP2_CN" );
 				pipelength = result.getFloat ( "PipeLength" );
-//				g.addPipe ( new Node ( cp1_cn, cp2_cn, pipelength ) );
+				//g.addPipe ( new Node ( cp1_cn, cp2_cn, pipelength ) );
 
-				System.out.println ( cp1_cn + "\t" + cp2_cn + "\t" + pipelength );
+ 				System.out.println ( cp1_cn + "\t" + cp2_cn + "\t" + pipelength );
 			}
 		} catch (SQLException e) {
 			System.err.println ( e.getMessage () );
 		}
 	}
 
-	private static void insertEdges_w_Names(Graph g) {
-
-		try {
-			openSQLConnection();
-			Statement stat = connection.createStatement();
-			ResultSet result = stat.executeQuery(
-					"SELECT PC.CNCT_PT_SIDE1_SYS_I AS CPS1, \n" +
-							"        PC.CNCT_PT_SIDE2_SYS_I AS CPS2\n" +
-							"FROM MNFLD.dbo.wmgma02_posbl_cnct AS PC"
-			);
-
-			System.out.println( "CP1_CN\tCP2_CN\tpipelength" );
-			float pipelength;
-			Float cps1, cps2;
-			while (result.next()) {
-				cps1 = result.getFloat( "CPS1" );
-				cps2 = result.getFloat( "CPS1" );
-				pipelength = result.getFloat( "PipeLength" );
-//				g.insertConnection ( cps1,cps2, pipelength );
-
-//				System.out.println ( cp1_cn + "\t" + cp2_cn + "\t" + pipelength );
-			}
-		} catch (SQLException e) {
-			System.err.println( e.getMessage() );
-		}
-
-	}
-
-	public static void insertConnections(Graph g) {
+/*new Edge is taking in float, float, float,
+ * constructor is Node Node Int
+ */
+ 	public static void insertConnections(Graph g) {
 		try {
 			openSQLConnection ();
 			Statement stat = connection.createStatement ();
@@ -427,42 +435,21 @@ public class JDBC {
 							"  FROM [MNFLD].[dbo].[wmgma02_posbl_cnct]"
 			);
 
-			System.out.println ( "CP1_ID\tCP2_ID\tSIZE\tCOUNT" );
+ 			System.out.println ( "CP1_ID\tCP2_ID\tSIZE\tCOUNT" );
 			float cp1_id, cp2_id, pipelength;
 			while (result.next ()) {
 				cp1_id = result.getFloat ( "CP1_ID" );
 				cp2_id = result.getFloat ( "CP2_ID" );
 				pipelength = result.getFloat ( "PipeLength" );
-				//TODO: Implement a way to insert edges based off ID in order to implement, inside graph we can create a custom find node function to retrieve the pipe
-//				g.insertConnection ( new Edge ( String.valueOf ( cp1_id ), String.valueOf ( cp2_id ), pipelength ));
+				//g.insertConnection ( new Edge (cp1_id, cp2_id, pipelength ));
 
-				System.out.println ( cp1_id + "\t" + cp2_id + "\t" + pipelength );
+ 				System.out.println ( cp1_id + "\t" + cp2_id + "\t" + pipelength );
 			}
 		} catch (SQLException e) {
 			System.err.println ( e.getMessage () );
 		}
 
 
-	}
-
-	public static void main(String[] args) {
-		Graph mnfld = new Graph();
-		System.out.println("Opening SQL Connection to DB");
-		insertPipes_w_Names ( mnfld );
-		insertEdges_w_Names( mnfld );
-		System.out.println("After SQL Connection function is called");
-
-
-		//		openSQLConnection();
-		//getOpenConnectionPorts();
-		//findExistingLineUp();
-		//findNearestPanel();
-		//findNearestPort();
-		//getLineUpFrom_LineUpSYS_I();
-		//getOpenPossibleConnections();
-		//getPipes();
-        if (connection != null) graphInformation();
-		closeSQLConnection();
-	}
+ 	}
 
 }
