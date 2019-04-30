@@ -114,31 +114,48 @@ public class Dijkstra {
         }
     }
 
-    static void mergePaths(Graph g, String srcTank, List<Node> path) {
+    static void mergePaths(Graph g, String srcTank, List<Node> path, Node dest) {
         List<Node> oldPath = new LinkedList<>();
-        Node c = new Node( "" );
-        Node closest;
+        List<Node> newPath = new LinkedList<>();
+        boolean seen = false;
+        Node current;
+        Node closest = null;
         Float min = Float.MAX_VALUE;
         // Storing copy of old path
-        for (Node n :
-                path) {
+        for (Node n : path) {
             oldPath.add( new Node( n ) );
         }
+        oldPath.add( new Node( dest ) );
 
         resetCosts( g );
         findMinPaths( g, g.getPipe( srcTank ) );
 
-        g.printDistanceTree();
+//        g.printDistanceTree();
 
         for (int i = 0; i < oldPath.size(); i++) {
-            c = g.getPipe( oldPath.get( i ).getID() );
-            if (min > c.getDistCost()) {
-                closest = c;
-                min = c.getDistCost();
+            current = g.getPipe( oldPath.get( i ).getID() );
+            if (min > current.getDistCost()) {
+                closest = current;
+                min = current.getDistCost();
             }
 
         }
-        System.out.println( c.getPath() );
+        newPath = closest.getPath();
+        newPath.add( closest );
+
+        for (Node n : oldPath) {
+            if (!seen) {
+                if (n.getID().equals( closest.getID() ))
+                    seen = true;
+//                oldPath.remove( n );
+            } else {
+                newPath.add( g.getPipe( n.getID() ) );
+//                System.out.println( n );
+            }
+
+        }
+//        System.out.println( "Old Path: \t\t\t\t" + oldPath);
+        System.out.println( "Connecting to old Path \t" + newPath );
     }
 
 }
