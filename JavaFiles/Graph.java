@@ -28,23 +28,21 @@ public class Graph {
         this.connections.add( conn );
     }
 
-
-    //TODO: Create method to fetch 2 pipes and insert the resulting edge from those two pipes
-    void insertConnection(String pipeNameIN, String pipeNameOUT) {
-
-//        this.connections.add(new Edge ( getPipe ( pipeNameIN ).ge ));
-    }
-
     // Linear search for pipe
     Node getPipe(String portID) {
-
+        int i = portID.indexOf( "==" );
         for (Node pipe : this.pipes) {
 
-            if (pipe.getPortOut() != null && pipe.getPortOut() != null) {
-                if (pipe.getPortIn() == Float.parseFloat( portID ) || pipe.getPortOut() == Float.parseFloat( portID ))
+            if (i == -1) {
+                if (pipe.getPortOut() != null && pipe.getPortOut() != null) {
+                    if (pipe.getPortIn() == Float.parseFloat( portID ) || pipe.getPortOut() == Float.parseFloat( portID ))
+                        return pipe;
+                } else if (pipe.getID().equals( portID )) {
                     return pipe;
-            } else if (pipe.getID().equals( portID )) {
-                return pipe;
+                }
+            } else {
+                if (pipe.getID().equals( portID ))
+                    return pipe;
             }
 
         }
@@ -103,6 +101,13 @@ public class Graph {
             }
         }
         return res;
+    }
+
+    void restoreDroppedConnections() {
+        for (Edge e :
+                droppedConnection) {
+            connections.add( e );
+        }
     }
 
 

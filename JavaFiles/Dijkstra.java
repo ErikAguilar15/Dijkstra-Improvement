@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class Dijkstra {
@@ -48,11 +49,12 @@ public class Dijkstra {
         TreeSet<Node> frontier = new TreeSet<>();
 
         // Path Start nodes
-//        expanded.add(startPort);
+        expanded.add( startPort );
         frontier.add(startPort);
 
         //While we still have unvisited nodes
         while (!frontier.isEmpty()) {
+
 
             Node currentNode = frontier.first();
             frontier.remove(currentNode);
@@ -66,9 +68,10 @@ public class Dijkstra {
 
                 if (!expanded.contains(adjPipe)) {
                     findShortcut(currentNode, adjPipe, lineLength);
-                    frontier.add( adjPipe );
-                }
 
+                }
+                if (!expanded.contains( adjPipe ) && currentNode != adjPipe)
+                    frontier.add( adjPipe );
                 }
             expanded.add(currentNode);
             }
@@ -98,15 +101,44 @@ public class Dijkstra {
         while (n > 0) {
             findMinPaths( g, g.getPipe( srcTank ) );
 //            g.printDistanceTree();
+            cons = g.getPipe( destTank ).pipesInRoute();
+            if (cons < 1)
+                break;
             System.out.print( "\nShortest Path: " );
             g.printPipeLine( destTank );
 
-            cons = g.getPipe( destTank ).pipesInRoute();
             p1 = g.getPipe( destTank ).getRoute( cons - 1 );
             g.dropConnection( p1.getID(), destTank );
             resetCosts( g );
             n--;
         }
+    }
+
+    static void mergePaths(Graph g, String srcTank, List<Node> path) {
+        List<Node> oldPath = new LinkedList<>();
+        Node c = new Node( "" );
+        Node closest;
+        Float min = Float.MAX_VALUE;
+        // Storing copy of old path
+        for (Node n :
+                path) {
+            oldPath.add( new Node( n ) );
+        }
+
+        resetCosts( g );
+        findMinPaths( g, g.getPipe( srcTank ) );
+
+        g.printDistanceTree();
+
+        for (int i = 0; i < oldPath.size(); i++) {
+            c = g.getPipe( oldPath.get( i ).getID() );
+            if (min > c.getDistCost()) {
+                closest = c;
+                min = c.getDistCost();
+            }
+
+        }
+        System.out.println( c.getPath() );
     }
 
 }

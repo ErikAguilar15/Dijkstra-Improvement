@@ -1,6 +1,5 @@
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 public class Node implements Comparable {
 
@@ -39,6 +38,15 @@ public class Node implements Comparable {
         this.srcPortID = portSrc;
         this.dstPortID = portDst;
         this.weight = pipeLength;
+    }
+
+    public Node(Node n) {
+        this.nodeID = n.nodeID;
+        this.srcPortID = n.srcPortID;
+        this.dstPortID = n.dstPortID;
+        this.weight = n.weight;
+        this.distCost = n.distCost;
+        this.shortestPath = n.shortestPath;
     }
 
     // Returns nodes ID
@@ -104,7 +112,7 @@ public class Node implements Comparable {
     // Object comparator
     @Override
     public int compareTo(Object o) {
-        if (Objects.equals( this.distCost, ((Node) o).distCost )) {
+        if (this.distCost == ((Node) o).distCost) {
             return 0;
         } else if (this.distCost > ((Node) o).distCost) {
             return 1;
@@ -122,6 +130,7 @@ public class Node implements Comparable {
         else
             return ("[" + this.nodeID + "] " + String.valueOf( this.distCost ));
     }
+
 
     // Prints the shortest path to screen
     void printLine() {

@@ -1,16 +1,10 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class shortestPath {
 	/*
-	 * NEED TO IMPLEMENT WITH INPUT nodes
+     * Inserts Example Tanks, Pipes, and Connections and tests program
 	 */
-    public static void createShortestPath(List<Node> nodes) {
-
-    	System.out.println( "Creating Graph" );
+    public static void runTest() {
         Graph mnfld = new Graph();
-        int index;
+        String destTank = "7.0";
 
         // Adding Tanks
         mnfld.addPipe( new Node( 0f, 5.0f ) );
@@ -25,6 +19,7 @@ public class shortestPath {
         mnfld.addPipe( new Node( 6f, 66f, 300f ) );
         mnfld.addPipe( new Node( 8f, 88f, 200f ) );
         mnfld.addPipe( new Node( 9f, 99f, 150f ) );
+        mnfld.addPipe( new Node( 10f, 1010f, 150f ) );
 
         // Inserting Edges to the graph
         mnfld.insertConnection( new Edge( mnfld.getPipe( "0.0" ), mnfld.getPipe( "2.0" ), 1f ) );
@@ -41,52 +36,15 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( mnfld.getPipe( "88.0" ), mnfld.getPipe( "7.0" ), 1f ) );
         mnfld.insertConnection( new Edge( mnfld.getPipe( "33.0" ), mnfld.getPipe( "9.0" ), 1f ) );
         mnfld.insertConnection( new Edge( mnfld.getPipe( "99.0" ), mnfld.getPipe( "5.0" ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( "33.0" ), mnfld.getPipe( "1010.0" ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( "1010.0" ), mnfld.getPipe( "7.0" ), 1f ) );
 
         // -- Running Dijkstra & Finding shortest Paths -- //
+        Dijkstra.findPaths( mnfld, 2, "0.0", destTank );
+//        mnfld.restoreDroppedConnections();
+        Dijkstra.findMinPaths( mnfld, mnfld.getPipe( "0.0" ) );
+        Dijkstra.mergePaths( mnfld, "1.0", mnfld.getPipe( destTank ).getPath() );
 
-        int cons;
-        String destTank = "7.0";
-        Node p1;
-
-
-//        for (int i = 0; i < 3; i++)
-//            System.out.println();
-        Dijkstra.findPaths( mnfld, 3, "0.0", destTank );
-
-//        Dijkstra.findMinPaths( mnfld, mnfld.getPipe( "0.0" ) );
-//        mnfld.printDistanceTree();
-//        System.out.print( "\nShortest Path: " );
-//        mnfld.printPipeLine( destTank );
-        // TODO: Implement method to remove edge and calculate new shortest cost with out the edge, used to find new routes for the destination
-
-
-//
-//        cons = mnfld.getPipe( destTank ).pipesInRoute();
-//
-//        p1 = mnfld.getPipe( destTank ).getRoute( cons - 1 );
-//
-//        mnfld.dropConnection( p1.getID(), destTank );
-//
-//        Dijkstra.resetCosts( mnfld );
-//
-//        Dijkstra.findMinPaths(mnfld, mnfld.getPipe("0.0"));
-////        mnfld.printDistanceTree();
-//        System.out.print( "\n\nShortest Path: " );
-//        mnfld.printPipeLine(destTank);
-//
-//
-//        cons = mnfld.getPipe( destTank ).pipesInRoute();
-//
-//        p1 = mnfld.getPipe( destTank ).getRoute( cons - 1 );
-//
-//        mnfld.dropConnection( p1.getID(), destTank );
-//
-//        Dijkstra.resetCosts( mnfld );
-//
-//        Dijkstra.findMinPaths(mnfld, mnfld.getPipe("0.0"));
-////        mnfld.printDistanceTree();
-//        System.out.print( "\n\nShortest Path: " );
-//        mnfld.printPipeLine(destTank);
     }
 
 

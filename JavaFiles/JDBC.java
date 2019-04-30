@@ -5,7 +5,8 @@
 //import java.sql.Statement;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 //import java.lang.Class;
 
 public class JDBC {
@@ -41,7 +42,7 @@ public class JDBC {
                 System.out.println("CONNECTION: FAILED");
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
 	}
