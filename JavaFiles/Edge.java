@@ -5,6 +5,7 @@ public class Edge {
     private Node side1; // Pipe  inFlow
     private Node side2; // Pipe outFlow
     private Float cost = Float.MAX_VALUE; // Edge Cost
+    private Boolean inUse;
 
     // Creates an Edge with null pointers
     public Edge() {

@@ -4,7 +4,7 @@ public class shortestPath {
 	 */
     public static void runTest() {
         Graph mnfld = new Graph();
-        String destTank = "7.0";
+        float destTank = 7f;
 
         // Adding Tanks
         mnfld.addPipe( new Node( 0f, 5.0f ) );
@@ -23,30 +23,32 @@ public class shortestPath {
         mnfld.addPipe( new Node( 20f, 2020f, 150f ) );
 
         // Inserting Edges to the graph
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "0.0" ), mnfld.getPipe( "2.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "0.0" ), mnfld.getPipe( "3.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "1.0" ), mnfld.getPipe( "2.0" ), 1f ) );
-//        mnfld.insertConnection( new Edge( mnfld.getPipe( "1.0" ), mnfld.getPipe( "3.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "22.0" ), mnfld.getPipe( "4.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "33.0" ), mnfld.getPipe( "5.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "44.0" ), mnfld.getPipe( "5.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "44.0" ), mnfld.getPipe( "7.0" ), 500f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "55.0" ), mnfld.getPipe( "6.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "66.0" ), mnfld.getPipe( "7.0" ), 100f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "66.0" ), mnfld.getPipe( "8.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "88.0" ), mnfld.getPipe( "7.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "33.0" ), mnfld.getPipe( "9.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "99.0" ), mnfld.getPipe( "5.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "33.0" ), mnfld.getPipe( "1010.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "1010.0" ), mnfld.getPipe( "7.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "1.0" ), mnfld.getPipe( "20.0" ), 1f ) );
-        mnfld.insertConnection( new Edge( mnfld.getPipe( "2020.0" ), mnfld.getPipe( "3.0" ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 0f ), mnfld.getPipe( 2f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 0f ), mnfld.getPipe( 3f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 1f ), mnfld.getPipe( 2f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 22f ), mnfld.getPipe( 4f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 33f ), mnfld.getPipe( 5f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 44f ), mnfld.getPipe( 5f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 44f ), mnfld.getPipe( 7f ), 500f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 55f ), mnfld.getPipe( 6f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 66f ), mnfld.getPipe( 7f ), 100f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 66f ), mnfld.getPipe( 8f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 88f ), mnfld.getPipe( 7f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 33f ), mnfld.getPipe( 9f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 99f ), mnfld.getPipe( 5f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 33f ), mnfld.getPipe( 1010f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 1010f ), mnfld.getPipe( 7f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 1f ), mnfld.getPipe( 20f ), 1f ) );
+        mnfld.insertConnection( new Edge( mnfld.getPipe( 2020f ), mnfld.getPipe( 3f ), 1f ) );
 
         // -- Running Dijkstra & Finding shortest Paths -- //
-//        Dijkstra.findPaths( mnfld, 2, "0.0", destTank );
+//        Dijkstra.findPaths( mnfld, 10, "0.0", destTank );
+//
 //        mnfld.restoreDroppedConnections();
-        Dijkstra.findMinPaths( mnfld, mnfld.getPipe( "0.0" ) );
-        Dijkstra.mergePaths( mnfld, "1.0", mnfld.getPipe( destTank ).getPath(), mnfld.getPipe( destTank ) );
+//
+//        System.out.println( "\n\n" );
+        Dijkstra.findMinPaths( mnfld, mnfld.getPipe( 0f ) );
+        Dijkstra.mergePaths( mnfld, 1f, mnfld.getPipe( destTank ).getPath(), mnfld.getPipe( destTank ) );
 
     }
 

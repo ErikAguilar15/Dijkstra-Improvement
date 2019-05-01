@@ -7,7 +7,7 @@ public class Node implements Comparable {
     private String nodeID;            // Pipe ID
     private Float srcPortID;          // Port IN
     private Float dstPortID;          // Port Out
-    private Float weight = (float) 0; // Pipe Length
+    private Float weight; // Pipe Length
 
     // Dijkstra Data
     private Float distCost = Float.MAX_VALUE; // Distance from src
