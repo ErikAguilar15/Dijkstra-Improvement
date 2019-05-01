@@ -1,53 +1,63 @@
 
 public class Edge {
 
-    private Node src;
-    private Node dst;
-    private Integer cost = Integer.MAX_VALUE;
+    private String conn; // Connection Name
+    private Node side1; // Pipe  inFlow
+    private Node side2; // Pipe outFlow
+    private Float cost = Float.MAX_VALUE; // Edge Cost
 
-    // Empty null pointer
+    // Creates an Edge with null pointers
     public Edge() {
-        this.src = null;
-        this.dst = null;
+        this.side1 = null;
+        this.side2 = null;
     }
 
-    public Edge(Node src, Node dst, Integer cost) {
-        this.src = src;
-        this.dst = dst;
+    // Creates an Edge with side1, side2 and cost of edge
+    public Edge(Node side1, Node side2, Float cost) {
+        this.conn = side1 + "__" + side2;
+        this.side1 = side1;
+        this.side2 = side2;
         this.cost = cost;
     }
 
-    public Node getSrc() {
-        return this.src;
+    // Returns the Side1 of the edge
+    public Node getSide1() {
+        return this.side1;
     }
 
-    public void setSrc(Node src) {
-        this.src = src;
+    // Sets the Side1 of the edge
+    public void setSide1(Node side1) {
+        this.side1 = side1;
     }
 
-    public Node getDst() {
-        return this.dst;
+    // Returns the Side2 of the edge
+    public Node getSide2() {
+        return this.side2;
     }
 
-    public void setDst(Node dst) {
-        this.dst = dst;
+    // Sets the Side2 of the edge
+    public void setSide2(Node side2) {
+        this.side2 = side2;
     }
 
-    // When considering using cost for edges we can sum the Node pipeLength
+    // Returns the Edge cost as cost of edge + weight of destination node
     Float getCost() {
-        return this.cost + this.dst.getPipeLength();
+        return this.cost + this.side2.getWeight();
     }
 
-    public void setCost(Integer cost) {
+    // Sets teh cost of the edge, does not effect node weight
+    public void setCost(Float cost) {
         this.cost = cost;
     }
 
+    // Returns the neighbor of given node
     Node getNeighbor(Node self) {
-        return (src == self) ? dst : src;
+        return (side1 == self) ? side2 : side1;
     }
 
+    // Returns the name of the source as string
     String getSrcName() {
-        String name = this.src.getName();
+        String name = this.side1.getID();
         if (name != null) {
             return name;
         }
@@ -55,13 +65,14 @@ public class Edge {
         return null;
     }
 
+    // Returns the name of the destination as string
     String getDstName() {
-        return this.dst.getName();
+        return this.side2.getID();
     }
 
     @Override
     public String toString() {
-        return ("(" + this.src + "," + this.dst + ")->" + this.cost);
+        return ("(" + this.side1 + "," + this.side2 + ")->" + (this.cost + this.side2.getWeight()));
     }
 
 }
