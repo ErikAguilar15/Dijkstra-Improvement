@@ -96,19 +96,19 @@ public class Dijkstra {
     }
 
     static void findPaths(Graph g, int n, Float srcTank, Float destTank) {
-        int cons;
+        int cons; //# of connections
         Node p1;
-        while (n > 0) {
-            findMinPaths( g, g.getPipe( srcTank ) );
+        while (n > 0) { //# of paths
+            findMinPaths( g, g.getPipe( srcTank ) ); //runs dijkstra
 //            g.printDistanceTree();
-            cons = g.getPipe( destTank ).pipesInRoute();
-            if (cons < 1)
+            cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
+            if (cons < 1) //short path maybe 2
                 break;
             System.out.print( "\nShortest Path: " );
             g.printPipeLine( destTank );
 
-            p1 = g.getPipe( destTank ).getRoute( cons - 1 );
-            g.dropConnection( p1.getID(), destTank.toString() );
+            p1 = g.getPipe( destTank ).getRoute( cons - 1 ); //returns node just before tank
+            g.dropConnection( p1.getID(), destTank.toString() ); //node just before and tank
             resetCosts( g );
             n--;
         }
@@ -163,5 +163,6 @@ public class Dijkstra {
 //        System.out.println( "Old Path: \t\t\t\t" + oldPath);
         System.out.println( "Connecting to old Path \t" + newPath );
     }
+
 
 }

@@ -1,4 +1,3 @@
-
 public class Edge {
 
     private String conn; // Connection Name
@@ -43,7 +42,7 @@ public class Edge {
 
     // Returns the Edge cost as cost of edge + weight of destination node
     Float getCost() {
-        return this.cost + this.side2.getWeight();
+        return this.cost + this.side2.getWeight(); //gets lenght of pipe
     }
 
     // Sets teh cost of the edge, does not effect node weight
