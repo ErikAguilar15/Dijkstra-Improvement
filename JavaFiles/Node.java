@@ -7,6 +7,8 @@ public class Node implements Comparable {
     private String nodeID;            // Pipe ID
     private Float srcPortID;          // Port IN
     private Float dstPortID;          // Port Out
+    private String srcName;           // Port Name
+    private String dstName;           // Port Name
     private Float weight; // Pipe Length
 
     // Dijkstra Data

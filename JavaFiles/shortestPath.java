@@ -58,7 +58,7 @@ public class shortestPath {
     public static void runTest2() {
         Graph mnfld = new Graph();
         Hashtable<Character, Node> nTable = new Hashtable<Character, Node>();
-        float destTank = 6f;
+        float destTank = 8f;
         Character c = 'A';
 
         // Adding Tanks
@@ -127,7 +127,7 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( nTable.get( 'U' ), nTable.get( 'V' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'X' ), nTable.get( 'R' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'R' ), nTable.get( 'W' ), 1f ) );
-        mnfld.insertConnection( new Edge( nTable.get( 'U' ), nTable.get( 'E' ), 300f ) );
+        mnfld.insertConnection( new Edge( nTable.get( 'U' ), nTable.get( 'E' ), 500f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'V' ), nTable.get( 'E' ), 300f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'T' ), nTable.get( 'D' ), 300f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'W' ), nTable.get( 'F' ), 300f ) );

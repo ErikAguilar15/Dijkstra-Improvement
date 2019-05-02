@@ -102,7 +102,7 @@ public class Dijkstra {
             findMinPaths( g, g.getPipe( srcTank ) ); //runs dijkstra
 //            g.printDistanceTree();
             cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
-            if (cons < 1) //short path maybe 2
+            if (cons < 2) //short path maybe 2
                 break;
             System.out.print( "\nShortest Path: " );
             g.printPipeLine( destTank );
