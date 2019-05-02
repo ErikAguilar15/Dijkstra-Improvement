@@ -8,7 +8,7 @@ public class main {
 
 //        System.out.println("QUERIES:");
 
-        shortestPath.runTest();
+        shortestPath.runTest2();
 
 //    	newnodes = JDBC.graphInformation();
 
