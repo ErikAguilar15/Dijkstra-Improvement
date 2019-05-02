@@ -183,7 +183,7 @@ public class Dijkstra {
         Check if hoses are used
             If yes, begin from this node
             find different paths without hose
-            My GitHub doesnt work
+            I think I solved this problem!
 
          */
 
