@@ -41,6 +41,10 @@ public class Dijkstra {
 //    }
 
     static void findMinPaths(Graph g, Node startPort) {
+        findMinPaths( g, startPort, true );
+    }
+
+    static void findMinPaths(Graph g, Node startPort, Boolean considerInUse) {
 
         startPort.setDistCost( (float) 0.0 );
 
@@ -61,18 +65,18 @@ public class Dijkstra {
 
             //Get node keys and lengths of wine lines
             for (Edge edge : g.findNeighbors( currentNode.getID() )) {
+                if (considerInUse || (!considerInUse && !edge.checkInUse())) {
+                    //Calculate path costs based off line lengths
+                    Node adjPipe = edge.getNeighbor( currentNode );
+                    Float lineLength = edge.getCost();
 
-                //Calculate path costs based off line lengths
-                Node adjPipe = edge.getNeighbor(currentNode);
-                Float lineLength = edge.getCost();
-
-                if (!expanded.contains(adjPipe)) {
-                    findShortcut(currentNode, adjPipe, lineLength);
-
+                    if (!expanded.contains( adjPipe )) {
+                        findShortcut( currentNode, adjPipe, lineLength );
+                    }
+                    if (!expanded.contains( adjPipe ) && currentNode != adjPipe)
+                        frontier.add( adjPipe );
                 }
-                if (!expanded.contains( adjPipe ) && currentNode != adjPipe)
-                    frontier.add( adjPipe );
-                }
+            }
             expanded.add(currentNode);
             }
 //        return g;

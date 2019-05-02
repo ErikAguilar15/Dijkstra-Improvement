@@ -110,7 +110,7 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( nTable.get( 'Z' ), nTable.get( 'L' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'L' ), nTable.get( 'M' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'I' ), nTable.get( 'N' ), 1f ) );
-        mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'M' ), 1f ) );
+        mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'M' ), 1f, true ) );
         mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'Y' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'M' ), nTable.get( 'O' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'M' ), nTable.get( 'X' ), 1f ) );
@@ -133,7 +133,9 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( nTable.get( 'W' ), nTable.get( 'F' ), 300f ) );
 
         // -- Running Dijkstra & Finding shortest Paths -- //
-        Dijkstra.findPaths( mnfld, 10, 0f, destTank );
+        Dijkstra.findMinPaths( mnfld, nTable.get( 'A' ), false );
+        mnfld.getPipe( 8f ).printLine();
+//        Dijkstra.findPaths( mnfld, 10, 0f, destTank );
 //
 //        mnfld.restoreDroppedConnections();
 //
