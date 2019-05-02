@@ -13,6 +13,9 @@ public class Node implements Comparable {
     private Float distCost = Float.MAX_VALUE; // Distance from src
     private LinkedList<Node> shortestPath = new LinkedList<>(); // Stores shortest path from src
 
+    
+    public Node() {
+    }
     // Create node from just ID
     public Node(String pipeID) {
         this.nodeID = pipeID;
@@ -38,6 +41,7 @@ public class Node implements Comparable {
         this.srcPortID = portSrc;
         this.dstPortID = portDst;
         this.weight = pipeLength;
+
     }
 
     public Node(Node n) {
@@ -48,6 +52,7 @@ public class Node implements Comparable {
         this.distCost = n.distCost;
         this.shortestPath = n.shortestPath;
     }
+
 
     // Returns nodes ID
     public String getID() {

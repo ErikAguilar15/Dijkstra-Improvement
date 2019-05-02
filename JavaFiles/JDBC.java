@@ -1,9 +1,3 @@
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.sql.Statement;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +9,11 @@ public class JDBC {
 	// accessible, ill do later
 	//static String DBLocation = "jdbc:sqlserver://JUSTIN\\SQLEXPRESS,1433:1433;integratedSecurity=true;";
     //	static String DBLocation = "jdbc:sqlserver://192.168.99.1:1433;databaseName=MNFLD;";
-    static String DBLocation = "jdbc:sqlserver://172.17.0.2;databaseName=MNFLD;integratedSecurity=true;";
+    //static String DBLocation = "jdbc:sqlserver://172.17.0.2;databaseName=MNFLD;integratedSecurity=true;";
 //    static String DBLocation = "jdbc:sqlserver://localhost;databaseName=MNFLD;";
 
 
-	// static String DBLocation =
-	// "jdbc:sqlserver://JUSTIN:1433;databaseName=MNFLD;integratedSecurity=true"; local, working
+	 static String DBLocation = "jdbc:sqlserver://JUSTIN:1433;databaseName=MNFLD;integratedSecurity=true"; //local, working
 	static Connection connection = null;
 
 //    static String username = "jgreen";
@@ -60,7 +53,7 @@ public class JDBC {
 		}
 
 	}
-	
+
 	public static void findExistingLineUp() {
 		openSQLConnection();
 		try {
@@ -229,7 +222,7 @@ public class JDBC {
 		}
 		closeSQLConnection();
 	}
-	
+
 	public static void getOpenPossibleConnections() {
 		openSQLConnection();
 		try {
@@ -280,8 +273,8 @@ public class JDBC {
 	}
 
 
-	public static List<Node> graphInformation() {
-		List<Node> newnode = new ArrayList<Node>();
+	public static ArrayList<Node> graphInformation() {
+		ArrayList<Node> newnode = new ArrayList<Node>();
 		openSQLConnection();
 		try {
 			Statement stat = connection.createStatement();
@@ -302,7 +295,7 @@ public class JDBC {
 					+ "AND PIPE.CNCT_PT_SIDE2_SYS_I = CP2.SYS_I "
 					+ "AND PIPE.LTH_N IS NOT NULL "
 					+ "ORDER BY PIPE.LTH_N, CP1.CNCT_I");
-			
+
 			System.out.println("CP1_ID\tCP1_CN\tCP2_ID\tCP2_CN\tpipelength");
 			float cp1_id, cp2_id, pipelength;
 			String cp1_cn, cp2_cn;
@@ -313,19 +306,18 @@ public class JDBC {
 				cp1_id = result.getFloat("CP1_ID");
 				String cp1 = String.valueOf(cp1_id); //temporary
 				cp1_cn = result.getString("CP1_CN");
-				
+
 				cp2_id = result.getFloat("CP2_ID");
 				cp2_cn = result.getString("CP2_CN");
-				
+
 				pipelength = result.getFloat("PipeLength");
 				boolean vis = false;
+        Node port = new Node(cp1_id, cp2_id, pipelength);
 				//Node ports = new Node(cp1_cn, cp2_cn, pipelength, vis);
 //				Node ports = new Node(cp1, cp1_cn, cp2_cn, pipelength);
 				//info.add(i, new Node(src, dest, cst, vis));
-//				newnode.add(i, ports);
-
+				newnode.add(i, port);
 				i++;
-
 				System.out.println(cp1_id + "\t" + cp1_cn + "\t" + cp2_id + "\t" + cp2_cn + "\t" + pipelength);
 			}
 
@@ -366,14 +358,8 @@ public class JDBC {
 			String cp1_cn, cp2_cn;
 			while (result.next()) {
 				cp1_id = result.getFloat("CP1_ID");
-//				cp1_cn = result.getString("CP1_CN");
-
- 				cp2_id = result.getFloat ( "CP2_ID" );
-//				cp2_cn = result.getString("CP2_CN");
-
- 				pipelength = result.getFloat ( "PipeLength" );
-				//g.addPipe ( new Node ( String.valueOf ( cp1_id ), String.valueOf ( cp2_id ), pipelength ) );
-
+ 				cp2_id = result.getFloat("CP2_ID");
+ 				pipelength = result.getFloat ("PipeLength");
 
  				System.out.println ( cp1_id + "\t" + cp1_id + "\t" + cp2_id + "\t" + pipelength );
 			}
@@ -424,33 +410,46 @@ public class JDBC {
 /*new Edge is taking in float, float, float,
  * constructor is Node Node Int
  */
- 	public static void insertConnections(Graph g) {
+ 	public static Graph insertConnections(Graph g) {
 		try {
 			openSQLConnection ();
 			Statement stat = connection.createStatement ();
 			ResultSet result = stat.executeQuery (
-					"SELECT [CNCT_PT_SIDE1_SYS_I] AS CP1_ID\n" +
-							"      ,[CNCT_PT_SIDE2_SYS_I] AS CP2_ID\n" +
-							"      ,[CLIP_SZ] AS SIZE\n" +
-							"      ,[HOSE_CNT_N] AS 'COUNT'\n" +
-							"  FROM [MNFLD].[dbo].[wmgma02_posbl_cnct]"
+					"SELECT TOP (100) PC.CNCT_PT_SIDE1_SYS_I AS CP1_ID, "
+					+ "PC.CNCT_PT_SIDE2_SYS_I AS CP2_ID, "
+					+ "CLIP_SZ AS SIZE, "
+					+ "HOSE_CNT_N AS HOSECNT "
+					+ "FROM MNFLD.dbo.wmgma02_posbl_cnct AS PC,"
+					+ "MNFLD.dbo.wmgma01_cnct_pt AS CP1, "
+					+ "MNFLD.dbo.wmgma01_cnct_pt AS CP2 "
+					+ "WHERE CP1.SITE_SYS_I = 10 "
+					+ "AND PC.CNCT_PT_SIDE1_SYS_I = CP1.SYS_I "
+					+ "AND PC.CNCT_PT_SIDE2_SYS_I = CP2.SYS_I"
 			);
 
  			System.out.println ( "CP1_ID\tCP2_ID\tSIZE\tCOUNT" );
-			float cp1_id, cp2_id, pipelength;
+ 			
+			float cp1_id, cp2_id, size, hosecnt;
+			Node pipe1 = new Node();
+			Node pipe2 = new Node();
 			while (result.next ()) {
 				cp1_id = result.getFloat ( "CP1_ID" );
 				cp2_id = result.getFloat ( "CP2_ID" );
-				pipelength = result.getFloat ( "PipeLength" );
-				//g.insertConnection ( new Edge (cp1_id, cp2_id, pipelength ));
+				size = result.getFloat ( "SIZE" );
+				hosecnt = result.getFloat ( "HOSECNT" );
+				
+				pipe1 = g.getPipe(cp1_id);
+				pipe2 = g.getPipe(cp2_id);
+				Edge newedge = new Edge(pipe1, pipe2, 1f);
+				g.insertConnection (newedge);
 
- 				System.out.println ( cp1_id + "\t" + cp2_id + "\t" + pipelength );
+ 				System.out.println (cp1_id + "\t" + cp2_id + "\t" + size + "\t" + hosecnt);
 			}
+			return g;
 		} catch (SQLException e) {
 			System.err.println ( e.getMessage () );
 		}
-
-
+		
+		return null;
  	}
-
 }
