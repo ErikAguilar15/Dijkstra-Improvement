@@ -1,31 +1,25 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 public class main {
 
 	public static void main(String[] args) {
 
 
-//        shortestPath.runTest();
-        shortestPath.runTest2();
-
-//    	newnodes = JDBC.graphInformation();
-
-//		 ArrayList<Node> newnodes = new ArrayList<Node>();
-
-//		 Graph mnfld = new Graph();
-
-
+		 ArrayList<Node> newnodes = new ArrayList<Node>();
+		
+		 Graph mnfld = new Graph();
+		 
+		 
 		 //might need to limit query results, too large maybe?
-//		 newnodes = JDBC.graphInformation(); //returns arraylist of nodes
-//		 mnfld.setPipes(newnodes); //set nodes to the manifold
-//		 JDBC.insertConnections(mnfld);
-//
-
-
-
-
-
-
+		 //newnodes = JDBC.graphInformation(); //returns arraylist of nodes
+		 //mnfld.setPipes(newnodes); //set nodes to the manifold
+		 //JDBC.insertConnections(mnfld);
+		 
+		
+		 
+		 
+		 
+		 
+		 
 		 /*
 			for (int i = 0; i < newnodes.length(); i++) { //length might be wrong
 				//need to look for way to add edges by looking for neighbor nodes i think
@@ -44,6 +38,7 @@ public class main {
 			this will change depending how html works so not spending any time now on it
 */
          //shortestPath.runTest();
+		 shortestPath.runTest2();
 	}
 
 }

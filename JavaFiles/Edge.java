@@ -4,7 +4,7 @@ public class Edge {
     private Node side1; // Pipe  inFlow
     private Node side2; // Pipe outFlow
     private Float cost = Float.MAX_VALUE; // Edge Cost
-    private Boolean inUse;
+    private Boolean inUse = false;
 
     // Creates an Edge with null pointers
     public Edge() {
@@ -18,6 +18,14 @@ public class Edge {
         this.side1 = side1;
         this.side2 = side2;
         this.cost = cost;
+    }
+
+    public Edge(Node side1, Node side2, Float cost, Boolean inUse) {
+        this.conn = side1 + "__" + side2;
+        this.side1 = side1;
+        this.side2 = side2;
+        this.cost = cost;
+        this.inUse = inUse;
     }
 
     // Returns the Side1 of the edge
@@ -68,6 +76,10 @@ public class Edge {
     // Returns the name of the destination as string
     String getDstName() {
         return this.side2.getID();
+    }
+
+    Boolean checkInUse() {
+        return this.inUse;
     }
 
     @Override

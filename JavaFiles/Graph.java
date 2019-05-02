@@ -4,7 +4,7 @@ public class Graph {
 
     // Stores list of Nodes and Edges
     private ArrayList<Node> pipes = new ArrayList<>();
-    private ArrayList<Edge> connections = new ArrayList<>();
+    public ArrayList<Edge> connections = new ArrayList<>(); // TODO:: Sort Connection by number of hoses, to shorten runtime
     private ArrayList<Edge> droppedConnection = new ArrayList<>();
 
     // MNFLD Dijkstra functions
@@ -54,7 +54,19 @@ public class Graph {
     }
 
 
-
+    Edge getEdge(Node side1, Node side2) {
+    	Node checkSide1 = new Node();
+    	Node checkSide2 = new Node();
+    	for (Edge connection : this.connections) {
+    		checkSide1 = connection.getSide1();
+    		checkSide2 = connection.getSide2();
+    		if ((checkSide1 == side1) && (checkSide2 == side2)) {
+    			return connection;
+    		}
+    	}
+    	return null;
+    	
+    }
 
     // Returns results of a directed graph Port1->Port2
     ArrayList<Edge> findNeighbors(String inPort) {
@@ -83,6 +95,8 @@ public class Graph {
 
     // ----------------
 
+   
+    
     boolean dropConnection(String eSrc, String eDst) {
         boolean res = false;
         for (Edge edge : findNeighbors( eSrc )) {
@@ -95,6 +109,13 @@ public class Graph {
             }
         }
         return res;
+    }
+    
+    void dropConnection(Edge edge) {
+    	if (connections.contains(edge)) {
+                droppedConnection.add( edge );
+                connections.remove( edge );
+    	}
     }
 
     boolean resetConnection(String eSrc, String eDst) {

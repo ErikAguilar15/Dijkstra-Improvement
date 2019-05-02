@@ -41,13 +41,17 @@ public class Dijkstra {
 //    }
 
     static void findMinPaths(Graph g, Node startPort) {
+        findMinPaths( g, startPort, true );
+    }
+
+    static void findMinPaths(Graph g, Node startPort, Boolean considerInUse) {
 
         startPort.setDistCost( (float) 0.0 );
 
         //TreeSet data structures for nodes we need to visit and add them once visited
         TreeSet<Node> expanded = new TreeSet<>();
         TreeSet<Node> frontier = new TreeSet<>();
-
+        //TODO:: Have list of clipped edges, if clipped is >0 then check if hose connections does not include destination, else connect to a clip.
         // Path Start nodes
         expanded.add( startPort );
         frontier.add(startPort);
@@ -55,24 +59,24 @@ public class Dijkstra {
         //While we still have unvisited nodes
         while (!frontier.isEmpty()) {
 
-
             Node currentNode = frontier.first();
             frontier.remove(currentNode);
 
             //Get node keys and lengths of wine lines
             for (Edge edge : g.findNeighbors( currentNode.getID() )) {
+                if (considerInUse || (!considerInUse && !edge.checkInUse())) {
+                    //Calculate path costs based off line lengths
 
-                //Calculate path costs based off line lengths
-                Node adjPipe = edge.getNeighbor(currentNode);
-                Float lineLength = edge.getCost();
+                    Node adjPipe = edge.getNeighbor( currentNode );
+                    Float lineLength = edge.getCost();
 
-                if (!expanded.contains(adjPipe)) {
-                    findShortcut(currentNode, adjPipe, lineLength);
-
+                    if (!expanded.contains( adjPipe )) {
+                        findShortcut( currentNode, adjPipe, lineLength );
+                    }
+                    if (!expanded.contains( adjPipe ) && currentNode != adjPipe)
+                        frontier.add( adjPipe );
                 }
-                if (!expanded.contains( adjPipe ) && currentNode != adjPipe)
-                    frontier.add( adjPipe );
-                }
+            }
             expanded.add(currentNode);
             }
 //        return g;
@@ -101,20 +105,63 @@ public class Dijkstra {
         while (n > 0) { //# of paths
             findMinPaths( g, g.getPipe( srcTank ) ); //runs dijkstra
 //            g.printDistanceTree();
-            cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
-            if (cons < 2) //short path maybe 2
-                break;
-            System.out.print( "\nShortest Path: " );
-            g.printPipeLine( destTank );
 
-            p1 = g.getPipe( destTank ).getRoute( cons - 1 ); //returns node just before tank
-            g.dropConnection( p1.getID(), destTank.toString() ); //node just before and tank
+            cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
+            if (cons < 1) //short path maybe 2
+                break;
+
+            System.out.println( "First Shortest Path Found :" + g.getPipe( destTank ).getPath() );
+            System.out.println( g.connections.size() );
+            if (cons > 6){
+            	removeExpensiveEdge(g, g.getPipe(destTank).getPath());
+//            	System.out.println( g.connections.size());
+            }
+
+
+//            p1 = g.getPipe( destTank ).getRoute( cons - 1 ); //returns node just before tank
+//            g.dropConnection( p1.getID(), destTank.toString() ); //node just before and tank
             resetCosts( g );
             n--;
         }
     }
 
     static void removeExpensiveEdge(Graph g, List<Node> path) {
+    		int i = 0;
+    		int maxnode = 0;
+    		float maxcost = 0;
+    		float currentcost, nextcost;
+    		Node currentnode = new Node();
+    		Node nextnode = new Node();
+    		Edge maxedge = new Edge();
+
+    		// Could change to 1 since first is always a tank
+    		for (i = 0; i < path.size()-1; i++) {
+//    			Node n = new Node();
+    			Node n = path.get(i);
+    			// need to change to differentiate between tank and pipe, temporary
+    			if (n.getPortIn() != null && n.getPortOut() != null)  {
+    				nextnode = path.get(i+1); //get node next in path
+
+    				currentcost = n.getWeight();
+    				nextcost = nextnode.getWeight();
+
+    				float currentAndNext = currentcost + nextcost;
+    				if (currentAndNext > maxcost) {
+    					maxcost = currentAndNext;
+    					maxnode = i;
+
+    				}
+
+    			}
+    		}
+
+    		currentnode = path.get(maxnode);
+    		nextnode = path.get(maxnode+1);
+    		maxedge = g.getEdge(currentnode, nextnode);
+    		if (maxedge != null) {
+//    		    System.out.println( maxedge );
+    			g.dropConnection(maxedge);
+    		}
 
     }
 
@@ -139,6 +186,7 @@ public class Dijkstra {
 
          */
     }
+
 
 
     static void mergePaths(Graph g, Float srcTank, List<Node> path, Node dest) {
