@@ -118,6 +118,28 @@ public class Dijkstra {
 
     }
 
+    static void tooManyConnections(Graph g, int n, Float srcTank, Float destTank){
+        int cons; //Number of connections
+
+        findMinPaths( g, g.getPipe( srcTank ) );    //Run dijkstra algorithm
+        cons = g.getPipe( destTank ).pipesInRoute();    //Get number of connections
+
+        do {
+               // removeExpensiveEdge(g, g.getPipes(destTank).getPath());
+                findMinPaths(g, g.getPipe(srcTank));
+        } while (cons > 6);
+
+    }
+
+    static void clipsOverHoses(Graph g, List<Node> path){
+        /*
+        Check if hoses are used
+            If yes, begin from this node
+            find different paths without hose
+
+         */
+    }
+
 
     static void mergePaths(Graph g, Float srcTank, List<Node> path, Node dest) {
 
