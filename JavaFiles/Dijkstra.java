@@ -106,21 +106,64 @@ public class Dijkstra {
             findMinPaths( g, g.getPipe( srcTank ) ); //runs dijkstra
 //            g.printDistanceTree();
             cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
-            if (cons < 2) //short path maybe 2
+            if (cons < 1) //short path maybe 2
                 break;
-            System.out.print( "\nShortest Path: " );
+
+            System.out.print( "\nFirst Shortest Path: " );
             g.printPipeLine( destTank );
 
-            p1 = g.getPipe( destTank ).getRoute( cons - 1 ); //returns node just before tank
-            g.dropConnection( p1.getID(), destTank.toString() ); //node just before and tank
+            if (cons > 6){
+            	removeExpensiveEdge(g, g.getPipe(destTank).getPath());
+            	System.out.println( g.getPipes().size());
+            }
+
+
+//            p1 = g.getPipe( destTank ).getRoute( cons - 1 ); //returns node just before tank
+//            g.dropConnection( p1.getID(), destTank.toString() ); //node just before and tank
             resetCosts( g );
             n--;
         }
     }
 
     static void removeExpensiveEdge(Graph g, List<Node> path) {
+    		int i = 0;
+    		int maxnode = 0;
+    		float maxcost = 0;
+    		float currentcost, nextcost;
+    		Node currentnode = new Node();
+    		Node nextnode = new Node();
+    		Edge maxedge = new Edge();
+
+    		// Could change to 1 since first is always a tank
+    		for (i = 0; i < path.size()-1; i++) {
+//    			Node n = new Node();
+    			Node n = path.get(i);
+    			// need to change to differentiate between tank and pipe, temporary
+    			if (n.getPortIn() != null && n.getPortOut() != null)  {
+    				nextnode = path.get(i+1); //get node next in path
+
+    				currentcost = n.getWeight();
+    				nextcost = nextnode.getWeight();
+
+    				float currentAndNext = currentcost + nextcost;
+    				if (currentAndNext > maxcost) {
+    					maxcost = currentAndNext;
+    					maxnode = i;
+
+    				}
+
+    			}
+    		}
+
+    		currentnode = path.get(maxnode);
+    		nextnode = path.get(maxnode+1);
+    		maxedge = g.getEdge(currentnode, nextnode);
+    		if (maxedge != null) {
+    			g.dropConnection(maxedge);
+    		}
 
     }
+
 
 
     static void mergePaths(Graph g, Float srcTank, List<Node> path, Node dest) {

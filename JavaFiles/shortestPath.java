@@ -132,6 +132,9 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( nTable.get( 'T' ), nTable.get( 'D' ), 300f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'W' ), nTable.get( 'F' ), 300f ) );
 
+
+        Dijkstra.findPaths(mnfld, 3, 0f, 8f);
+
         // -- Running Dijkstra & Finding shortest Paths -- //
         Dijkstra.findMinPaths( mnfld, nTable.get( 'A' ), false );
         mnfld.getPipe( 8f ).printLine();
