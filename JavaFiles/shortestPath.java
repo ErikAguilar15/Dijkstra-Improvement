@@ -69,23 +69,23 @@ public class shortestPath {
 
         // Adding Pipes
         nTable.put( 'G', new Node( 1000f, 1001f, 100f ) );
-        nTable.put( 'H', new Node( 1002f, 1003f, 100f ) );
-        nTable.put( 'I', new Node( 1004f, 1005f, 100f ) );
-        nTable.put( 'J', new Node( 1006f, 1007f, 100f ) );
-        nTable.put( 'K', new Node( 1008f, 1009f, 100f ) );
+        nTable.put( 'H', new Node( 1002f, 1003f, 10f ) );
+        nTable.put( 'I', new Node( 1004f, 1005f, 120f ) );
+        nTable.put( 'J', new Node( 1006f, 1007f, 500f ) );
+        nTable.put( 'K', new Node( 1008f, 1009f, 170f ) );
         nTable.put( 'L', new Node( 1010f, 1011f, 100f ) );
-        nTable.put( 'M', new Node( 1012f, 1013f, 100f ) );
+        nTable.put( 'M', new Node( 1012f, 1013f, 150f ) );
         nTable.put( 'N', new Node( 1014f, 1015f, 100f ) );
-        nTable.put( 'O', new Node( 1016f, 1017f, 100f ) );
+        nTable.put( 'O', new Node( 1016f, 1017f, 140f ) );
         nTable.put( 'P', new Node( 1018f, 1019f, 100f ) );
-        nTable.put( 'Q', new Node( 1020f, 1021f, 100f ) );
+        nTable.put( 'Q', new Node( 1020f, 1021f, 190f ) );
         nTable.put( 'R', new Node( 1022f, 1023f, 100f ) );
-        nTable.put( 'S', new Node( 1024f, 1025f, 100f ) );
+        nTable.put( 'S', new Node( 1024f, 1025f, 130f ) );
         nTable.put( 'T', new Node( 1026f, 1027f, 100f ) );
-        nTable.put( 'U', new Node( 1028f, 1029f, 100f ) );
+        nTable.put( 'U', new Node( 1028f, 1029f, 160f ) );
         nTable.put( 'V', new Node( 1030f, 1031f, 100f ) );
         nTable.put( 'W', new Node( 1032f, 1033f, 100f ) );
-        nTable.put( 'X', new Node( 1034f, 1035f, 100f ) );
+        nTable.put( 'X', new Node( 1034f, 1035f, 120f ) );
         nTable.put( 'Y', new Node( 1036f, 1037f, 100f ) );
         nTable.put( 'Z', new Node( 1038f, 1039f, 100f ) );
 
@@ -133,11 +133,11 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( nTable.get( 'W' ), nTable.get( 'F' ), 300f ) );
 
 
-        Dijkstra.findPaths(mnfld, 3, 0f, 8f);
+        Dijkstra.findPaths( mnfld, 10, 0f, 8f );
 
         // -- Running Dijkstra & Finding shortest Paths -- //
-        Dijkstra.findMinPaths( mnfld, nTable.get( 'A' ), false );
-        mnfld.getPipe( 8f ).printLine();
+//        Dijkstra.findMinPaths( mnfld, nTable.get( 'A' ), true);
+//        mnfld.getPipe( 8f ).printLine();
 //        Dijkstra.findPaths( mnfld, 10, 0f, destTank );
 //
 //        mnfld.restoreDroppedConnections();

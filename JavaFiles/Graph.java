@@ -4,7 +4,7 @@ public class Graph {
 
     // Stores list of Nodes and Edges
     private ArrayList<Node> pipes = new ArrayList<>();
-    private ArrayList<Edge> connections = new ArrayList<>();
+    public ArrayList<Edge> connections = new ArrayList<>(); // TODO:: Sort Connection by number of hoses, to shorten runtime
     private ArrayList<Edge> droppedConnection = new ArrayList<>();
 
     // MNFLD Dijkstra functions

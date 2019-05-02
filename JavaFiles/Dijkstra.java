@@ -51,14 +51,13 @@ public class Dijkstra {
         //TreeSet data structures for nodes we need to visit and add them once visited
         TreeSet<Node> expanded = new TreeSet<>();
         TreeSet<Node> frontier = new TreeSet<>();
-
+        //TODO:: Have list of clipped edges, if clipped is >0 then check if hose connections does not include destination, else connect to a clip.
         // Path Start nodes
         expanded.add( startPort );
         frontier.add(startPort);
 
         //While we still have unvisited nodes
         while (!frontier.isEmpty()) {
-
 
             Node currentNode = frontier.first();
             frontier.remove(currentNode);
@@ -67,6 +66,7 @@ public class Dijkstra {
             for (Edge edge : g.findNeighbors( currentNode.getID() )) {
                 if (considerInUse || (!considerInUse && !edge.checkInUse())) {
                     //Calculate path costs based off line lengths
+
                     Node adjPipe = edge.getNeighbor( currentNode );
                     Float lineLength = edge.getCost();
 
@@ -105,16 +105,16 @@ public class Dijkstra {
         while (n > 0) { //# of paths
             findMinPaths( g, g.getPipe( srcTank ) ); //runs dijkstra
 //            g.printDistanceTree();
+
             cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
             if (cons < 1) //short path maybe 2
                 break;
 
-            System.out.print( "\nFirst Shortest Path: " );
-            g.printPipeLine( destTank );
-
+            System.out.println( "First Shortest Path Found :" + g.getPipe( destTank ).getPath() );
+            System.out.println( g.connections.size() );
             if (cons > 6){
             	removeExpensiveEdge(g, g.getPipe(destTank).getPath());
-            	System.out.println( g.getPipes().size());
+//            	System.out.println( g.connections.size());
             }
 
 
@@ -159,6 +159,7 @@ public class Dijkstra {
     		nextnode = path.get(maxnode+1);
     		maxedge = g.getEdge(currentnode, nextnode);
     		if (maxedge != null) {
+//    		    System.out.println( maxedge );
     			g.dropConnection(maxedge);
     		}
 
