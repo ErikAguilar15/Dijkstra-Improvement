@@ -89,7 +89,7 @@ public class shortestPath {
         nTable.put( 'Y', new Node( 1036f, 1037f, 100f ) );
         nTable.put( 'Z', new Node( 1038f, 1039f, 100f ) );
 
-        for (Character ch = 'G'; ch <= 'Z'; ch++) {
+        for (Character ch = 'A'; ch <= 'Z'; ch++) {
             mnfld.addPipe( nTable.get( ch ) );
         }
 
