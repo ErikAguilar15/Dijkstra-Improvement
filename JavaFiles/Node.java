@@ -7,26 +7,27 @@ public class Node implements Comparable {
     private String nodeID;            // Pipe ID
     private Float srcPortID;          // Port IN
     private Float dstPortID;          // Port Out
-    private Float weight = (float) 0; // Pipe Length
+    private Float weight; // Pipe Length
 
     // Dijkstra Data
     private Float distCost = Float.MAX_VALUE; // Distance from src
     private LinkedList<Node> shortestPath = new LinkedList<>(); // Stores shortest path from src
 
     // Create node from just ID
+    public Node() {
+    }
+    
     public Node(String pipeID) {
         this.nodeID = pipeID;
     }
 
     // Create node with ID and Weights
-    // is this always a tank?
     public Node(Float pipeID, Float pipeLength) {
         this.nodeID = String.valueOf( pipeID );
         this.weight = pipeLength;
     }
 
     // Create nodes with Src, Dest, and Weight (Assigns ID from Src and Dst)
-    // is this always a pipe?
     public Node(Float src, Float dst, Float pipeLength) {
         this.nodeID = src + "==" + dst;
         this.srcPortID = src;

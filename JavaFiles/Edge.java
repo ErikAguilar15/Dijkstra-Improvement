@@ -5,6 +5,7 @@ public class Edge {
     private Node side1; // Pipe  inFlow
     private Node side2; // Pipe outFlow
     private Float cost = Float.MAX_VALUE; // Edge Cost
+    private Boolean inUse;
 
     // Creates an Edge with null pointers
     public Edge() {
@@ -42,7 +43,7 @@ public class Edge {
 
     // Returns the Edge cost as cost of edge + weight of destination node
     Float getCost() {
-        return this.cost + this.side2.getWeight();
+        return this.cost + this.side2.getWeight(); //gets lenght of pipe
     }
 
     // Sets teh cost of the edge, does not effect node weight

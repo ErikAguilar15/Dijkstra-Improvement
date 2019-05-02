@@ -16,50 +16,45 @@ public class Graph {
         this.pipes = pipes;
     }
 
-    public void setConnections(ArrayList<Edge> connections) {
-        this.connections = connections;
-    }
-
-    // Adds a node to end of list
+    // Adds a node
     void addPipe(Node pipe) {
 //        System.out.println( pipe );
         this.pipes.add( pipe );
     }
 
-    // Adds an edge to end of list
+    // Adds an edge
     void insertConnection(Edge conn) {
 //        System.out.println( conn );
         this.connections.add( conn );
     }
 
     // Linear search for pipe
-    //made it more readable
-    Node getPipe(String portID) {
-        Float fportID = Float.parseFloat(portID); //portID casted to float
-        int i = portID.indexOf( "==" );
+    Node getPipe(Float id) {
+        String portID = id.toString();
         for (Node pipe : this.pipes) {
-          Node pipeout = new Node();
-          pipeout = pipe.getPortOut();
 
-          Node pipein = new Node();
-          pipein = pipe.getPortIn();
-
-          if (i == -1) { //if node is not following src==dest, tank?
-              if (pipeout != null && pipeout != null) { //dst port, why repeated twice?
-                  if (pipein == fportID || pipeout == fportID) //src prt
-                      return pipe;
-              //if pipeout is null, then check if current ID portID, might be tank?
-              } else if (pipe.getID().equals( portID )) {
-                  return pipe;
-              }
-          } else { //same as above else if
-              if (pipe.getID().equals( portID ))
-                  return pipe;
-          }
-
+            if (pipe.getPortIn() != null && pipe.getPortOut() != null) {
+                if (pipe.getPortIn() == Float.parseFloat( portID )
+                        || pipe.getPortOut() == Float.parseFloat( portID ))
+                        return pipe;
+                } else if (pipe.getID().equals( portID )) {
+                    return pipe;
+                }
         }
         return null;
     }
+
+    Node getPipe(String nodeID) {
+
+        for (Node pipe : this.pipes) {
+            if (pipe.getID().equals( nodeID ))
+                return pipe;
+        }
+        return null;
+    }
+
+
+
 
     // Returns results of a directed graph Port1->Port2
     ArrayList<Edge> findNeighbors(String inPort) {
@@ -75,7 +70,7 @@ public class Graph {
     }
 
     // Only print the path from the source to the destination
-    void printPipeLine(String n) {
+    void printPipeLine(Float n) {
         getPipe( n ).printLine();
     }
 
@@ -105,7 +100,6 @@ public class Graph {
     boolean resetConnection(String eSrc, String eDst) {
         boolean res = false;
         for (Edge edge : droppedConnection) {
-//          System.out.println(edge);
             if (eSrc.equals( edge.getSrcName() ) || eDst.equals( edge.getDstName() )) {
                 connections.add( edge );
                 res = true;
