@@ -1,0 +1,9 @@
+SELECT CP.SYS_I AS System_ID, CP.CNCT_I AS Connection_ID, CP.ACTV_X AS In_Use, CP.CNCT_PT_TYP_SYS_I AS Connection_Type
+    --,*
+FROM MNFLD.DBO.wmgma01_cnct_pt AS CP
+WHERE SITE_SYS_I = 10 --AND ACTV_X = 0
+    --AND CP.SYS_I > 3000
+  AND SUBSTRING(CP.CNCT_I, 4, 1) <> '-'
+  AND SUBSTRING(CP.CNCT_I, 5, 1) <> '-'
+  AND SUBSTRING(CP.CNCT_I, 6, 1) <> '-'
+ORDER BY CP.CNCT_I DESC
