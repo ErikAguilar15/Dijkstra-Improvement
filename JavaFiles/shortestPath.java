@@ -4,6 +4,7 @@ public class shortestPath {
     /*
      * Inserts Example Tanks, Pipes, and Connections and tests program
      */
+	/*
     public static void runTest() {
         Graph mnfld = new Graph();
         float destTank = 7f;
@@ -58,7 +59,7 @@ public class shortestPath {
     public static void runTest2() {
         Graph mnfld = new Graph();
         Hashtable<Character, Node> nTable = new Hashtable<Character, Node>();
-        float destTank = 8f;
+        float destTank = 6f;
         Character c = 'A';
 
         // Adding Tanks
@@ -69,23 +70,23 @@ public class shortestPath {
 
         // Adding Pipes
         nTable.put( 'G', new Node( 1000f, 1001f, 100f ) );
-        nTable.put( 'H', new Node( 1002f, 1003f, 10f ) );
-        nTable.put( 'I', new Node( 1004f, 1005f, 120f ) );
-        nTable.put( 'J', new Node( 1006f, 1007f, 500f ) );
-        nTable.put( 'K', new Node( 1008f, 1009f, 170f ) );
+        nTable.put( 'H', new Node( 1002f, 1003f, 100f ) );
+        nTable.put( 'I', new Node( 1004f, 1005f, 100f ) );
+        nTable.put( 'J', new Node( 1006f, 1007f, 100f ) );
+        nTable.put( 'K', new Node( 1008f, 1009f, 100f ) );
         nTable.put( 'L', new Node( 1010f, 1011f, 100f ) );
-        nTable.put( 'M', new Node( 1012f, 1013f, 150f ) );
+        nTable.put( 'M', new Node( 1012f, 1013f, 100f ) );
         nTable.put( 'N', new Node( 1014f, 1015f, 100f ) );
-        nTable.put( 'O', new Node( 1016f, 1017f, 140f ) );
+        nTable.put( 'O', new Node( 1016f, 1017f, 100f ) );
         nTable.put( 'P', new Node( 1018f, 1019f, 100f ) );
-        nTable.put( 'Q', new Node( 1020f, 1021f, 190f ) );
+        nTable.put( 'Q', new Node( 1020f, 1021f, 100f ) );
         nTable.put( 'R', new Node( 1022f, 1023f, 100f ) );
-        nTable.put( 'S', new Node( 1024f, 1025f, 130f ) );
+        nTable.put( 'S', new Node( 1024f, 1025f, 100f ) );
         nTable.put( 'T', new Node( 1026f, 1027f, 100f ) );
-        nTable.put( 'U', new Node( 1028f, 1029f, 160f ) );
+        nTable.put( 'U', new Node( 1028f, 1029f, 100f ) );
         nTable.put( 'V', new Node( 1030f, 1031f, 100f ) );
         nTable.put( 'W', new Node( 1032f, 1033f, 100f ) );
-        nTable.put( 'X', new Node( 1034f, 1035f, 120f ) );
+        nTable.put( 'X', new Node( 1034f, 1035f, 100f ) );
         nTable.put( 'Y', new Node( 1036f, 1037f, 100f ) );
         nTable.put( 'Z', new Node( 1038f, 1039f, 100f ) );
 
@@ -110,7 +111,7 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( nTable.get( 'Z' ), nTable.get( 'L' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'L' ), nTable.get( 'M' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'I' ), nTable.get( 'N' ), 1f ) );
-        mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'M' ), 1f, true ) );
+        mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'M' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'Y' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'M' ), nTable.get( 'O' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'M' ), nTable.get( 'X' ), 1f ) );
@@ -127,17 +128,16 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( nTable.get( 'U' ), nTable.get( 'V' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'X' ), nTable.get( 'R' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'R' ), nTable.get( 'W' ), 1f ) );
-        mnfld.insertConnection( new Edge( nTable.get( 'U' ), nTable.get( 'E' ), 500f ) );
+        mnfld.insertConnection( new Edge( nTable.get( 'U' ), nTable.get( 'E' ), 300f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'V' ), nTable.get( 'E' ), 300f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'T' ), nTable.get( 'D' ), 300f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'W' ), nTable.get( 'F' ), 300f ) );
 
-
-        Dijkstra.findPaths( mnfld, 10, 0f, 8f );
-
+        
+        Dijkstra.findPaths(mnfld, 3, 0f, 8f);
+        
+        
         // -- Running Dijkstra & Finding shortest Paths -- //
-//        Dijkstra.findMinPaths( mnfld, nTable.get( 'A' ), true);
-//        mnfld.getPipe( 8f ).printLine();
 //        Dijkstra.findPaths( mnfld, 10, 0f, destTank );
 //
 //        mnfld.restoreDroppedConnections();
@@ -147,6 +147,6 @@ public class shortestPath {
 //        Dijkstra.mergePaths( mnfld, 1f, mnfld.getPipe( destTank ).getPath(), mnfld.getPipe( destTank ) );
 
     }
-
+*/
 
 }

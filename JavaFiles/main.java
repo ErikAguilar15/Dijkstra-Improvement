@@ -10,9 +10,12 @@ public class main {
 		 
 		 
 		 //might need to limit query results, too large maybe?
-		 //newnodes = JDBC.graphInformation(); //returns arraylist of nodes
-		 //mnfld.setPipes(newnodes); //set nodes to the manifold
-		 //JDBC.insertConnections(mnfld);
+		 newnodes = JDBC.graphInformation(); //returns arraylist of nodes
+		 newnodes = JDBC.getTanks(newnodes);
+		 mnfld.setPipes(newnodes); //set nodes to the manifold
+		 JDBC.insertConnections(mnfld);
+		 
+		 Dijkstra.findPaths(mnfld, 3, "1013", "2050");
 		 
 		
 		 
@@ -38,7 +41,7 @@ public class main {
 			this will change depending how html works so not spending any time now on it
 */
          //shortestPath.runTest();
-		 shortestPath.runTest2();
+		 //shortestPath.runTest2();
 	}
 
 }

@@ -283,8 +283,8 @@ public class JDBC {
 		ArrayList<Node> newnode = new ArrayList<Node>();
 		openSQLConnection();
 		try {
-			Statement stat = connection.createStatement();
-			ResultSet result = stat.executeQuery("SELECT CP1.SYS_I AS CP1_ID, "
+			Statement pipe = connection.createStatement();
+			ResultSet result = pipe.executeQuery("SELECT CP1.SYS_I AS CP1_ID, "
 					+ "CP1.CNCT_I AS CP1_CN, "
 					+ "CP2.SYS_I AS CP2_ID, "
 					+ "CP2.CNCT_I AS CP2_CN, "
@@ -301,33 +301,37 @@ public class JDBC {
 					+ "AND PIPE.CNCT_PT_SIDE2_SYS_I = CP2.SYS_I "
 					+ "AND PIPE.LTH_N IS NOT NULL "
 					+ "ORDER BY PIPE.LTH_N, CP1.CNCT_I");
+			
 
-			System.out.println("CP1_ID\tCP1_CN\tCP2_ID\tCP2_CN\tpipelength");
+			//System.out.println("CP1_ID\tCP1_CN\tCP2_ID\tCP2_CN\tpipelength");
 			float cp1_id, cp2_id, pipelength;
 			String cp1_cn, cp2_cn;
-
+			int i = 0;
 
 			while (result.next()) {
-				int i = 0;
+				
 				cp1_id = result.getFloat("CP1_ID");
 				String cp1 = String.valueOf(cp1_id); //temporary
 				cp1_cn = result.getString("CP1_CN");
+				
 
 				cp2_id = result.getFloat("CP2_ID");
 				cp2_cn = result.getString("CP2_CN");
+				
 
 				pipelength = result.getFloat("PipeLength");
-				boolean vis = false;
-        Node port = new Node(cp1_id, cp2_id, pipelength);
+				
+				
+				Node port = new Node(cp1_cn, cp2_cn, pipelength);
 				//Node ports = new Node(cp1_cn, cp2_cn, pipelength, vis);
 //				Node ports = new Node(cp1, cp1_cn, cp2_cn, pipelength);
 				//info.add(i, new Node(src, dest, cst, vis));
 				newnode.add(i, port);
 				i++;
-				System.out.println(cp1_id + "\t" + cp1_cn + "\t" + cp2_id + "\t" + cp2_cn + "\t" + pipelength);
+				//System.out.println(cp1_id + "\t" + cp1_cn + "\t" + cp2_id + "\t" + cp2_cn + "\t" + pipelength);
 			}
-
-
+			closeSQLConnection();
+			return newnode;
 		}
 
 		catch (SQLException e) {
@@ -335,6 +339,39 @@ public class JDBC {
 		}
 		closeSQLConnection();
 		return newnode;
+	}
+	
+	public static ArrayList<Node> getTanks (ArrayList<Node> tankList){
+		
+		String tanks;
+		openSQLConnection();
+		try {
+			
+			Statement tank = connection.createStatement();
+			ResultSet tankResult = tank.executeQuery("SELECT CNCT_I AS tanks "
+					+ "FROM MNFLD.dbo.wmgma01_cnct_pt "
+					+ "WHERE CNCT_I LIKE ('____')");
+			
+			System.out.println("tanks");
+			
+			
+			
+			while (tankResult.next()){
+				tanks = tankResult.getString("tanks");
+				Node ports = new Node(tanks, 5.0f);
+				tankList.add(ports);
+				System.out.println(tanks);
+			}
+
+		}
+		catch (SQLException e) {
+			
+			System.err.println(e.getMessage());
+		}
+		closeSQLConnection();
+		
+		return tankList;
+		
 	}
 
 	public static void insertPipes(Graph g) {
@@ -416,46 +453,48 @@ public class JDBC {
 /*new Edge is taking in float, float, float,
  * constructor is Node Node Int
  */
- 	public static Graph insertConnections(Graph g) {
+ 	public static Graph insertConnections(Graph g) { //add order by to sort by clip to save runtime
+ 		openSQLConnection ();
 		try {
-			openSQLConnection ();
+			
 			Statement stat = connection.createStatement ();
-			ResultSet result = stat.executeQuery (
-					"SELECT TOP (100) PC.CNCT_PT_SIDE1_SYS_I AS CP1_ID, "
-					+ "PC.CNCT_PT_SIDE2_SYS_I AS CP2_ID, "
+			ResultSet result = stat.executeQuery ( "Select CP.CNCT_I AS Side1, "
+					+ "CP2.CNCT_I AS Side2, "
 					+ "CLIP_SZ AS SIZE, "
 					+ "HOSE_CNT_N AS HOSECNT "
-					+ "FROM MNFLD.dbo.wmgma02_posbl_cnct AS PC,"
-					+ "MNFLD.dbo.wmgma01_cnct_pt AS CP1, "
-					+ "MNFLD.dbo.wmgma01_cnct_pt AS CP2 "
-					+ "WHERE CP1.SITE_SYS_I = 10 "
-					+ "AND PC.CNCT_PT_SIDE1_SYS_I = CP1.SYS_I "
-					+ "AND PC.CNCT_PT_SIDE2_SYS_I = CP2.SYS_I"
-			);
+					+ "FROM MNFLD.dbo.wmgma01_cnct_pt AS CP, "
+					+ "MNFLD.dbo.wmgma01_cnct_pt AS CP2, "
+					+ "MNFLD.dbo.wmgma02_posbl_cnct AS PC "
+					+ "WHERE CP.SITE_SYS_I = 10 "
+					+ "AND CP2.SITE_SYS_I = 10 "
+					+ "AND CP.SYS_I = PC.CNCT_PT_SIDE1_SYS_I "
+					+ "AND CP2.SYS_I = PC.CNCT_PT_SIDE2_SYS_I ");
 
- 			System.out.println ( "CP1_ID\tCP2_ID\tSIZE\tCOUNT" );
+ 			System.out.println ( "Side1\tSide2\tSIZE\tHOSECNT" );
  			
-			float cp1_id, cp2_id, size, hosecnt;
+			float size, hosecnt;
+			String side1, side2;
 			Node pipe1 = new Node();
 			Node pipe2 = new Node();
 			while (result.next ()) {
-				cp1_id = result.getFloat ( "CP1_ID" );
-				cp2_id = result.getFloat ( "CP2_ID" );
+				side1 = result.getString( "Side1" );
+				side2 = result.getString( "Side2" );
 				size = result.getFloat ( "SIZE" );
 				hosecnt = result.getFloat ( "HOSECNT" );
 				
-				pipe1 = g.getPipe(cp1_id);
-				pipe2 = g.getPipe(cp2_id);
+				pipe1 = g.getPipe(side1);
+				pipe2 = g.getPipe(side2);
 				Edge newedge = new Edge(pipe1, pipe2, 1f);
 				g.insertConnection (newedge);
 
- 				System.out.println (cp1_id + "\t" + cp2_id + "\t" + size + "\t" + hosecnt);
+ 				//System.out.println (side1+ "\t" + side2 + "\t" + size + "\t" + hosecnt);
 			}
+			closeSQLConnection();
 			return g;
 		} catch (SQLException e) {
 			System.err.println ( e.getMessage () );
 		}
-		
+		closeSQLConnection();
 		return null;
  	}
 

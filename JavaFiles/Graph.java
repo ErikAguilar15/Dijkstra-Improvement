@@ -4,7 +4,7 @@ public class Graph {
 
     // Stores list of Nodes and Edges
     private ArrayList<Node> pipes = new ArrayList<>();
-    public ArrayList<Edge> connections = new ArrayList<>(); // TODO:: Sort Connection by number of hoses, to shorten runtime
+    private ArrayList<Edge> connections = new ArrayList<>();
     private ArrayList<Edge> droppedConnection = new ArrayList<>();
 
     // MNFLD Dijkstra functions
@@ -29,13 +29,12 @@ public class Graph {
     }
 
     // Linear search for pipe
-    Node getPipe(Float id) {
+  /*  Node getPipe(String id) {
         String portID = id.toString();
         for (Node pipe : this.pipes) {
 
             if (pipe.getPortIn() != null && pipe.getPortOut() != null) {
-                if (pipe.getPortIn() == Float.parseFloat( portID )
-                        || pipe.getPortOut() == Float.parseFloat( portID ))
+                if (pipe.getPortIn() == portID || pipe.getPortOut() == portID )
                         return pipe;
                 } else if (pipe.getID().equals( portID )) {
                     return pipe;
@@ -43,7 +42,7 @@ public class Graph {
         }
         return null;
     }
-
+*/
     Node getPipe(String nodeID) {
 
         for (Node pipe : this.pipes) {
@@ -82,7 +81,7 @@ public class Graph {
     }
 
     // Only print the path from the source to the destination
-    void printPipeLine(Float n) {
+    void printPipeLine(String n) { //why string
         getPipe( n ).printLine();
     }
 

@@ -5,8 +5,8 @@ public class Node implements Comparable {
 
     // Database Data
     private String nodeID;            // Pipe ID
-    private Float srcPortID;          // Port IN
-    private Float dstPortID;          // Port Out
+    private String srcPortID;          // Port IN
+    private String dstPortID;          // Port Out
     private Float weight; // Pipe Length
 
     // Dijkstra Data
@@ -22,13 +22,13 @@ public class Node implements Comparable {
     }
 
     // Create node with ID and Weights
-    public Node(Float pipeID, Float pipeLength) {
-        this.nodeID = String.valueOf( pipeID );
+    public Node(String pipeID, Float pipeLength) {
+        this.nodeID =  pipeID ;
         this.weight = pipeLength;
     }
 
     // Create nodes with Src, Dest, and Weight (Assigns ID from Src and Dst)
-    public Node(Float src, Float dst, Float pipeLength) {
+    public Node(String src, String dst, Float pipeLength) {
         this.nodeID = src + "==" + dst;
         this.srcPortID = src;
         this.dstPortID = dst;
@@ -36,7 +36,7 @@ public class Node implements Comparable {
     }
 
     // Create nodes with ID, Src, Dest, and Weight
-    public Node(String pipeID, Float portSrc, Float portDst, Float pipeLength) {
+    public Node(String pipeID, String portSrc, String portDst, Float pipeLength) {
         this.nodeID = pipeID;
         this.srcPortID = portSrc;
         this.dstPortID = portDst;
@@ -63,12 +63,12 @@ public class Node implements Comparable {
     }
 
     // Returns the Pipe's incoming Port
-    Float getPortIn() {
+    String getPortIn() {
         return this.srcPortID;
     }
 
     // Returns the Pipe's outgoing Port
-    Float getPortOut() {
+    String getPortOut() {
         return this.dstPortID;
     }
 
