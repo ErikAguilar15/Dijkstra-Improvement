@@ -12,7 +12,7 @@ table, th, td {
 <body>
 
 <h2>Four possible lineups for this job </h2>    <!-- This could possibly be just shortest path calculation -->
-<p>This is the first possible Lineup, based strictly on shortest path.</p>
+<p>This is the first possible Lineup, based strictly on shortest path for pipes that aren't in use.</p>
 
 <table style = "width:100%">
   <tr>
@@ -24,14 +24,10 @@ table, th, td {
     <th>Area</th>
     <th>Op Order</th>
     <th>Lineup</th>
-    <th>Start</th>
-    <th>Finish</th>
     <th>State</th>
   </tr>
   <tr>
     <th>1</th>
-    <th></th>
-    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -51,13 +47,9 @@ table, th, td {
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
   <tr>
     <th>3</th>
-    <th></th>
-    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -77,13 +69,9 @@ table, th, td {
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
   <tr>
     <th>5</th>
-    <th></th>
-    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -103,6 +91,15 @@ table, th, td {
     <th></th>
     <th></th>
     <th></th>
+  </tr>
+  <tr>
+    <th></th>
+    <th></th>
+    <th>Total:</th>
+    <th>###</th>
+    <th></th>
+    <th></th>
+    <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -117,14 +114,10 @@ table, th, td {
       <th>Area</th>
       <th>Op Order</th>
       <th>Lineup</th>
-      <th>Start</th>
-      <th>Finish</th>
       <th>State</th>
     </tr>
     <tr>
       <th>1</th>
-      <th></th>
-      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -144,13 +137,9 @@ table, th, td {
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
     <tr>
       <th>3</th>
-      <th></th>
-      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -170,13 +159,9 @@ table, th, td {
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
     <tr>
       <th>5</th>
-      <th></th>
-      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -196,11 +181,20 @@ table, th, td {
       <th></th>
       <th></th>
       <th></th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>Total:</th>
+      <th>###</th>
+      <th></th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
     </tr>
 
-  Second possible lineup, no hoses, strictly clips
+  Second possible lineup, based on shortest path calculation including pipes that aren't currently available
 
 
   <table style = "width:100%">
@@ -213,14 +207,10 @@ table, th, td {
       <th>Area</th>
       <th>Op Order</th>
       <th>Lineup</th>
-      <th>Start</th>
-      <th>Finish</th>
       <th>State</th>
     </tr>
     <tr>
       <th>1</th>
-      <th></th>
-      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -240,13 +230,9 @@ table, th, td {
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
     <tr>
       <th>3</th>
-      <th></th>
-      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -266,13 +252,9 @@ table, th, td {
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
     <tr>
       <th>5</th>
-      <th></th>
-      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -292,11 +274,20 @@ table, th, td {
       <th></th>
       <th></th>
       <th></th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>Total:</th>
+      <th>###</th>
+      <th></th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
     </tr>
 
-    Third possible line up, based on
+    Third possible line up, based on shortest path calculation that uses absolutely no hoses, strictly clips
 
     <table style = "width:100%">
       <tr>
@@ -308,14 +299,10 @@ table, th, td {
         <th>Area</th>
         <th>Op Order</th>
         <th>Lineup</th>
-        <th>Start</th>
-        <th>Finish</th>
         <th>State</th>
       </tr>
       <tr>
         <th>1</th>
-        <th></th>
-        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -335,13 +322,9 @@ table, th, td {
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
       </tr>
       <tr>
         <th>3</th>
-        <th></th>
-        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -361,13 +344,9 @@ table, th, td {
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
       </tr>
       <tr>
         <th>5</th>
-        <th></th>
-        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -384,6 +363,15 @@ table, th, td {
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>Total:</th>
+        <th>###</th>
         <th></th>
         <th></th>
         <th></th>
