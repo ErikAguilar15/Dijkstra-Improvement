@@ -15,15 +15,24 @@ public class Edge {
 
     // Creates an Edge with side1, side2 and cost of edge
     public Edge(Node side1, Node side2, Float cost) {
-        this.conn = side1 + "__" + side2;
+    	String node1, node2;
+    	node1 = side1.getID();
+    	node2 = side2.getID();
+        this.conn = node1 + "__" + node2;
         this.side1 = side1;
         this.side2 = side2;
         this.cost = cost;
     }
+    
+    public String getEdgeID() {
+    	return this.conn;
+    }
 
     // Returns the Side1 of the edge
     public Node getSide1() {
-        return this.side1;
+    	if (this.side1 != null)
+    		return this.side1;
+    	return null;
     }
 
     // Sets the Side1 of the edge
@@ -33,7 +42,9 @@ public class Edge {
 
     // Returns the Side2 of the edge
     public Node getSide2() {
-        return this.side2;
+    	if (this.side2 != null)
+    		return this.side2;
+    	return null;
     }
 
     // Sets the Side2 of the edge
@@ -43,7 +54,7 @@ public class Edge {
 
     // Returns the Edge cost as cost of edge + weight of destination node
     Float getCost() {
-        return this.cost + this.side2.getWeight(); //gets lenght of pipe
+        return this.cost; //gets lenght of pipe
     }
 
     // Sets teh cost of the edge, does not effect node weight
@@ -53,22 +64,27 @@ public class Edge {
 
     // Returns the neighbor of given node
     Node getNeighbor(Node self) {
-        return (side1 == self) ? side2 : side1;
+        return (this.side1 == self) ? this.side2 : this.side1;
     }
 
     // Returns the name of the source as string
     String getSrcName() {
+    	//String bane = this.side2.getID();
         String name = this.side1.getID();
         if (name != null) {
             return name;
         }
-        System.out.println("Tried to get source when it was null");
+        //System.out.println("Tried to get source when it was null");
         return null;
     }
 
     // Returns the name of the destination as string
     String getDstName() {
-        return this.side2.getID();
+    	String name = this.side2.getID();
+        if (name != null) {
+        	return name;
+        }
+        return null;
     }
 
     @Override

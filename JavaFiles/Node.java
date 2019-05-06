@@ -17,12 +17,12 @@ public class Node implements Comparable {
     public Node() {
     }
     
-    public Node(String pipeID) {
+    public Node(String pipeID) { 
         this.nodeID = pipeID;
     }
 
     // Create node with ID and Weights
-    public Node(String pipeID, Float pipeLength) {
+    public Node(String pipeID, Float pipeLength) { //for tanks, ####, fake weight for now
         this.nodeID =  pipeID ;
         this.weight = pipeLength;
     }
@@ -54,7 +54,9 @@ public class Node implements Comparable {
 
     // Returns nodes ID
     public String getID() {
-        return nodeID;
+    	if (this.nodeID != null)
+    		return this.nodeID;
+    	return null;
     }
 
     // Sets the node ID

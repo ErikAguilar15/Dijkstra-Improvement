@@ -12,8 +12,8 @@ public class Graph {
         return this.pipes;
     }
 
-    public void setPipes(ArrayList<Node> pipes) {
-        this.pipes = pipes;
+    public void setPipes(ArrayList<Node> pipeList) {
+        this.pipes = pipeList;
     }
 
     // Adds a node
@@ -26,6 +26,10 @@ public class Graph {
     void insertConnection(Edge conn) {
 //        System.out.println( conn );
         this.connections.add( conn );
+    }
+    
+    public void setEdges(ArrayList<Edge> edges) {
+    	this.connections = edges;
     }
 
     // Linear search for pipe
@@ -43,13 +47,44 @@ public class Graph {
         return null;
     }
 */
-    Node getPipe(String nodeID) {
 
-        for (Node pipe : this.pipes) {
-            if (pipe.getID().equals( nodeID ))
-                return pipe;
-        }
-        return null;
+    Node getPipeFromSrcOrDst(String PortID) { //not actually node ID: ###-###
+    	for (Node pipe : this.pipes) {
+    		String pipein = pipe.getPortIn();
+    		String pipeout = pipe.getPortOut();
+    		if (pipein != null || pipeout != null) {
+    			if (pipein.equals(PortID) || pipeout.equals(PortID)) {
+    				//System.out.println("Found node");
+    				return pipe;
+    			}
+    		}
+    	}
+    	//System.out.println("Didnt find node");
+    	return null;
+    }
+    
+
+    
+    Node getPipe(String nodeID) { //node ID is ###-###, comparing as ###-###=###-###
+    	
+    	//Node currentpipe = getPipeFromSrcOrDst(nodeID);
+    	//String news = currentpipe.getID();
+    	//nodeID = currentpipe.getID();
+    	int length = nodeID.length();
+    	if (length != 7 || nodeID.equals("PRODUCT")) {
+    		for (Node pipe : this.pipes) {
+
+    			if (pipe.getID().equals( nodeID )) {
+    				//System.out.print("found node");
+    				return pipe;
+    			}
+    		}
+    	}
+    	else {
+    		return getPipeFromSrcOrDst(nodeID);
+    	}
+    	//System.out.print("didnt find node");
+    	return null;
     }
 
 
@@ -68,18 +103,48 @@ public class Graph {
     }
 
     // Returns results of a directed graph Port1->Port2
-    ArrayList<Edge> findNeighbors(String inPort) {
+    ArrayList<Edge> findNeighborsForPipes(String nodeID) { //find neighbor pipes using ###-###==###-###
+    	//test srcPort and dstPort
 
         ArrayList<Edge> edgeList = new ArrayList<>();
 
+
         for (Edge edge : connections) {
 //          System.out.println(edge);
-            if (inPort.equals( edge.getSrcName() ) /*|| inPort.equals(edge.getDstName())*/)
+            if (nodeID.equals( edge.getSrcName() ) /*|| inPort.equals(edge.getDstName())*/)
                 edgeList.add( edge );
         }
         return edgeList;
     }
 
+    ArrayList<Edge> findNeighborsForTanks(String nodeID) {
+
+        ArrayList<Edge> edgeList = new ArrayList<>();
+
+        for (Edge edge : connections) {
+//          System.out.println(edge);
+        	String edgeSrcID = edge.getSrcName();
+        	String edgeDstID = edge.getDstName();
+        	
+            if (nodeID.equals(edgeSrcID) || nodeID.equals(edgeDstID) ) /*|| inPort.equals(edge.getDstName())*/
+                edgeList.add( edge );
+        }
+        return edgeList;
+    }
+    
+    ArrayList<Edge> findNeighborsHelper(Graph g, Node currentNode) {
+    	ArrayList<Edge> edges = new ArrayList();
+    	if (currentNode.getPortIn() != null && currentNode.getPortOut() != null) {
+    		edges = g.findNeighborsForPipes(currentNode.getID()); //was getID but is ###-###==###-###, need ###-###
+    	
+    	} else
+    	{
+    		edges = g.findNeighborsForTanks(currentNode.getID());
+    	}
+    	
+    	return edges;
+    }
+    
     // Only print the path from the source to the destination
     void printPipeLine(String n) { //why string
         getPipe( n ).printLine();
@@ -96,9 +161,9 @@ public class Graph {
 
    
     
-    boolean dropConnection(String eSrc, String eDst) {
+   /* boolean dropConnection(Graph g, String eSrc, String eDst) {
         boolean res = false;
-        for (Edge edge : findNeighbors( eSrc )) {
+        for (Edge edge : findNeighborsHelper(g, eSrc )) {
 //            System.out.println( edge );
             if (eDst.equals( edge.getDstName() )) {
                 droppedConnection.add( edge );
@@ -108,7 +173,7 @@ public class Graph {
             }
         }
         return res;
-    }
+    }*/
     
     void dropConnection(Edge edge) {
     	if (connections.contains(edge)) {

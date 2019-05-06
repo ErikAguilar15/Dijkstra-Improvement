@@ -5,17 +5,27 @@ public class main {
 
 
 		 ArrayList<Node> newnodes = new ArrayList<Node>();
+		 ArrayList<Edge> newedges = new ArrayList<Edge>();
 		
 		 Graph mnfld = new Graph();
 		 
+		 //JDBC.test();
 		 
 		 //might need to limit query results, too large maybe?
 		 newnodes = JDBC.graphInformation(); //returns arraylist of nodes
 		 newnodes = JDBC.getTanks(newnodes);
 		 mnfld.setPipes(newnodes); //set nodes to the manifold
-		 JDBC.insertConnections(mnfld);
 		 
-		 Dijkstra.findPaths(mnfld, 3, "1013", "2050");
+		 newedges = JDBC.insertConnections(mnfld);
+		 mnfld.setEdges(newedges);
+		 //Edge edge = new Edge();
+		 //Node node1 = new Node();
+		 //Node node2 = new Node();
+		 //node1 = mnfld.getPipe("2050");
+		 //node2 = mnfld.getPipe("229-001");
+		 //edge = mnfld.getEdge(node1, node2);
+		 //System.out.println(edge);
+		 Dijkstra.findPaths(mnfld, 1, "1007", "1014");
 		 
 		
 		 

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -47,6 +48,8 @@ public class Dijkstra {
         //TreeSet data structures for nodes we need to visit and add them once visited
         TreeSet<Node> expanded = new TreeSet<>();
         TreeSet<Node> frontier = new TreeSet<>();
+        
+        ArrayList<Edge> edges = new ArrayList();
 
         // Path Start nodes
         expanded.add( startPort );
@@ -60,21 +63,28 @@ public class Dijkstra {
             frontier.remove(currentNode);
 
             //Get node keys and lengths of wine lines
-            for (Edge edge : g.findNeighbors( currentNode.getID() )) {
+            
+            
+            		if (edges != null) {
+            			for (Edge edge : g.findNeighborsHelper(g, currentNode )) {
 
-                //Calculate path costs based off line lengths
-                Node adjPipe = edge.getNeighbor(currentNode);
-                Float lineLength = edge.getCost();
+            				//Calculate path costs based off line lengths
+            				Node adjPipe = edge.getNeighbor(currentNode);
+            				Float lineLength = edge.getCost();
 
-                if (!expanded.contains(adjPipe)) {
-                    findShortcut(currentNode, adjPipe, lineLength);
+            				if (!expanded.contains(adjPipe)) {
+            					findShortcut(currentNode, adjPipe, lineLength);
 
-                }
-                if (!expanded.contains( adjPipe ) && currentNode != adjPipe)
-                    frontier.add( adjPipe );
-                }
+            				}
+            				if (!expanded.contains( adjPipe ) && currentNode != adjPipe)
+            					frontier.add( adjPipe );
+            			}
+            		}
+
             expanded.add(currentNode);
-            }
+            
+         }
+        
 //        return g;
     }
 
@@ -99,7 +109,8 @@ public class Dijkstra {
         int cons; //# of connections
         Node p1;
         while (n > 0) { //# of paths
-            findMinPaths( g, g.getPipe( srcTank ) ); //runs dijkstra
+        	Node getsrctank = g.getPipe(srcTank);
+            findMinPaths(g, getsrctank ); //runs dijkstra
 //            g.printDistanceTree();
             cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
             if (cons < 1) //short path maybe 2
