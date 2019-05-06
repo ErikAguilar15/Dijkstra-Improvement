@@ -12,14 +12,14 @@ table, th, td {
 <body>
 
 <h2>Four possible lineups for this job </h2>    <!-- This could possibly be just shortest path calculation -->
-<p>This is the first possible Lineup, based strictly on shortest path for pipes that aren't in use.</p>
+<p>This is the first possible Lineup, based on the shortest path considering reserved pipes and non-reserved pipes.</p>
 
 <table style = "width:100%">
   <tr>
     <th>Seq</th>
     <th>From</th>
     <th>To</th>
-    <th>Distance (Ft)</th>
+    <th>Pipelength Pipelength Distance (Ft)</th>
     <th>Connection</th>
     <th>Area</th>
     <th>Op Order</th>
@@ -28,75 +28,75 @@ table, th, td {
   </tr>
   <tr>
     <th>1</th>
+    <th>Tank A</th>
+    <th>1000</th>
+    <th>100</th>
+    <th>Hose</th>
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Available</th>
   </tr>
   <tr>
     <th>2</th>
+    <th>1001</th>
+    <th>1006</th>
+    <th>100</th>
+    <th>Clip</th>
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Available</th>
   </tr>
   <tr>
     <th>3</th>
+    <th>1007</th>
+    <th>1012</th>
+    <th>100</th>
+    <th>Clip</th>
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>In Use/Needs Overlay</th>
   </tr>
   <tr>
     <th>4</th>
+    <th>1013</th>
+    <th>1016</th>
+    <th>100</th>
+    <th>Clip</th>
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>In Use/Needs Overlay</th>
   </tr>
   <tr>
     <th>5</th>
+    <th>1017</th>
+    <th>1028</th>
+    <th>100</th>
+    <th>Clip</th>
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>In Use/Needs Overlay</th>
   </tr>
   <tr>
     <th>6</th>
+    <th>1029</th>
+    <th>Tank E</th>
+    <th>0</th>
+    <th>Hose</th>
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Available</th>
   </tr>
   <tr>
     <th></th>
     <th></th>
     <th>Total:</th>
-    <th>###</th>
+    <th>500ft</th>
     <th></th>
     <th></th>
     <th></th>
@@ -109,7 +109,7 @@ table, th, td {
       <th>Seq</th>
       <th>From</th>
       <th>To</th>
-      <th>Distance (Ft)</th>
+      <th>Pipelength Distance (Ft)</th>
       <th>Connection</th>
       <th>Area</th>
       <th>Op Order</th>
@@ -118,75 +118,86 @@ table, th, td {
     </tr>
     <tr>
       <th>1</th>
+      <th>Tank A</th>
+      <th>1002</th>
+      <th>10</th>
+      <th>Hose</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th>2</th>
+      <th>1003</th>
+      <th>1008</th>
+      <th>170</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th>3</th>
+      <th>1009</th>
+      <th>1006</th>
+      <th>100</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th>4</th>
+      <th>1007</th>
+      <th>1012</th>
+      <th>100</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>In Use/Needs Overlay</th>
     </tr>
     <tr>
       <th>5</th>
+      <th>1013</th>
+      <th>1016</th>
+      <th>100</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>In Use/Needs Overlay</th>
     </tr>
     <tr>
       <th>6</th>
+      <th>1017</th>
+      <th>1028</th>
+      <th>100</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
+      <th>In Use/Needs Overlay</th>
+    </tr>
+    <tr>
+      <th>7</th>
+      <th>1029</th>
+      <th>Tank E</th>
+      <th>0</th>
+      <th>Hose</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th></th>
       <th></th>
       <th>Total:</th>
-      <th>###</th>
+      <th>580</th>
       <th></th>
       <th></th>
       <th></th>
@@ -194,7 +205,7 @@ table, th, td {
       <th></th>
     </tr>
 
-  Second possible lineup, based on shortest path calculation including pipes that aren't currently available
+  Second possible lineup, an alternate shortest path considering reserved pipes and non-reserved pipes.
 
 
   <table style = "width:100%">
@@ -202,7 +213,7 @@ table, th, td {
       <th>Seq</th>
       <th>From</th>
       <th>To</th>
-      <th>Distance (Ft)</th>
+      <th>Pipelength Distance (Ft)</th>
       <th>Connection</th>
       <th>Area</th>
       <th>Op Order</th>
@@ -211,75 +222,86 @@ table, th, td {
     </tr>
     <tr>
       <th>1</th>
+      <th>Tank A</th>
+      <th>1000</th>
+      <th>100</th>
+      <th>Hose</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th>2</th>
+      <th>1001</th>
+      <th>1004</th>
+      <th>120</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th>3</th>
+      <th>1005</th>
+      <th>1014</th>
+      <th>100</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th>4</th>
+      <th>1015</th>
+      <th>1036</th>
+      <th>140</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th>5</th>
+      <th>1037</th>
+      <th>1016</th>
+      <th>100</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th>6</th>
+      <th>1017</th>
+      <th>1028</th>
+      <th>100</th>
+      <th>Clip</th>
       <th></th>
       <th></th>
       <th></th>
+      <th>In Use/Needs Overlay</th>
+    </tr>
+    <tr>
+      <th>7</th>
+      <th>1029</th>
+      <th>Tank E</th>
+      <th>100</th>
+      <th>Hose</th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
+      <th>Available</th>
     </tr>
     <tr>
       <th></th>
       <th></th>
       <th>Total:</th>
-      <th>###</th>
+      <th>760</th>
       <th></th>
       <th></th>
       <th></th>
@@ -287,14 +309,14 @@ table, th, td {
       <th></th>
     </tr>
 
-    Third possible line up, based on shortest path calculation that uses absolutely no hoses, strictly clips
+    Third possible line up, another alternate shortest path considering reserved pipes and non-reserved pipes.
 
     <table style = "width:100%">
       <tr>
         <th>Seq</th>
         <th>From</th>
         <th>To</th>
-        <th>Distance (Ft)</th>
+        <th>Pipelength Distance (Ft)</th>
         <th>Connection</th>
         <th>Area</th>
         <th>Op Order</th>
@@ -303,75 +325,75 @@ table, th, td {
       </tr>
       <tr>
         <th>1</th>
+        <th>Tank A</th>
+        <th>1000</th>
+        <th>100</th>
+        <th>Hose</th>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Available</th>
       </tr>
       <tr>
         <th>2</th>
+        <th>1001</th>
+        <th>1006</th>
+        <th>100</th>
+        <th>Clip</th>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Available</th>
       </tr>
       <tr>
         <th>3</th>
+        <th>1007</th>
+        <th>1036</th>
+        <th>140</th>
+        <th>Clip</th>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Available</th>
       </tr>
       <tr>
         <th>4</th>
+        <th>1037</th>
+        <th>1018</th>
+        <th>100</th>
+        <th>Clip</th>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Available</th>
       </tr>
       <tr>
         <th>5</th>
+        <th>1019</th>
+        <th>1028</th>
+        <th>100</th>
+        <th>Clip</th>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Available</th>
       </tr>
       <tr>
         <th>6</th>
+        <th>1029</th>
+        <th>Tank E</th>
+        <th>0</th>
+        <th>Hose</th>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Available</th>
       </tr>
       <tr>
         <th></th>
         <th></th>
         <th>Total:</th>
-        <th>###</th>
+        <th>540</th>
         <th></th>
         <th></th>
         <th></th>
@@ -379,7 +401,7 @@ table, th, td {
         <th></th>
       </tr>
 
-      Fourth possible lineup
+      Fourth possible lineup, shortest path considering only open connections
 
 
 </body>
