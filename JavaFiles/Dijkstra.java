@@ -110,11 +110,13 @@ public class Dijkstra {
             if (cons < 1) //short path maybe 2
                 break;
 
-            System.out.println( "First Shortest Path Found :" + g.getPipe( destTank ).getPath() );
+
             System.out.println( g.connections.size() );
             if (cons > 6){
-            	removeExpensiveEdge(g, g.getPipe(destTank).getPath());
+                removeExpensiveEdge(g, g.getPipe(destTank).getPath());
 //            	System.out.println( g.connections.size());
+            } else {
+                System.out.println( "First Shortest Path Found :" + g.getPipe( destTank ).getPath() + ", " + g.getPipe( destTank ) );
             }
 
 
@@ -124,6 +126,25 @@ public class Dijkstra {
             n--;
         }
     }
+
+
+    static void findAltPaths(Graph g, int n, Float srcTank, Float destTank) {
+        int cons; //# of connections
+        Node p1;
+        while (n > 0) { //# of paths
+            findMinPaths( g, g.getPipe( srcTank ) ); //runs dijkstra
+            cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
+            if (cons < 1) //short path maybe 2
+                break;
+            g.getPipe( destTank ).printLine();
+//            System.out.println( "First Shortest Path Found :" + g.getPipe( destTank ).getPath() + ", "+ g.getPipe( destTank ));
+//            System.out.println( g.connections.size() );
+            removeExpensiveEdge( g, g.getPipe( destTank ).getPath() );
+            resetCosts( g );
+            n--;
+        }
+    }
+
 
     static void removeExpensiveEdge(Graph g, List<Node> path) {
     		int i = 0;
@@ -225,15 +246,20 @@ public class Dijkstra {
         newPath.add( closest );
 
         for (Node n : oldPath) {
-            if (!seen)
+            if (!seen) {
                 if (n.getID().equals( closest.getID() ))
                     seen = true;
-                else
+            } else
                 newPath.add( g.getPipe( n.getID() ) );
 
         }
 //        System.out.println( "Old Path: \t\t\t\t" + oldPath);
-        System.out.println( "Connecting to old Path \t" + newPath );
+
+        System.out.println( "Connecting to old Path \t" );
+        for (int i = 0; i < newPath.size() - 1; i++) {
+            System.out.print( "(" + newPath.get( i ) + ") -> " );
+        }
+        System.out.print( "(" + newPath.get( newPath.size() - 1 ) + ")" );
     }
 
 
