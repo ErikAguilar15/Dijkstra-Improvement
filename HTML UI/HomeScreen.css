@@ -18,19 +18,10 @@ body{
 table, th, td{
   border: 1px solid black;
   border-collapse: collapse;
+  margin-top: 210px;
+  margin-left: 745px;
 }
 
 th, td{
   padding: 10px;
-}
-
-#myProgress {
-  width: 30%;
-  background-color: grey;
-}
-
-#myBar {
-  width: 1%;
-  height: 30px;
-  background-color: red;
 }
