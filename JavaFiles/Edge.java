@@ -50,6 +50,7 @@ public class Edge {
 
     // Returns the Edge cost as cost of edge + weight of destination node
     Float getCost() {
+        if (inUse) return this.cost + (this.side2.getWeight() / 2);
         return this.cost + this.side2.getWeight(); //gets lenght of pipe
     }
 

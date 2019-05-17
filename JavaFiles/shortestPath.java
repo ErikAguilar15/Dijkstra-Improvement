@@ -231,13 +231,16 @@ public class shortestPath {
         mnfld.insertConnection( new Edge( nTable.get( 'I' ), nTable.get( 'N' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'M' ), 1f, true ) );
         mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'Y' ), 1f ) );
+        mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'N' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'M' ), nTable.get( 'O' ), 1f ) );
-        mnfld.insertConnection( new Edge( nTable.get( 'M' ), nTable.get( 'X' ), 1f ) );
+        mnfld.insertConnection( new Edge( nTable.get( 'M' ), nTable.get( 'Y' ), 1f ) );
+        mnfld.insertConnection( new Edge( nTable.get( 'J' ), nTable.get( 'Y' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'N' ), nTable.get( 'Y' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'N' ), nTable.get( 'Q' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'Y' ), nTable.get( 'O' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'Y' ), nTable.get( 'P' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'Q' ), nTable.get( 'T' ), 1f ) );
+        mnfld.insertConnection( new Edge( nTable.get( 'S' ), nTable.get( 'T' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'Q' ), nTable.get( 'S' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'P' ), nTable.get( 'U' ), 1f ) );
         mnfld.insertConnection( new Edge( nTable.get( 'P' ), nTable.get( 'S' ), 1f ) );
@@ -288,8 +291,6 @@ public class shortestPath {
 
         shortestPath.loadGraph( mnfld );
         while (runSearch) {
-            Dijkstra.resetCosts( mnfld );
-
             // Gets user input
             System.out.print( "First Source Tank: " );
             srcTank1 = in.nextFloat();
@@ -301,30 +302,31 @@ public class shortestPath {
             alternetPaths = in.nextInt();
 
             // Prints outputs
-            System.out.println( "True shortest with alt paths" );
-            Dijkstra.findAltPaths( mnfld, 3, srcTank1, destTank );
-            mnfld.restoreDroppedConnections();
             Dijkstra.resetCosts( mnfld );
+            System.out.println( "True shortest with alt paths" );
+            Dijkstra.findAltPaths( mnfld, alternetPaths, srcTank1, destTank );
+            mnfld.restoreDroppedConnections();
 
+            Dijkstra.resetCosts( mnfld );
             System.out.println( "Lineup Considering used connections" );
             Dijkstra.findMinPaths( mnfld, mnfld.getPipe( srcTank1 ), true );
             mnfld.getPipe( destTank ).printLine();
             mnfld.restoreDroppedConnections();
-            Dijkstra.resetCosts( mnfld );
 
+            Dijkstra.resetCosts( mnfld );
             System.out.println( "Lineup Considering only open connections" );
             Dijkstra.findMinPaths( mnfld, mnfld.getPipe( srcTank1 ), false );
             mnfld.getPipe( destTank ).printLine();
             mnfld.restoreDroppedConnections();
-            Dijkstra.resetCosts( mnfld );
 
+            Dijkstra.resetCosts( mnfld );
             System.out.println( "Merge Lineup" );
             Dijkstra.findMinPaths( mnfld, mnfld.getPipe( srcTank1 ) );
             System.out.println( "\t Original Lineup: " );
             mnfld.getPipe( destTank ).printLine();
             System.out.println( "\t Merged Lineup: " );
             Dijkstra.mergePaths( mnfld, srcTank2, mnfld.getPipe( destTank ).getPath(), mnfld.getPipe( destTank ) );
-            System.out.println( "\nRun another search [1:Yes, 0:No]" );
+            System.out.print( "\nRun another search [1:Yes, 0:No] :: " );
             if (in.nextInt() == 0) runSearch = false;
             else System.out.println( "\n\n\n" );
         }

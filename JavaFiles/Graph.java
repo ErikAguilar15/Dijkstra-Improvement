@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Graph {
 
@@ -123,6 +124,7 @@ public class Graph {
         for (Edge edge : droppedConnection) {
             if (eSrc.equals( edge.getSrcName() ) || eDst.equals( edge.getDstName() )) {
                 connections.add( edge );
+                droppedConnection.remove( edge );
                 res = true;
                 break;
             }
@@ -134,6 +136,18 @@ public class Graph {
         for (Edge e :
                 droppedConnection) {
             connections.add( e );
+        }
+        droppedConnection.clear();
+    }
+
+    void restoreRandomConnection() {
+        Random rand = new Random();
+        int n;
+        if (droppedConnection.size() > 1) {
+            n = rand.nextInt( droppedConnection.size() );
+            connections.add( droppedConnection.get( n ) );
+            System.out.println( "Random connection restored: " + droppedConnection.get( n ) );
+            droppedConnection.remove( n );
         }
     }
 

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -78,7 +79,7 @@ public class Dijkstra {
                 }
             }
             expanded.add(currentNode);
-            }
+        }
 //        return g;
     }
 
@@ -130,13 +131,23 @@ public class Dijkstra {
 
     static void findAltPaths(Graph g, int n, Float srcTank, Float destTank) {
         int cons; //# of connections
+        List<List<Node>> paths = new ArrayList<>();
         Node p1;
         while (n > 0) { //# of paths
             findMinPaths( g, g.getPipe( srcTank ) ); //runs dijkstra
             cons = g.getPipe( destTank ).pipesInRoute(); //return # of connections
-            if (cons < 1) //short path maybe 2
+            if (cons < 1) {//short path maybe 2
+                //TODO:: Fix so we only consider new paths, this does a decent job at finding new ones, we can print all paths once we find them that way they can be sorted by their cost rather than by how they were found.
+//                g.restoreRandomConnection();
+//                findMinPaths( g, g.getPipe( srcTank ) );
+//                cons = g.getPipe( destTank ).pipesInRoute();
                 break;
-            g.getPipe( destTank ).printLine();
+            }
+            if (!containsPath( paths, g.getPipe( destTank ).getPath() )) {
+                paths.add( g.getPipe( destTank ).getPath() );
+                g.getPipe( destTank ).printLine();
+            }
+
 //            System.out.println( "First Shortest Path Found :" + g.getPipe( destTank ).getPath() + ", "+ g.getPipe( destTank ));
 //            System.out.println( g.connections.size() );
             removeExpensiveEdge( g, g.getPipe( destTank ).getPath() );
@@ -145,44 +156,72 @@ public class Dijkstra {
         }
     }
 
+    private static boolean containsPath(List<List<Node>> paths, List<Node> path) {
+
+
+        if (paths.size() == 0) return false;
+        for (List<Node> p :
+                paths) {
+            if (sameLineups( p, path )) return true;
+        }
+//        System.out.println( "containsPath() defaulted to returning false" );
+        return false;
+    }
+
+
+    static boolean sameLineups(List<Node> path1, List<Node> path2) {
+        /*
+         * Last node distance different or list diff lengths the diff path
+         * Same cost then analyse path itself
+         */
+        if (path1.size() == 0 && path2.size() == 0) return true;
+        if (path1.size() == 0 && path2.size() > 0) return false;
+        if (path1.size() != 0 && path2.size() != 0)
+            if (path1.get( path1.size() - 1 ).getDistCost() == path2.get( path2.size() - 1 ).getDistCost())
+                return true;
+        for (int i = 0; i < path1.size(); i++) if (path1.get( i ).getID() == path2.get( i ).getID()) return true;
+
+        return true;
+    }
+
 
     static void removeExpensiveEdge(Graph g, List<Node> path) {
-    		int i = 0;
-    		int maxnode = 0;
-    		float maxcost = 0;
-    		float currentcost, nextcost;
-    		Node currentnode = new Node();
-    		Node nextnode = new Node();
-    		Edge maxedge = new Edge();
+        int i = 0;
+        int maxnode = 0;
+        float maxcost = 0;
+        float currentcost, nextcost;
+        Node currentnode = new Node();
+        Node nextnode = new Node();
+        Edge maxedge = new Edge();
 
-    		// Could change to 1 since first is always a tank
-    		for (i = 0; i < path.size()-1; i++) {
+        // Could change to 1 since first is always a tank
+        for (i = 0; i < path.size()-1; i++) {
 //    			Node n = new Node();
-    			Node n = path.get(i);
-    			// need to change to differentiate between tank and pipe, temporary
-    			if (n.getPortIn() != null && n.getPortOut() != null)  {
-    				nextnode = path.get(i+1); //get node next in path
+            Node n = path.get(i);
+            // need to change to differentiate between tank and pipe, temporary
+            if (n.getPortIn() != null && n.getPortOut() != null)  {
+                nextnode = path.get(i+1); //get node next in path
 
-    				currentcost = n.getWeight();
-    				nextcost = nextnode.getWeight();
+                currentcost = n.getWeight();
+                nextcost = nextnode.getWeight();
 
-    				float currentAndNext = currentcost + nextcost;
-    				if (currentAndNext > maxcost) {
-    					maxcost = currentAndNext;
-    					maxnode = i;
+                float currentAndNext = currentcost + nextcost;
+                if (currentAndNext > maxcost) {
+                    maxcost = currentAndNext;
+                    maxnode = i;
 
-    				}
+                }
 
-    			}
-    		}
+            }
+        }
 
-    		currentnode = path.get(maxnode);
-    		nextnode = path.get(maxnode+1);
-    		maxedge = g.getEdge(currentnode, nextnode);
-    		if (maxedge != null) {
+        currentnode = path.get(maxnode);
+        nextnode = path.get(maxnode+1);
+        maxedge = g.getEdge(currentnode, nextnode);
+        if (maxedge != null) {
 //    		    System.out.println( maxedge );
-    			g.dropConnection(maxedge);
-    		}
+            g.dropConnection(maxedge);
+        }
 
     }
 
@@ -193,8 +232,8 @@ public class Dijkstra {
         cons = g.getPipe( destTank ).pipesInRoute();    //Get number of connections
 
         do {
-               // removeExpensiveEdge(g, g.getPipes(destTank).getPath());
-                findMinPaths(g, g.getPipe(srcTank));
+            // removeExpensiveEdge(g, g.getPipes(destTank).getPath());
+            findMinPaths(g, g.getPipe(srcTank));
         } while (cons > 6);
 
     }
@@ -209,7 +248,6 @@ public class Dijkstra {
          */
 
     }
-
 
 
     static void mergePaths(Graph g, Float srcTank, List<Node> path, Node dest) {
@@ -242,24 +280,28 @@ public class Dijkstra {
             }
 
         }
-        newPath = closest.getPath();
-        newPath.add( closest );
+        if (closest != null) {
+            newPath = closest.getPath();
+            newPath.add( closest );
 
-        for (Node n : oldPath) {
-            if (!seen) {
-                if (n.getID().equals( closest.getID() ))
-                    seen = true;
-            } else
-                newPath.add( g.getPipe( n.getID() ) );
+            for (Node n : oldPath) {
+                if (!seen) {
+                    if (n.getID().equals( closest.getID() ))
+                        seen = true;
+                } else
+                    newPath.add( g.getPipe( n.getID() ) );
 
-        }
+            }
 //        System.out.println( "Old Path: \t\t\t\t" + oldPath);
 
-        System.out.println( "Connecting to old Path \t" );
-        for (int i = 0; i < newPath.size() - 1; i++) {
-            System.out.print( "(" + newPath.get( i ) + ") -> " );
+//            System.out.println( "Connecting to old Path \t" );
+            for (int i = 0; i < newPath.size() - 1; i++) {
+                System.out.print( "(" + newPath.get( i ) + ") -> " );
+            }
+            System.out.print( "(" + newPath.get( newPath.size() - 1 ) + ")" );
+        } else {
+            System.out.println( "Unable to merge Paths" );
         }
-        System.out.print( "(" + newPath.get( newPath.size() - 1 ) + ")" );
     }
 
 
